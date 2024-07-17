@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Slider from "react-slick";
-import PrevArrow from './PrevArrow';
-import NextArrow from './NextArrow';
+import PrevArrow from './common/PrevArrow';
+import NextArrow from './common/NextArrow';
 import axios from 'axios';
-import FoodItems from '../json/FoodItems';
+import FoodItems from '../json/FoodItems.json'
 
 
 
 const TabOptions = () => {
 
   const [foodItems,setFoodItems]=useState([]);
-  console.log(foodItems)
   const settings = {
     dots: true,
     infinite: false,
@@ -28,32 +27,29 @@ const TabOptions = () => {
   const foodItemsToDisplay=foodItems.slice(0,6).map((food)=>{
    return(
     <>
-     <div className="food-box-container">
-    <div className="food-box" key={food.id}>
+    <div className="h-36 w-36 flex justify-center items-center flex-col ml-6 mt-4" key={food.id}>
       <img
-        className="food-image"
+        className="w-96 object-cover rounded-full"
         src={food.foodImage}
         alt={food.category}
       />
       <p className="food-name">{food.category}</p>
     </div>
-  </div>
     </>
    )
 
   })
 
   return (
-    <div className="option-container">
-      <div className="food-list max-width">
-        <p className="description">Eat what makes you happy</p>
+   
+      <div className="">
+        <p className="text-3xl  ml-28 mt-2">Eat what makes you happy</p>
         {/* <Slider {...settings}> */}
-          <div className="food-list-container">
+          <div className="flex ml-16 pl-3">
             {foodItemsToDisplay}
           </div>
         {/* </Slider> */}
       </div>
-    </div>
   );
 }
 

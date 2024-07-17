@@ -21,14 +21,15 @@ const Header = () => {
             className="w-36 object-cover"
           />
         </div>
-        <div className="w-36">
-              {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
+        <div className="w-36 flex">
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
               <input className='serach-input none cur-point' type="text" placeholder='Search for restaurant, cuisine or a dish' ref={inputRef} value={dishname} onChange={e=>{setDishName(e.target.value)}}/>
             </div>
 
-        <div className="">
-            {/* <FontAwesomeIcon className='margin-left' icon={faShoppingCart} /> */}
-            <p>Anugraha</p>
+        <div className="flex mr-4 pr-4">
+        <Link to='/'><FontAwesomeIcon className='margin-left' icon={faHouse} /></Link>
+            <FontAwesomeIcon className='margin-left' icon={faShoppingCart} />
+            {/* <p>Anugraha</p> */}
           </div>
     </div>
   );

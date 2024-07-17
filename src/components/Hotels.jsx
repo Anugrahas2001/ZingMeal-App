@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import hotelData from './json/HotelJson'
+import hotelData from '../json/HotelJson.json'
 import Details from './common/Details';
 import { Link } from 'react-router-dom';
 import RestuarentPage from './RestuarentPage';
 
 const Hotels = () => {
     const [hotels,setHotels]=useState([]);
-    const lastIndex=3;
-    const firstIndex=lastIndex-3;
   
     useEffect(()=>{
         setHotels(hotelData);
@@ -15,16 +13,16 @@ const Hotels = () => {
 
     
 
-    const hotelDeatails=hotels.slice(firstIndex,lastIndex).map((hotel)=>{
+    const hotelDeatails=hotels.slice(0,3).map((hotel)=>{
         return (
           <>
-      <div className='restuarent-card-details'>
-        <div className="restuarent-single-card" key={hotel.id}>
+      <div className='flex flex-col ml-4  p-2 rounded-md shadow-2xl'>
+        <div className="w-80 h-36 rounded-md" key={hotel.id}>
         <Link to='/restuarent'> <img
-                    className="image-size"
+                    className="w-full object-cover rounded-md"
                     src={hotel.hotel_backdrop}
                     alt={hotel.name}
-                  onClick={()=>{RestuarentPagehandler(hotel.hotel_backdrop,hotel.name)}} /> </Link>
+                   /> </Link>
           </div>
           <Details hotelData={hotel}/>
      </div>
@@ -37,14 +35,12 @@ const Hotels = () => {
 
   return (
     <div className="hotel-main-container">
-      <div className="max-width">
-      <p className='food-listing-description'>Explore the food life!</p>
-        <div className="restuarent-card">
-        <div className='restuarent-banner max-width'>
+      <div className="w-96">
+      <p className='text-3xl ml-28 mt-2'>Explore the food life!</p>
+        <div className='flex ml-28'>
         {hotelDeatails}
         </div>
         </div>
-      </div>
     </div>
   );
 }
