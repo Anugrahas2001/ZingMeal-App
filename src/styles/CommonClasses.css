@@ -1,0 +1,86 @@
+.max-width{
+    max-width: 67em;
+    margin: 0px auto;
+}
+.absolute-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cur-ponint{
+    cursor: pointer;
+}
+.font-fam{
+    font-family: Okra, Helvetica, sans-serif;
+}
+.none{
+    outline: none;
+  border: none;
+  font-size: 0.9em;
+}
+.margin-left{
+    margin-left: 1.3em;
+}
+.food-box-container{
+    touch-action: manipulation;
+    display: flex;
+    position: relative;
+    /* overflow: hidden; */
+    margin-right: 2em;
+    transform: translateX(0px);
+    transition: transform 0.45s ease-in-out 0s;
+}
+  .restuarent-card
+  {
+    display: flex;
+    width: 100%;
+    margin: 2.7rem 0px;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    /* height: 40em; */
+  }
+
+  .restuarent-single-card{
+    overflow: hidden;
+    width: 20rem;
+    height: 15em;
+    border-radius:1em;
+    margin: 0em 0.5em;
+  }
+  .image-size{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius:1em;
+    margin-top: 0.5em;
+  }
+
+  .restuarent-card-details{
+    display: flex;
+    flex-direction: column;
+    width: 21em;
+    height: 20em;
+    margin-left: 1.5em;
+    border-radius: 0.3em;
+    text-decoration: none;
+  }
+
+.information{
+  font-size: inherit;
+    line-height: 1.5;
+    margin: 0px;
+    text-align: right;
+    white-space: nowrap;
+    color: rgb(105, 105, 105);
+    max-width: 30%;
+    padding: 0px 0px 0.4rem;
+    text-decoration: none;
+}
+.text-overflow{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+}
+.restuatrent-page-description{
+  
+}
