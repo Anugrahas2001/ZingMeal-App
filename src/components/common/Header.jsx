@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCaretDown,faLocationDot,faMagnifyingGlass,faAngleDown,faHouse,faShoppingCart,faUserTie} from '@fortawesome/free-solid-svg-icons'
+import {faMagnifyingGlass,faHouse,faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
@@ -29,7 +29,6 @@ const Header = () => {
         <div className="flex mr-4 pr-4">
         <Link to='/'><FontAwesomeIcon className='margin-left' icon={faHouse} /></Link>
             <FontAwesomeIcon className='margin-left' icon={faShoppingCart} />
-            {/* <p>Anugraha</p> */}
           </div>
     </div>
   );
