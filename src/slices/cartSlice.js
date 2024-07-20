@@ -27,3 +27,6 @@ const cartSlicer=createSlice({
 
 export const {addToCart,updateCart,removeFromCart}=cartSlicer.actions
 export default cartSlicer.reducer
+
+
+
