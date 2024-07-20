@@ -16,11 +16,11 @@ const cartSlicer=createSlice({
         console.log(find,"find element")
         if(find)
         {
-            action.payload.value==1?(state.quantity+=1):(state.quantity>0?state.quantity-=1:0);
+            console.log(action.payload.value==1?(state.quantity+=1):(state.quantity>0?state.quantity-=1:0));
         }
     },
     removeFromCart:(state,action)=>{
-        action.payload.value==0?state.cartIds.filter(item=>item!=action.payload.id):0;
+        state.cartIds=action.payload.value==0||state.quantity==0?state.cartIds.filter(item=>item!=action.payload.id):0;
     }
    }
 })
