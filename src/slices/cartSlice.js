@@ -16,14 +16,14 @@ const cartSlicer = createSlice({
         (item) => item.id == action.payload.id
       );
       if (index >= 0) {
-        action.payload.value === 1
+        action.payload.value == 1
           ? (state.cart[index].quantity += 1)
-          : (state.cart[index].quantity -= 1);
+          : (state.cart[index].quantity>0?(state.cart[index].quantity -= 1):0);
       }
     },
     removeFromCart: (state, action) => {
-      action.payload.value === 0
-        ? state.cart.filter((item) => !item.id == action.payload.id)
+        state.cart=action.payload.value == 0
+        ? state.cart.filter((item) => item.id != action.payload.id)
         : 0;
     },
   },
