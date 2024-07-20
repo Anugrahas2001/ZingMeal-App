@@ -76,14 +76,13 @@ const RestuarentPage = () => {
                     <div>
                       <button
                         className="bg-green-600 font-semibold h-8 w-24 ml-1 rounded-md"
-                        onClick={() => dispatch(addToCart(dish.id))}
+                        onClick={() => dispatch(addToCart(dish))}
                       >
                         Add
                       </button>
                     </div>
                   </div>
                 </div>
-              
               );
             })}
             </div>
