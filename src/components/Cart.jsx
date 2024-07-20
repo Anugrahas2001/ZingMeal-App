@@ -3,7 +3,7 @@ import { useDispatch, useSelector} from 'react-redux'
 import foodItems from '../json/foodItems.json'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
-import {updateCart} from '../slices/cartSlice'
+import {updateCart,removeFromCart} from '../slices/cartSlice'
 
 const Cart = () => {
 
@@ -11,7 +11,6 @@ const Cart = () => {
   const quantity=useSelector((store)=>store.cart.quantity)
 
   const dispatch=useDispatch();
-
     
     const data=foodItems.filter((item)=>selector.includes(item.id))
     .map((item)=>{
@@ -49,7 +48,7 @@ const Cart = () => {
                     <button className="w-14 ml-2 bg-slate-200 text-lg font-semibold rounded-full" onClick={()=>dispatch(updateCart({value:-1,id:item.id}))}>
                       -
                     </button>
-                     <button className="w-20 h-8 ml-5 bg-orange-500 text-white text-lg font-semibold rounded-sm mr-1" onClick={()=>dispatch(updateCart({value:0,id:item.id}))}>
+                     <button className="w-20 h-8 ml-5 bg-orange-500 text-white text-lg font-semibold rounded-sm mr-1" onClick={()=>dispatch(removeFromCart({value:0,id:item.id}))}>
                     Remove
                   </button>
                     </div>
@@ -70,17 +69,10 @@ const Cart = () => {
         );
     })
 
-  //  const value= data.map((item)=>{
-  //    return(
-  //     console.log(item)
-  //    )
-  //   })
   return (
     <div className="m-2 ">
-      {/* <h1 className='ml-32'>This is Cart page</h1> */}
       <div className=" w-full">
         {data}
-        {/* {value} */}
       </div>
     </div>
   );

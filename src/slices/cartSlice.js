@@ -12,15 +12,18 @@ const cartSlicer=createSlice({
         state.quantity=1  
     },
     updateCart:(state,action)=>{
-        const find=state.cartIds.some((item)=>item===action.payload.id);
+        const find=state.cartIds.findIndex((item)=>item===action.payload.id);
         console.log(find,"find element")
-        if(find>=0)
+        if(find)
         {
-            action.payload.value==1?(state.quantity+=1):state.quantity[find]-=1;
+            action.payload.value==1?(state.quantity+=1):(state.quantity>0?state.quantity-=1:0);
         }
+    },
+    removeFromCart:(state,action)=>{
+        action.payload.value==0?state.cartIds.filter(item=>item!=action.payload.id):0;
     }
    }
 })
 
-export const {addToCart,updateCart}=cartSlicer.actions
+export const {addToCart,updateCart,removeFromCart}=cartSlicer.actions
 export default cartSlicer.reducer
