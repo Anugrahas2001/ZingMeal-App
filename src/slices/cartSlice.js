@@ -19,7 +19,7 @@ const cartSlicer = createSlice({
         action.payload.value == 1
           ? (state.cart[index].quantity += 1)
           : (state.cart[index].quantity>0?(state.cart[index].quantity -= 1):0);
-      }
+      } 
     },
     removeFromCart: (state, action) => {
         state.cart=action.payload.value == 0
