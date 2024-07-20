@@ -7,7 +7,7 @@ const TabOptions = () => {
 
   const foodItemsToDisplay = foodItems.slice(0, 6).map((food) => {
     return (
-      <>
+     
         <div
           className="h-36 w-36 flex justify-center items-center flex-col ml-6 mt-4"
           key={food.id}
@@ -19,7 +19,6 @@ const TabOptions = () => {
           />
           <p className="food-name">{food.category}</p>
         </div>
-      </>
     );
   });
 

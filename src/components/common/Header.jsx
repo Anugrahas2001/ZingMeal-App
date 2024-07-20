@@ -28,7 +28,7 @@ const Header = () => {
 
         <div className="flex mr-4 pr-4">
         <Link to='/'><FontAwesomeIcon className='margin-left' icon={faHouse} /></Link>
-            <FontAwesomeIcon className='margin-left' icon={faShoppingCart} />
+            <Link to='/cart'><FontAwesomeIcon className='margin-left' icon={faShoppingCart} /></Link>
           </div>
     </div>
   );
