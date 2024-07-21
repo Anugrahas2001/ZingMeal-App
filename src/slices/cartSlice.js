@@ -2,32 +2,43 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlicer = createSlice({
   name: "cart",
-  initialState: {
-    cart: [],
-    quantity: 0,
-  },
+  initialState: [],
   reducers: {
     addToCart: (state, action) => {
-      state.cart.push(action.payload);
-      state.quantity = 1;
+      const index = state.findIndex(
+        (item) => item.id == action.payload
+      );
+      if(index < 0)
+        state.push({id:action.payload,quantity:1})
+    else
+      state[index].quantity+=1;
     },
     updateCart: (state, action) => {
-      const index = state.cart.findIndex(
+      const index = state.findIndex(
         (item) => item.id == action.payload.id
       );
-      if (index >= 0) {
-        action.payload.value == 1
-          ? (state.cart[index].quantity += 1)
-          : (state.cart[index].quantity>0?(state.cart[index].quantity -= 1):0);
-      } 
-    },
-    removeFromCart: (state, action) => {
-        state.cart=action.payload.value == 0
-        ? state.cart.filter((item) => item.id != action.payload.id)
-        : 0;
-    },
+      if (index < 0) return;
+      state[index].quantity+=action.payload.value
+      if (state[index].quantity <= 0 || action.payload.value == 0) {
+        state = state.filter((item) => item.id != action.payload.id);
+        return state;
+      }else{
+        state;
+      }       
+    }
   },
 });
 
 export const {addToCart,updateCart,removeFromCart}=cartSlicer.actions
 export default cartSlicer.reducer
+
+
+// Number-11 -->{}
+// string-"anu" {0: 'a', 1: 'n', 2: 'u'}
+// boolean-false {}
+// array-["anu"]  {0: 'a', 1: 'b'}
+// object-{
+//     id:1,
+//     name:"anu"
+// }
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import foodItems from '../json/foodItems.json'
+import foodItems from '../json/FoodItems.json'
 
 
 

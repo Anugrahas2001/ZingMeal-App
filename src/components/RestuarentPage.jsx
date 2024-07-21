@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faIndianRupeeSign,faStar } from '@fortawesome/free-solid-svg-icons'
 import {useParams} from 'react-router-dom'
 import hotelData from '../json/hotel.json'
-import foodItems from '../json/foodItems.json'
+import foodItems from '../json/FoodItems.json'
 import { addToCart } from '../slices/cartSlice'
 import { useDispatch} from 'react-redux'
 
@@ -76,7 +76,7 @@ const RestuarentPage = () => {
                     <div>
                       <button
                         className="bg-green-600 font-semibold h-8 w-24 ml-1 rounded-md"
-                        onClick={() => dispatch(addToCart(dish))}
+                        onClick={() => dispatch(addToCart(dish.id))}
                       >
                         Add
                       </button>

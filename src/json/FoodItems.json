@@ -1,6 +1,6 @@
 [
   {
-    "id": 716,
+    "id": "716",
     "foodName": "Chicken Biriyani",
     "category": "Biriyani",
     "type": "Non-Veg",
@@ -14,7 +14,7 @@
     "rating": 4.5
   },
   {
-    "id": 917,
+    "id": "917",
     "foodName": "Fish Curry",
     "category": "Biriyani",
     "type": "Non-Veg",
@@ -28,7 +28,7 @@
     "rating": 4.2
   },
   {
-    "id": 839,
+    "id": "839",
     "foodName": "Vegetable Pulao",
     "category": "Biriyani",
     "type": "Veg",
@@ -42,7 +42,7 @@
     "rating": 4.0
   },
   {
-    "id": 253,
+    "id": "253",
     "foodName": "Cheese Pizza",
     "category": "Pizza",
     "type": "Veg",
@@ -56,7 +56,7 @@
     "rating": 4.3
   },
   {
-    "id": 315,
+    "id": "315",
     "foodName": "Chicken Shawarma",
     "category": "Shawarma",
     "type": "Non-Veg",
@@ -70,7 +70,7 @@
     "rating": 4.6
   },
   {
-    "id": 417,
+    "id": "417",
     "foodName": "Vegetable Rice",
     "category": "Tacos",
     "type": "Veg",
@@ -84,7 +84,7 @@
     "rating": 4.1
   },
   {
-    "id": 614,
+    "id": "614",
     "foodName": "Palak Paneer",
     "category": "Appetizer",
     "type": "Veg",
@@ -98,7 +98,7 @@
     "rating": 4.4
   },
   {
-    "id": 135,
+    "id": "135",
     "foodName": "Egg Curry",
     "category": "Curry",
     "type": "Non-Veg",
@@ -112,7 +112,7 @@
     "rating": 4.3
   },
   {
-    "id": 871,
+    "id": "871",
     "foodName": "Chole",
     "category": "Curry",
     "type": "Veg",
@@ -126,7 +126,7 @@
     "rating": 4.5
   },
   {
-    "id": 733,
+    "id": "733",
     "foodName": "Butter Chicken",
     "category": "Curry",
     "type": "Non-Veg",
@@ -140,7 +140,7 @@
     "rating": 4.7
   },
   {
-    "id": 531,
+    "id": "531",
     "foodName": "Veg Biryani",
     "category": "Appetizer",
     "type": "Veg",
@@ -154,7 +154,7 @@
     "rating": 4.0
   },
   {
-    "id": 550,
+    "id": "550",
     "foodName": "Chicken Kebab",
     "category": "Biriyanis",
     "type": "Non-Veg",
@@ -168,7 +168,7 @@
     "rating": 4.5
   },
   {
-    "id": 816,
+    "id": "816",
     "foodName": "Dal Tadka",
     "category": "Curry",
     "type": "Veg",
@@ -182,7 +182,7 @@
     "rating": 4.3
   },
   {
-    "id": 823,
+    "id": "823",
     "foodName": "Lamb Vindaloo",
     "category": "Curry",
     "type": "Non-Veg",
