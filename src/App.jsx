@@ -5,7 +5,7 @@ import RestuarentPage from './components/RestuarentPage'
 import Cart from './components/Cart'
 import { Provider } from 'react-redux'
 import store from './slices/store'
-import Order from './components/Order'
+import CheckOut from './components/CheckOut'
 
 
 
@@ -18,7 +18,7 @@ function App() {
         <Route path='/' element={<HomePage/>} />
         <Route path="/restuarent/:id" element={<RestuarentPage/>} />
         <Route path="/cart" element={<Cart/>} />
-        <Route path="/order/:item" element={<Order/>} />
+        <Route path="/checkout/:id" element={<CheckOut/>} />
       </Routes>
     </Router>
     </Provider>

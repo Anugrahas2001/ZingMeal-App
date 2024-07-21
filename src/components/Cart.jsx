@@ -16,10 +16,6 @@ const Cart = () => {
   const max = 300;
   const random = Math.floor(min + (Math.random() * (max - min)));
 
-  const oderHndler=()=>{
-    alert("item added successfully")
-  }
-
   
   const idMap = cartItems.reduce((acc,val)=>{
     acc[val.id] = val
@@ -30,7 +26,8 @@ const Cart = () => {
     .map((item)=>{
       ItemsPrice=ItemsPrice+item.price*idMap[item.id].quantity;
         return (
-          <div className="border h-48 w-2/3 key={item.id}">
+          <>
+          <div className="border h-56 w-2/3 key={item.id}">
             <div className="  flex mt-3 items-center">
               <div className="flex justify-center items-center mb-1">
                 <img
@@ -51,7 +48,7 @@ const Cart = () => {
                   <p>{item.type}</p>
                   <p>{item.price}</p>
                   
-                  <div className="flex absolute right-1/3">
+                  <div className="flex absolute right-2/3">
                     <FontAwesomeIcon
                       className="text-sm mt-1"
                       icon={faIndianRupeeSign}
@@ -91,8 +88,14 @@ const Cart = () => {
                 </div>
               </div>
             </div>
-            <div className='w-24 h-5 bg-red-500'><p>Checkout</p></div>
+            <Link to={`/checkout/${item.id}`}><div className=' h-5 flex items-center justify-center'>
+          <p className='text-lg  absolute right-1/3 mr-7 bg-blue-600 text-white font-semibold cursor-pointer'>Checkout</p>
+            </div>
+            </Link>
           </div>
+          
+          
+          </>
         );
     })
     console.log(data,"idd")
@@ -100,7 +103,7 @@ const Cart = () => {
     <div className=" w-full m-3">
       <div className="flex flex-wrap" key={data.id}>
         {data}
-        <div className="w-96 h-auto shadow-lg ml-3 absolute right-5">
+        {/* <div className="w-96 h-auto shadow-lg ml-3 absolute right-5">
           <div className="m-5">
             <div className="text-lg h-10 m-5 mt-2 flex justify-center items-center font-semibold shadow-lg ">
               <p className="text-lg text-gray-500 h-5 ">Price Details</p>
@@ -150,15 +153,15 @@ const Cart = () => {
               </p>
             </div>
 
-            <Link to={`/order/`}>
+            
               <div className="text-lg h-14 rounded-sm m-5 mt-2 flex justify-between bg-blue-600 cursor-pointer" onClick={oderHndler}>
                 <p className=" text-white text-lg font-bold flex justify-center items-center ml-24">
                   Checkout
                 </p>
               </div>
-            </Link>
+            
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
