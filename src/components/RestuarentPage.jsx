@@ -7,6 +7,8 @@ import hotelData from '../json/hotel.json'
 import foodItems from '../json/FoodItems.json'
 import { addToCart } from '../slices/cartSlice'
 import { useDispatch} from 'react-redux'
+import { ToastContainer, toast,Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -14,6 +16,24 @@ const RestuarentPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
+  const notify=()=>{
+    toast.success('Item added successfully!', {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      });
+  }
+
+  const addToCartFunction=(id)=>{
+    dispatch(addToCart(id))
+    notify();
+  }
  
 
   const hotelDetails = hotelData
@@ -76,7 +96,7 @@ const RestuarentPage = () => {
                     <div>
                       <button
                         className="bg-green-600 font-semibold h-8 w-24 ml-1 rounded-md"
-                        onClick={() => dispatch(addToCart(dish.id))}
+                        onClick={()=>{addToCartFunction(dish.id)}}
                       >
                         Add
                       </button>
@@ -94,6 +114,7 @@ const RestuarentPage = () => {
       <div className="">
         <Header />
         {hotelDetails}
+        <ToastContainer/>
       </div>
     
   );

@@ -1,33 +1,64 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 import foodItems from '../json/FoodItems.json'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar,faIndianRupeeSign } from '@fortawesome/free-solid-svg-icons'
+import { faStar,faIndianRupeeSign, faXmark } from '@fortawesome/free-solid-svg-icons'
 import {updateCart} from '../slices/cartSlice'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import Confetti from 'react-confetti'
 
 const Cart = () => {
 
   const cartItems=useSelector((store)=>store.cart)
   const dispatch=useDispatch();
+  const navigate=useNavigate();
+  const [btnState,setBtnState]=useState("Place Order");
+  const [btn,setBtn]=useState(false);
+  const [dimension,setDimension]=useState({width:window.innerWidth,height:window.innerHeight})
+  // const [random,setRandom]=useState(0);
   let ItemsPrice=0;
 
-  const min = 50;
-  const max = 300;
+  var min = 50;
+  var max = 200;
   const random = Math.floor(min + (Math.random() * (max - min)));
+  console.log(random,"random value")
 
-  
   const idMap = cartItems.reduce((acc,val)=>{
     acc[val.id] = val
      return acc
   },{})
+
+ useEffect(()=>{
+ 
+  setDimension({width:window.innerWidth,height:window.innerHeight})
+ },[])
+
+ const detectSize=()=>{
+  window.addEventListener('resize',detectSize);
+  return()=>{
+    window.removeEventListener('resize',detectSize);
+  }
+ }
+
+  const oderHandler=()=>{
+    setBtn(!btn);
+    setBtnState((prevState)=>
+      prevState === "Place Order" ? "Order Placed" : "Place Order"
+    );
+    setTimeout(()=>{
+      navigate('/order',{state:{idArray}})
+    },5000)
+   
+  }
+
+  const idArray=Object.keys(idMap);
 
     const data=foodItems.filter((item)=>Object.keys(idMap).includes(item.id))
     .map((item)=>{
       ItemsPrice=ItemsPrice+item.price*idMap[item.id].quantity;
         return (
           <>
-          <div className="border h-56 w-2/3 key={item.id}">
+          <div className="border h-48 w-2/3 key={item.id}">
             <div className="  flex mt-3 items-center">
               <div className="flex justify-center items-center mb-1">
                 <img
@@ -46,15 +77,12 @@ const Cart = () => {
                   </div>
                   <p>{item.hotel}</p>
                   <p>{item.type}</p>
-                  <p>{item.price}</p>
-                  
-                  <div className="flex absolute right-2/3">
-                    <FontAwesomeIcon
+                 <div className='flex'>
+                 <FontAwesomeIcon
                       className="text-sm mt-1"
-                      icon={faIndianRupeeSign}
-                    />
-                    <p className="mb-2 text-md">{Math.floor(item.price*idMap[item.id].quantity)}</p>
-                  </div>
+                      icon={faIndianRupeeSign}/>
+                  <p>{item.price}</p>
+                 </div>
                   
                   <div className="flex justify-center items-center">
                     <button
@@ -88,27 +116,42 @@ const Cart = () => {
                 </div>
               </div>
             </div>
-            <Link to={`/checkout/${item.id}`}><div className=' h-5 flex items-center justify-center'>
-          <p className='text-lg  absolute right-1/3 mr-7 bg-blue-600 text-white font-semibold cursor-pointer'>Checkout</p>
-            </div>
-            </Link>
           </div>
-          
-          
           </>
         );
     })
-    console.log(data,"idd")
   return (
     <div className=" w-full m-3">
       <div className="flex flex-wrap" key={data.id}>
         {data}
-        {/* <div className="w-96 h-auto shadow-lg ml-3 absolute right-5">
+        <div className="w-96 h-auto shadow-lg ml-3 absolute right-5">
           <div className="m-5">
             <div className="text-lg h-10 m-5 mt-2 flex justify-center items-center font-semibold shadow-lg ">
               <p className="text-lg text-gray-500 h-5 ">Price Details</p>
             </div>
-            <div className="text-lg h-5 m-5 mt-2 flex justify-between">
+
+{cartItems.map((item)=>{
+  const foodItem=foodItems.find((food)=>food.id==item.id);
+    return(
+         <div className="text-lg h-5 m-5 mt-2 flex justify-between ">
+                <div className='flex'>
+                <p>{foodItem.foodName} <FontAwesomeIcon icon={faXmark}/></p>
+                <p>{idMap[foodItem.id].quantity}</p>
+                </div>
+                <div className="flex">
+                  <FontAwesomeIcon
+                    className="text-sm mt-2"
+                    icon={faIndianRupeeSign}
+                  />
+                  <p className="mb-2 text-md">{foodItem.price*idMap[foodItem.id].quantity}</p>
+                </div>
+              </div>
+  
+      )}
+    )
+   }
+
+            <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2">
               <p>Price ({data.length} items)</p>
               <div className="flex">
                 <FontAwesomeIcon
@@ -149,19 +192,23 @@ const Cart = () => {
 
             <div className="text-lg h-6 m-5 mt-2 flex justify-between border-dashed border-gray-400 border-t-2">
               <p className="text-sm text-green-800 font-bold mt-1">
-                You will save ₹10,152 on this order
+               You will save ₹{random} on this order
               </p>
             </div>
 
             
-              <div className="text-lg h-14 rounded-sm m-5 mt-2 flex justify-between bg-blue-600 cursor-pointer" onClick={oderHndler}>
+              <div className="text-lg h-14 rounded-sm m-5 mt-2 flex justify-between bg-blue-600 cursor-pointer" onClick={oderHandler}>
                 <p className=" text-white text-lg font-bold flex justify-center items-center ml-24">
-                  Checkout
+                {btnState}
                 </p>
+                {btn&&<Confetti
+                width={dimension.width}
+                height={dimension.height}
+                />}
               </div>
             
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
