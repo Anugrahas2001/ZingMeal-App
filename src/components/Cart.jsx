@@ -6,6 +6,7 @@ import { faStar,faIndianRupeeSign, faXmark } from '@fortawesome/free-solid-svg-i
 import {updateCart} from '../slices/cartSlice'
 import { useNavigate } from 'react-router-dom'
 import Confetti from 'react-confetti'
+import Header from './common/Header'
 
 const Cart = () => {
 
@@ -119,7 +120,9 @@ const Cart = () => {
         );
     })
   return (
-    <div className=" w-full m-3">
+    <div>
+      <Header/>
+      <div className=" w-full m-3">
       <div className="flex flex-wrap" key={data.id}>
         {data}
         <div className="w-96 h-auto shadow-lg ml-3 absolute right-5">
@@ -209,6 +212,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

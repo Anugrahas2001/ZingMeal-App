@@ -9,11 +9,11 @@ const TabOptions = () => {
     return (
      
         <div
-          className="h-36 w-36 flex justify-center items-center flex-col ml-6 mt-4"
+          className=" w-full flex justify-center items-center flex-col pl-1 mt-4"
           key={food.id}
         >
           <img
-            className="w-96 object-cover rounded-full"
+            className="w-full object-cover rounded-full"
             src={food.foodImage}
             alt={food.category}
           />
@@ -24,9 +24,9 @@ const TabOptions = () => {
 
   return (
    
-      <div>
-        <p className="text-3xl  ml-28 mt-2">Eat what makes you happy</p>
-          <div className="flex ml-16 pl-3">
+      <div className='overflow-x-hidden m-4'>
+        <p className="text-3xl mt-2">Eat what makes you happy</p>
+          <div className="flex">
             {foodItemsToDisplay}
           </div>
       </div>
