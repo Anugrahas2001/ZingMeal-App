@@ -53,7 +53,7 @@ const FoodRecepies = () => {
                 </div>
                 <div>
                   <p className="font-semibold">Preparing Steps:</p>
-                  <p>{food.preparingSteps}</p>
+                  <p className='w-4/5'>{food.preparingSteps}</p>
                 </div>
               </div>
             </div>
