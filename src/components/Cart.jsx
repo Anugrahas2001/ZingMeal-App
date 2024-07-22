@@ -7,10 +7,12 @@ import {updateCart} from '../slices/cartSlice'
 import { useNavigate } from 'react-router-dom'
 import Confetti from 'react-confetti'
 import Header from './common/Header'
+import { addOrder } from '../slices/orderSlice'
 
 const Cart = () => {
 
   const cartItems=useSelector((store)=>store.cart)
+  // console.log(cartItems,"cartItems")
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const [btnState,setBtnState]=useState("Place Order");
@@ -21,12 +23,13 @@ const Cart = () => {
   var min = 50;
   var max = 200;
   const random = Math.floor(min + (Math.random() * (max - min)));
-  console.log(random,"random value")
+  // let totalPrice=ItemsPrice+random;
 
   const idMap = cartItems.reduce((acc,val)=>{
     acc[val.id] = val
      return acc
   },{})
+  // console.log(idMap,"arraaaay")
 
  useEffect(()=>{
   setDimension({width:window.innerWidth,height:window.innerHeight})
@@ -39,11 +42,14 @@ const Cart = () => {
   }
  }
 
-  const oderHandler=()=>{
+  const oderHandler=(totalPrice)=>{
+    console.log(totalPrice,"price from cart")
+    dispatch(addOrder({order:cartItems,price:totalPrice}))
     setBtn(!btn);
     setBtnState((prevState)=>
       prevState === "Place Order" ? "Order Placed" : "Place Order"
     );
+    
     setTimeout(()=>{
       navigate('/order',{state:{idArray}})
     },5000)
@@ -187,7 +193,7 @@ const Cart = () => {
               <p>Total Amount</p>
               <div className="flex">
                 <p className="mb-2 text-md text-green-600">
-                  {ItemsPrice + random}
+                  {ItemsPrice - random}
                 </p>
               </div>
             </div>
@@ -200,8 +206,9 @@ const Cart = () => {
 
             <div
               className="text-lg h-14 rounded-sm m-5 mt-2 flex justify-between bg-blue-600 cursor-pointer"
-              onClick={oderHandler}
+              onClick={()=>{oderHandler(ItemsPrice + random)}}
             >
+              {console.log((ItemsPrice - random),"cart")}
               <p className=" text-white text-lg font-bold flex justify-center items-center ml-24">
                 {btnState}
               </p>

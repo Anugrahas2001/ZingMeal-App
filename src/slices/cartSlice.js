@@ -26,10 +26,15 @@ const cartSlicer = createSlice({
         state;
       }       
     }
-  },
+  }
 });
 
-export const {addToCart,updateCart,removeFromCart}=cartSlicer.actions
+export const {addToCart,updateCart,getTotalQuantity}=cartSlicer.actions
+
+export const selectTotalQuantity=(state)=>{
+  return state.cart.reduce((total,item)=>total+item.quantity,0)
+}
+
 export default cartSlicer.reducer
 
 

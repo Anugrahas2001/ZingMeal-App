@@ -2,11 +2,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faMagnifyingGlass,faHouse,faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectTotalQuantity } from '../../slices/cartSlice'
+// import { totalQuantity } from '../../slices/cartSlice'
+
 
 const Header = () => {
 
   const inputRef=useRef(null);
   const[dishname,setDishName]=useState('');
+  const count=useSelector(selectTotalQuantity);
 
   useEffect(()=>{
     inputRef.current.focus()
@@ -33,7 +38,7 @@ const Header = () => {
             <div className='flex'>
             <FontAwesomeIcon className='margin-left w-9 mt-1' icon={faShoppingCart} />
             <div className='flex'>
-            <p className='w-5 h-5 rounded-full bg-red-500 absolute right-12 top-5 mb-4 flex items-center pl-2'>0</p>
+            <p className='w-5 h-5 rounded-full bg-red-500 text-white absolute right-12 top-5 mb-4 flex items-center'>{count}</p>
             </div>
             </div>
             </Link>
