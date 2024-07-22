@@ -12,7 +12,7 @@ const Order = () => {
 
     const orderData=foodItems.filter((item)=>location.state.idArray.includes(item.id)).map((food)=>{
         return (
-          <div className='w-2/3 ml-40 mt-6'>
+          <div className="w-2/3 ml-40 mt-6">
             <div className="flex shadow-inner">
               <img
                 className="w-28 rounded-sm m-2"
@@ -28,11 +28,11 @@ const Order = () => {
                   className="text-sm mt-1"
                   icon={faIndianRupeeSign}
                 />
-                <p className='pl-1'>{food.price}</p>
+                <p className="pl-1">{food.price}</p>
               </div>
-              <div className='flex flex-col m-2'>
-              <FontAwesomeIcon icon={faBell}/>
-              <p>food is preparing</p>
+              <div className="flex flex-col m-2">
+                <FontAwesomeIcon icon={faBell} />
+                <p>food is preparing</p>
               </div>
             </div>
           </div>

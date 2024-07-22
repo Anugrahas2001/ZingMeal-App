@@ -9,6 +9,7 @@ import { addToCart } from '../slices/cartSlice'
 import { useDispatch} from 'react-redux'
 import { ToastContainer, toast,Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom'
 
 
 
@@ -44,13 +45,15 @@ const RestuarentPage = () => {
       return (
         <div key={item.id}>
           <div className="" >
+            
             <div className="w-full pl-36 pr-36 mt-8 rounded-md">
               <img
                 className="w-full object-cover h-72 rounded-md"
                 src={item.hotel_backdrop}
-                alt=""
+                alt={item.name}
               />
             </div>
+            
 
             <div className="flex w-96 justify-between h-8 items-center rounded-lg">
               <div className="ml-36 text-xl font-semibold">{item.name}</div>
@@ -79,11 +82,11 @@ const RestuarentPage = () => {
               return (
                 <div className="ml-36 mt-4" key={dish.id}>
                   <div className="flex">
-                    <img
-                      className="w-48 h-36 rounded-lg"
+                  <Link to={`/food/${dish.id}`}><img
+                      className="w-48 h-36 rounded-lg  cursor-pointer"
                       src={dish.foodImage}
                       alt={dish.foodName}
-                    />
+                    /></Link>
                     <div className="flex flex-col ml-3 w-1/3">
                       <div className="text-lg">{dish.foodName}</div>
                       <div className="text-lg">{dish.category}</div>

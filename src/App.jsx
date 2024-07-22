@@ -6,6 +6,7 @@ import Cart from './components/Cart'
 import { Provider } from 'react-redux'
 import store from './slices/store'
 import Order from './components/Order'
+import FoodRecepies from './components/FoodRecepies'
 
 
 
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage/>} />
         <Route path="/restuarent/:id" element={<RestuarentPage/>} />
+        <Route path="/food/:id" element={<FoodRecepies/>}/>
         <Route path="/cart" element={<Cart/>} />
         <Route path="/order" element={<Order/>} />
       </Routes>
