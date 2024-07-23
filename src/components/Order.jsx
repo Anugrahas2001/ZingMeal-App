@@ -1,7 +1,7 @@
 import React from "react";
 import foodItems from "../json/FoodItems.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
+import { faIndianRupeeSign, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./common/Header";
@@ -15,7 +15,7 @@ const Order = () => {
   const notify = () => {
     toast.error("Order Cancelled!", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -32,6 +32,7 @@ const Order = () => {
   };
 
   const renderOrderItems = (order) => {
+
     return order.map((item) => {
       const foodData = foodItems.find((foodItem) => foodItem.id === item.id);
       return (
@@ -43,7 +44,13 @@ const Order = () => {
               alt={foodData.foodName}
             />
             <div className="flex flex-col m-2  w-96">
+              <div className="flex">
               <p>{foodData.foodName}</p>
+              <div className="flex  ml-2">
+              <FontAwesomeIcon className="mt-1 text-sm" icon={faXmark}/>
+              <p>{item.quantity}</p>
+              </div>
+              </div>
               <p className="text-gray-400">{foodData.category}</p>
             </div>
           </div>
@@ -84,7 +91,7 @@ const Order = () => {
                   </div>
                 </div>
                 <button
-                  className="w-20 p-2 text-white self-center cursor-pointer rounded-md bg-red-500 mt-4 mb-4"
+                  className="w-20 p-1 text-white self-center cursor-pointer rounded-md bg-red-500 mt-4 mb-4"
                   onClick={() => cancelOrderHandler(order.orderId)}
                 >
                   Cancel
@@ -133,7 +140,7 @@ const Order = () => {
                     <p className="ml-1">1500</p>
                   </div>
                 </div>
-                <button className="w-20 p-2 text-white self-center cursor-pointer rounded-md bg-red-500 mt-4 mb-4">
+                <button className="w-20 p-1 text-white self-center cursor-pointer rounded-md bg-red-500 mt-4 mb-4">
                   Cancel
                 </button>
               </div>

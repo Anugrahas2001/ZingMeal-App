@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PREPARING } from "../constants/constants";
 
 
-const orderData =
-  localStorage.getItem("orderItems") != 0
-    ? JSON.parse(localStorage.getItem("orderItems"))
-    : [];
+const orderData = localStorage.getItem("orderItems")!=0
+  ? JSON.parse(localStorage.getItem("orderItems"))
+  : [];
 
-const orderSlicer = createSlice({
+const orderSlice = createSlice({
   name: "order",
   initialState: orderData,
   reducers: {
@@ -15,27 +15,20 @@ const orderSlicer = createSlice({
         orderId: Math.floor(Math.random() * (200 - 10 + 1)) + 10,
         order: action.payload.order,
         totalPrice: action.payload.price,
-        status: "Pending",
+        status: PREPARING,
       });
 
       localStorage.setItem("orderItems", JSON.stringify(state));
     },
     cancelOrder: (state, action) => {
-      const index = state.findIndex((item) => item.id == action.payload.id);
-      state.splice(index, 1);
-      localStorage.setItem("orderItems", state);
+      const index = state.findIndex(
+        (item) => item.orderId === action.payload.id)
+        state.splice(index, 1);
+        localStorage.setItem("orderItems", JSON.stringify(state));
+      
     },
   },
 });
 
-export const { addOrder, cancelOrder } = orderSlicer.actions;
-export default orderSlicer.reducer;
-
-// [
-// {
-//         id:16728
-//         order:[ids],---->cartSlice(quantity),
-//         status
-//         totalPrice:"price",
-//     }
-// ]
+export const { addOrder, cancelOrder } = orderSlice.actions;
+export default orderSlice.reducer;

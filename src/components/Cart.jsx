@@ -210,6 +210,7 @@ const Cart = () => {
                 </div>
               </div>
 
+              <div className="flex flex-col">
               <div className="text-lg h-6 m-5 mt-2 font-semibold flex justify-between border-dashed border-gray-400 border-t-2">
                 <p>Total Amount</p>
                 <div className="flex">
@@ -217,6 +218,8 @@ const Cart = () => {
                     {ItemsPrice - random}
                   </p>
                 </div>
+              </div>
+              <p className="text-sm ml-6 text-red-500">Cash On Delivery</p>
               </div>
 
               <div className="text-lg h-6 m-5 mt-2 flex justify-between border-dashed border-gray-400 border-t-2">
