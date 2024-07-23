@@ -10,6 +10,7 @@ import { cancelOrder } from "../slices/orderSlice";
 
 const Order = () => {
   const orders = useSelector((store) => store.order);
+  console.log(orders,"from order page")
   const dispatch = useDispatch();
 
   const notify = () => {
@@ -35,6 +36,9 @@ const Order = () => {
 
     return order.map((item) => {
       const foodData = foodItems.find((foodItem) => foodItem.id === item.id);
+      if (!foodData) {
+        return null;
+      }
       return (
         <div key={item.id} className="mt-1 ">
           <div className="flex">
@@ -67,7 +71,7 @@ const Order = () => {
           {orders.map((order) => (
             <div
               key={order.orderId}
-              className="w-2/3 h-auto m-2 flex shadow-2xl mb-4"
+              className="w-2/3 h-auto m-2 flex shadow mb-4"
             >
               <div className="w-64 ml-4">
                 <p>OrderID: {order.orderId}</p>
@@ -104,7 +108,7 @@ const Order = () => {
         <div className="h-auto mt-10">
           <h1 className="font-semibold text-2xl ml-2">Past orders</h1>
           <div className="w-full ">
-            <div className="w-2/3 h-auto m-2 flex shadow-2xl">
+            <div className="w-2/3 h-auto m-2 flex shadow">
               <div className="w-64 ml-4">
                 <p className="">OrderID:CHE#46271</p>
                 <div className="">

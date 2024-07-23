@@ -13,7 +13,7 @@ const orderSlice = createSlice({
     addOrder: (state, action) => {
       state.push({
         orderId: Math.floor(Math.random() * (200 - 10 + 1)) + 10,
-        order: action.payload.order,
+        order: action.payload.cart,
         totalPrice: action.payload.price,
         status: PREPARING,
       });
@@ -32,3 +32,19 @@ const orderSlice = createSlice({
 
 export const { addOrder, cancelOrder } = orderSlice.actions;
 export default orderSlice.reducer;
+
+
+
+// [
+//  {
+//   id:--,
+//   order:[{id,quantity},{id,quantity}],
+//   status:" ",
+//   totalPrice:--
+//  },{
+//   id:--,
+//   order:[{id,quantity},{id,quantity}],
+//   status:" ",
+//   totalPrice:--
+//  }
+// ]

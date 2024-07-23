@@ -7,11 +7,11 @@ import {
   faIndianRupeeSign,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { updateCart } from "../slices/cartSlice";
+import { updateCart,clearCart } from "../slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
 import Header from "./common/Header";
-import { addOrder } from "../slices/orderSlice";
+import { addOrder} from "../slices/orderSlice";
 // import {
 //   UPDATE_CART_DECREMENT,
 //   UPDATE_CART_INCREMENT,
@@ -29,6 +29,7 @@ const Cart = () => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const [empty,setEmpty]=useState(cartItems);
   let ItemsPrice = 0;
 
   var min = 50;
@@ -51,14 +52,15 @@ const Cart = () => {
     };
   };
 
-  const oderHandler = (totalPrice) => {
-    dispatch(addOrder({ order: cartItems, price: totalPrice }));
+  const cartHandler = (totalPrice) => {
+    dispatch(addOrder({ cart: cartItems, price: totalPrice }));
     setBtn(!btn);
     setBtnState((prevState) =>
       prevState === "Place Order" ? "Order Placed" : "Place Order"
     );
 
     setTimeout(() => {
+      dispatch(clearCart());
       navigate("/order", { state: { idArray } });
     }, 5000);
   };
@@ -159,6 +161,8 @@ const Cart = () => {
               </div>
               {cartItems.map((item) => {
                 const foodItem = foodItems.find((food) => food.id == item.id);
+                console.log(foodItem,"items of food")
+                if(!foodItem) return null;
                 return (
                   <div className="text-lg h-5 m-5 mt-2 flex justify-between ">
                     <div className="flex">
@@ -231,7 +235,7 @@ const Cart = () => {
               <div
                 className="text-lg h-14 rounded-sm m-5 mt-2 flex justify-between bg-blue-600 cursor-pointer"
                 onClick={() => {
-                  oderHandler(ItemsPrice + random);
+                  cartHandler(ItemsPrice + random);
                 }}
               >
                 {console.log(ItemsPrice - random, "cart")}

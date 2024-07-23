@@ -29,10 +29,13 @@ const cartSlicer = createSlice({
       }
       localStorage.setItem("cartItems", JSON.stringify(state));
     },
+    clearCart:(state)=>{
+      localStorage.setItem("cartItems", JSON.stringify([]));
+    }
   },
 });
 
-export const { addToCart, updateCart, getTotalQuantity } = cartSlicer.actions;
+export const { addToCart, updateCart, clearCart } = cartSlicer.actions;
 
 export const selectTotalQuantity = (state) => {
   return state.cart.reduce((total, item) => total + item.quantity, 0);
