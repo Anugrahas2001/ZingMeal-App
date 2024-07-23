@@ -5,7 +5,7 @@ const orderSlicer=createSlice({
     initialState:[],
     reducers:{
         addOrder:(state,action) => {
-            state.push({orderId: action.payload.order , totalPrice: action.payload.price});
+            state.push({orderId: action.payload.order , totalPrice: action.payload.price,status:"Pending"});
         }
     }
 })
