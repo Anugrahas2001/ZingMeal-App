@@ -61,8 +61,6 @@ const FoodRecepies = () => {
         );
     })
     
-
-    
   return (
     <div>
       <Header/>

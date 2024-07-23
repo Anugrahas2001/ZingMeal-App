@@ -1,1 +1,3 @@
-export const baseURL="www.themealdb.com/api/json/v1/1";
+export const UPDATE_CART_DECREMENT=-1
+export const UPDATE_CART_INCREMENT=1
+export const UPDATE_CART_REMOVE=0

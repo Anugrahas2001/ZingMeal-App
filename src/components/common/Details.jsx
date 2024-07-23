@@ -1,17 +1,17 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar,faIndianRupeeSign} from '@fortawesome/free-solid-svg-icons'
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 
 const Details = (props) => {
   return (
-  <div className='m-4'>
+    <div className="m-4">
       <div className=" flex mt-20 flex-row">
-        <div className='flex justify-between w-64 h-5'>
-        <div className="ml-5 text-lg ">{props.hotelData.name}</div>
-        <div className="flex justify-between ml-4 bg-green-500 ">
-          <p className="text-sm">{props.hotelData.ratings}</p>
-          <FontAwesomeIcon icon={faStar} />
-        </div>
+        <div className="flex justify-between w-64 h-5">
+          <div className="ml-5 text-lg ">{props.hotelData.name}</div>
+          <div className="flex justify-between ml-4 bg-green-500 ">
+            <p className="text-sm">{props.hotelData.ratings}</p>
+            <FontAwesomeIcon icon={faStar} />
+          </div>
         </div>
       </div>
       <div className="flex justify-between w-64 ml-5 mt-4">
@@ -29,8 +29,8 @@ const Details = (props) => {
         </p>
         <p className="">27 min</p>
       </div>
-      </div>
+    </div>
   );
-}
+};
 
-export default Details
+export default Details;

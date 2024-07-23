@@ -1,7 +1,7 @@
-import React from 'react'
-import hotelData from '../json/hotel.json'
-import Details from './common/Details';
-import { Link } from 'react-router-dom';
+import React from "react";
+import hotelData from "../json/hotel.json";
+import Details from "./common/Details";
+import { Link } from "react-router-dom";
 
 const Hotels = () => {
   const hotelDetails = hotelData.map((hotel) => {
@@ -37,4 +37,4 @@ const Hotels = () => {
   );
 };
 
-export default Hotels
+export default Hotels;

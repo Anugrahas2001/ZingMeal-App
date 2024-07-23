@@ -14,7 +14,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-content">
-        <h3 className="text-lg font-medium" >GROUP COMPANIES</h3>
+        <h3 className="text-lg font-medium">GROUP COMPANIES</h3>
         <ul className="grid grid-rows-4 gap-4 mt-4">
           <li>Zomato</li>
           <li>Swiggy</li>
