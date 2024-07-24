@@ -3,9 +3,9 @@ import React from "react";
 import TabOptions from "./TabOptions";
 import Footer from "./common/Footer";
 import Hotels from "./Dashboard";
-import Search from "./common/Search";
+import Search from "./Search";
 
-const HomePage = () => {
+const UseHomePage = () => {
   return (
     <div>
       <Search/>
@@ -16,4 +16,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default UseHomePage;

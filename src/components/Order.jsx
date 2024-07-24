@@ -6,7 +6,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { cancelOrder } from "../slices/orderSlice";
-import Search from "./common/Search";
+import Search from "./Search";
 
 const Order = () => {
   const orders = useSelector((store) => store.order);

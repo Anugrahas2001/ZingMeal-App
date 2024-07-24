@@ -11,7 +11,7 @@ import { updateCart,clearCart } from "../slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
 import { addOrder} from "../slices/orderSlice";
-import Search from "./common/Search";
+import Search from "./Search";
 // import {
 //   UPDATE_CART_DECREMENT,
 //   UPDATE_CART_INCREMENT,

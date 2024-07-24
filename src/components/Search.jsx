@@ -1,7 +1,7 @@
 import React, {useEffect,useRef,useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import Header from "./Header";
+import Header from "./common/Header";
 
 const Search = () => {
   const inputRef = useRef(null);
