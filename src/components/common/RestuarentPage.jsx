@@ -1,9 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faIndianRupeeSign, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faIndianRupeeSign, faStar ,faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import hotelData from '../../json/hotel.json'
-import foodItems from '../../json/FoodItems.json'
+import hotelData from "../../json/hotel.json";
+import foodItems from "../../json/FoodItems.json";
 import { addToCart } from "../../slices/cartSlice";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast, Bounce } from "react-toastify";
@@ -46,6 +46,12 @@ const RestuarentPage = () => {
                 src={item.hotel_backdrop}
                 alt={item.name}
               />
+              <div className="flex relative bottom-10 left-3/4 ml-28 ">
+              <div className="bg-white flex p-1 rounded-sm cursor-pointer">
+              <FontAwesomeIcon className="mt-1" icon={faPenToSquare} />
+              <button className="ml-1">Edit Info</button>
+              </div>
+              </div>
             </div>
 
             <div className="flex w-96 justify-between h-8 items-center rounded-lg">
@@ -66,10 +72,13 @@ const RestuarentPage = () => {
               </div>
             </div>
           </div>
-          <div className="flex mt-4 w-1/3 bg-red-500">
-          <p className="ml-36  text-3xl">Menu Items</p>
-          <button>Add Menu</button>
+          <div className="flex w-3/4 justify-between ml-8 mt-4">
+            <p className="ml-36  text-3xl">Menu Items</p>
+            <div className="bg-gray-600 font-semibold text-white h-9 w-24 rounded-md">
+              <button className="p-2">Add Menu</button>
+            </div>
           </div>
+          <div className="mt-14">
           {foodItems
             .filter((food) => {
               return food.category === item.category;
@@ -77,26 +86,28 @@ const RestuarentPage = () => {
             .map((dish) => {
               return (
                 <div className="ml-36 mt-4" key={dish.id}>
-                  <div className="flex">
+                  <div className="flex w-3/4 justify-between">
                     {/* <Link to={`/food/${dish.id}`}> */}
-                    <img
-                      className="w-48 h-36 rounded-lg"
-                      src={dish.foodImage}
-                      alt={dish.foodName}
-                    />
-                    {/* </Link> */}
-                    <div className="flex flex-col ml-3 w-1/3">
-                      <div className="text-lg">{dish.foodName}</div>
-                      <div className="text-lg">{dish.category}</div>
-                      <div className="text-sm">
-                        {<FontAwesomeIcon icon={faIndianRupeeSign} />}
-                        {dish.price} per one
+                    <div className="flex">
+                      <img
+                        className="w-48 h-36 rounded-lg"
+                        src={dish.foodImage}
+                        alt={dish.foodName}
+                      />
+                      {/* </Link> */}
+                      <div className="flex flex-col ml-3 ">
+                        <div className="text-lg">{dish.foodName}</div>
+                        <div className="text-lg">{dish.category}</div>
+                        <div className="text-sm">
+                          {<FontAwesomeIcon icon={faIndianRupeeSign} />}
+                          {dish.price} per one
+                        </div>
+                        <div className="text-sm">{dish.description}</div>
                       </div>
-                      <div className="text-sm">{dish.description}</div>
                     </div>
                     <div>
                       <button
-                        className="bg-green-600 font-semibold h-8 w-24 ml-1 rounded-md"
+                        className="bg-green-600 font-semibold h-8 w-24 ml-3 rounded-md"
                         onClick={() => {
                           addToCartFunction(dish.id);
                         }}
@@ -108,6 +119,7 @@ const RestuarentPage = () => {
                 </div>
               );
             })}
+            </div>
         </div>
       );
     });
