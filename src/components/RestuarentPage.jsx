@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "./common/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndianRupeeSign, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
@@ -9,7 +8,8 @@ import { addToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import Search from "./common/Search";
 
 const RestuarentPage = () => {
   const { id } = useParams();
@@ -77,13 +77,13 @@ const RestuarentPage = () => {
               return (
                 <div className="ml-36 mt-4" key={dish.id}>
                   <div className="flex">
-                    <Link to={`/food/${dish.id}`}>
+                    {/* <Link to={`/food/${dish.id}`}> */}
                       <img
-                        className="w-48 h-36 rounded-lg  cursor-pointer"
+                        className="w-48 h-36 rounded-lg"
                         src={dish.foodImage}
                         alt={dish.foodName}
                       />
-                    </Link>
+                    {/* </Link> */}
                     <div className="flex flex-col ml-3 w-1/3">
                       <div className="text-lg">{dish.foodName}</div>
                       <div className="text-lg">{dish.category}</div>
@@ -113,7 +113,7 @@ const RestuarentPage = () => {
 
   return (
     <div className="">
-      <Header />
+      <Search/>
       {hotelDetails}
       <ToastContainer />
     </div>

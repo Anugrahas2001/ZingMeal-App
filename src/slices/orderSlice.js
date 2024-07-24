@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PREPARING } from "../constants/constants";
 
-
-const orderData = localStorage.getItem("orderItems")!=0
-  ? JSON.parse(localStorage.getItem("orderItems"))
-  : [];
+const orderData =
+  localStorage.getItem("orderItems") != 0
+    ? JSON.parse(localStorage.getItem("orderItems"))
+    : [];
 
 const orderSlice = createSlice({
   name: "order",
@@ -22,18 +22,16 @@ const orderSlice = createSlice({
     },
     cancelOrder: (state, action) => {
       const index = state.findIndex(
-        (item) => item.orderId === action.payload.id)
-        state.splice(index, 1);
-        localStorage.setItem("orderItems", JSON.stringify(state));
-      
+        (item) => item.orderId === action.payload.id
+      );
+      state.splice(index, 1);
+      localStorage.setItem("orderItems", JSON.stringify(state));
     },
   },
 });
 
 export const { addOrder, cancelOrder } = orderSlice.actions;
 export default orderSlice.reducer;
-
-
 
 // [
 //  {

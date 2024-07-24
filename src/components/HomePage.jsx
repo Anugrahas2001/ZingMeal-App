@@ -1,13 +1,14 @@
 import React from "react";
-import Header from "./common/Header";
+// import Header from "./common/Header";
 import TabOptions from "./TabOptions";
 import Footer from "./common/Footer";
 import Hotels from "./Dashboard";
+import Search from "./common/Search";
 
 const HomePage = () => {
   return (
     <div>
-      <Header />
+      <Search/>
       <TabOptions />
       <Hotels />
       <Footer />

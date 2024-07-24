@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndianRupeeSign, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "./common/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { cancelOrder } from "../slices/orderSlice";
+import Search from "./common/Search";
 
 const Order = () => {
   const orders = useSelector((store) => store.order);
@@ -65,7 +65,7 @@ const Order = () => {
 
   return (
     <div>
-      <Header />
+      <Search/>
       <div className="w-full ml-44 h-auto">
         <div className="w-full mt-2">
           {orders.map((order) => (
