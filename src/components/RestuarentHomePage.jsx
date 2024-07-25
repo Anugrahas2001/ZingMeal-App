@@ -4,33 +4,62 @@ import {
   faIndianRupeeSign,
   faStar,
   faPenToSquare,
+  faTrash
 } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./common/Header";
 import { Link } from "react-router-dom";
 
 const RestuarentPage = () => {
-  const dispatch = useDispatch();
-
-  const notify = () => {
-    toast.success("Item added successfully!", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
+  const selector=useSelector((store)=>store.menu);
+  console.log(selector,"the selector")
 
   const restuarentEditHandler=()=>{
-    
   }
+
+  const menuData=selector.map((item)=>{
+    return(
+      <div className="mt-14">
+          <div className="ml-36 mt-4">
+            <div className="flex w-3/4 justify-between">
+              <div className="flex">
+                <img
+                  className="w-48 h-36 rounded-lg"
+                  src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmlyeWFuaXxlbnwwfHwwfHx8MA%3D%3D"
+                  alt="Chicken Biriyani"
+                />
+
+                <div className="flex flex-col ml-3 ">
+                  <div className="text-lg">{item.name}</div>
+                  <div className="text-lg">{item.category}</div>
+                  <div className="text-sm">
+                    {<FontAwesomeIcon icon={faIndianRupeeSign} />}
+                    {item.price} per one
+                  </div>
+                  <div className="text-sm">{item.description}</div>
+                  <div className="flex mt-1">
+                    <FontAwesomeIcon icon={faPenToSquare}/>
+                  <FontAwesomeIcon className="ml-1" icon={faTrash} />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button
+                  className="bg-green-600 font-semibold h-8 w-24 ml-3 rounded-md"
+                  // onClick={() => {
+                  //   addToCartFunction(dish.id);
+                  // }}
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    )
+  })
 
   return (
     <div className="">
@@ -44,10 +73,12 @@ const RestuarentPage = () => {
               alt="Nmr Hotel"
             />
             <div className="flex relative bottom-10 left-3/4 ml-28 ">
-              <div className="bg-white flex p-1 rounded-sm cursor-pointer" onClick={restuarentEditHandler}>
+             <Link to='/edit'>
+             <div className="bg-white flex p-1 rounded-sm cursor-pointer" onClick={restuarentEditHandler}>
                 <FontAwesomeIcon className="mt-1" icon={faPenToSquare} />
                 <button className="ml-1">Edit Info</button>
               </div>
+             </Link>
             </div>
           </div>
 
@@ -75,7 +106,8 @@ const RestuarentPage = () => {
           </div>
           </Link>
         </div>
-        <div className="mt-14">
+        <div className="mt-4">
+          {menuData}
           <div className="ml-36 mt-4">
             <div className="flex w-3/4 justify-between">
               <div className="flex">

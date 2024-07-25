@@ -9,6 +9,7 @@ import Order from './components/Order'
 import FoodRecepies from './components/FoodRecepies'
 import RestuarentHomePage from './components/RestuarentHomePage'
 import FoodMenu from './components/FoodMenu'
+import EditFoodMenu from './components/EditFoodMenu'
 
 
 
@@ -20,6 +21,7 @@ function App() {
       <Routes>
          <Route path='/' element={<RestuarentHomePage/>}/>
          <Route path='/add' element={<FoodMenu/>}/>
+         <Route path='/edit' element={<EditFoodMenu/>}/>
         <Route path='/user' element={<UseHomePage/>} />
         <Route path="/restuarent/:id" element={<UserRestuarent/>} />
         <Route path="/food/:id" element={<FoodRecepies/>}/>
