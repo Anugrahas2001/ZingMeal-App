@@ -1,24 +1,8 @@
 import React from "react";
 
 const EditFoodMenu = () => {
-  // const notify = () => {
-  //     toast.success("New item added successfully!", {
-  //       position: "top-right",
-  //       autoClose: 2000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "light",
-  //       transition: Bounce,
-  //     });
-  //   };
-
   const handleSubmitMenu = (e) => {
     e.preventDefault();
-    // notify();
-    // dispatch(addMenu(foodMenu));
   };
 
   return (
@@ -76,7 +60,6 @@ const EditFoodMenu = () => {
             <option value="Veg">Select</option>
           </select>
         </div>
-
 
         <div className="flex flex-col mt-4">
           <label
