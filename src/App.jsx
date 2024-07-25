@@ -8,6 +8,7 @@ import store from './slices/store'
 import Order from './components/Order'
 import FoodRecepies from './components/FoodRecepies'
 import RestuarentHomePage from './components/RestuarentHomePage'
+import FoodMenu from './components/FoodMenu'
 
 
 
@@ -18,11 +19,12 @@ function App() {
       <Router>
       <Routes>
          <Route path='/' element={<RestuarentHomePage/>}/>
-        {/* <Route path='/' element={<UseHomePage/>} />
+         <Route path='/add' element={<FoodMenu/>}/>
+        <Route path='/user' element={<UseHomePage/>} />
         <Route path="/restuarent/:id" element={<UserRestuarent/>} />
         <Route path="/food/:id" element={<FoodRecepies/>}/>
         <Route path="/cart" element={<Cart/>} />
-        <Route path="/order" element={<Order/>} /> */}
+        <Route path="/order" element={<Order/>} />
        
       </Routes>
     </Router>

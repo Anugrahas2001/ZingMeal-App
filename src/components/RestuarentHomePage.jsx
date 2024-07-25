@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./common/Header";
+import { Link } from "react-router-dom";
 
 const RestuarentPage = () => {
   const dispatch = useDispatch();
@@ -68,9 +69,11 @@ const RestuarentPage = () => {
         </div>
         <div className="flex w-3/4 justify-between ml-8 mt-4">
           <p className="ml-36  text-3xl">Menu Items</p>
+          <Link to="/add">
           <div className="bg-gray-600 font-semibold text-white h-9 w-24 rounded-md">
             <button className="p-2">Add Menu</button>
           </div>
+          </Link>
         </div>
         <div className="mt-14">
           <div className="ml-36 mt-4">

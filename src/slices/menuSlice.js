@@ -6,14 +6,15 @@ const menuSlicer = createSlice({
   reducers: {
     addMenu: (state, action) => {
       state.push({
-        name: action.payload.name,
-        category: action.payload.category,
-        type: action.payload.type,
-        price:action.payload.price,
-        description:action.payload.description,
-        ratings:1,
-        image:action.payload.image
+        name: action.payload.foodName,         
+        category: action.payload.foodCategory, 
+        type: action.payload.isVeg ? "Veg" : "Non-Veg", 
+        price: action.payload.price,
+        description: action.payload.description,
+        ratings: 1,
+        image: action.payload.imageFile
       });
+      localStorage.setItem("menuItem",JSON.stringify(state))
     },
   },
 });
