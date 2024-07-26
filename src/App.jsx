@@ -10,6 +10,7 @@ import FoodRecepies from './components/FoodRecepies'
 import RestuarentHomePage from './components/RestuarentHomePage'
 import FoodMenu from './components/FoodMenu'
 import EditFoodMenu from './components/EditFoodMenu'
+import Login from './components/Login'
 
 
 
@@ -20,6 +21,7 @@ function App() {
       <Router>
       <Routes>
          <Route path='/' element={<RestuarentHomePage/>}/>
+         <Route path='/login' element={<Login/>}/>
          <Route path='/add' element={<FoodMenu/>}/>
          <Route path='/edit' element={<EditFoodMenu/>}/>
         <Route path='/user' element={<UseHomePage/>} />

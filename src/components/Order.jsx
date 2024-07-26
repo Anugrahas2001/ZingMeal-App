@@ -77,8 +77,13 @@ const Order = () => {
                 <div>{renderOrderItems(order.order)}</div>
               </div>
               <div>
-                <div className=" flex justify-center flex-col">
-                  <p className="ml-10 mt-3">{order.status}</p>
+                <div className="flex justify-center flex-col">
+                  <select className="ml-10 mt-2 outline-none">
+                    <option value="Preparing">Preparing</option>
+                    <option value="Packed">Packed</option>
+                    <option value="Dispatched">Dispatched</option>
+                    <option value="Delivered">Delivered</option>
+                  </select>
                   <p className="text-sm">Your item has been preparing</p>
                 </div>
               </div>
