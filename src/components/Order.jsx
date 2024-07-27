@@ -78,6 +78,7 @@ const Order = () => {
               </div>
               <div>
                 <div className="flex justify-center flex-col">
+                  {/* <p className="ml-10 mt-3">{order.status}</p> */}
                   <select className="ml-10 mt-2 outline-none">
                     <option value="Preparing">Preparing</option>
                     <option value="Packed">Packed</option>
