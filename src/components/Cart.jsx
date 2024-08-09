@@ -152,7 +152,7 @@ const Cart = () => {
     <div className="w-full overflow-x-hidden">
       <Search/>
       <div className=" w-full">
-        <div className="flex flex-wrap" key={data.id}>
+        <div className="flex flex-wrap ml-5" key={data.id}>
           {data}
           <div className="w-96 h-auto shadow-lg ml-3 absolute right-5">
             <div className="m-5">

@@ -48,9 +48,9 @@ const RestuarentPage = () => {
               </div>
             </div>
           </div>
-          <button className="bg-green-600 font-semibold h-8 w-24 ml-3 rounded-md">
+          {/* <button className="bg-green-600 font-semibold h-8 w-24 ml-3 rounded-md">
             Add
-          </button>
+          </button> */}
         </div>
       </div>
     );
@@ -130,9 +130,9 @@ const RestuarentPage = () => {
                 </div>
               </div>
             </div>
-            <button className="bg-green-600 font-semibold h-8 w-24 ml-3 rounded-md">
+            {/* <button className="bg-green-600 font-semibold h-8 w-24 ml-3 rounded-md">
               Add
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

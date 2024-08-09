@@ -7,13 +7,13 @@ const Hotels = () => {
   const hotelDetails = hotelData.map((hotel) => {
     return (
       <div
-        className="flex flex-col w-80 rounded-md shadow-2xl ml-1"
+        className="flex flex-col w-1/4 rounded-md shadow ml-14 mt-7"
         key={hotel.id}
       >
         <Link to={`/restuarent/${hotel.id}`}>
-          <div className="w-80 h-36 rounded-md">
+          <div className="w-80 h-28 rounded-md ">
             <img
-              className="w-full object-cover rounded-md p-2"
+              className="w-full object-cover rounded-md p-3 ml-1"
               src={hotel.hotel_backdrop}
               alt={hotel.name}
             />
@@ -25,7 +25,7 @@ const Hotels = () => {
   });
 
   return (
-    <div className="w-full m-4">
+    <div className="w-full ml-16 mr-16">
       <p className="text-3xl mt-2 w-full">Explore the food life!</p>
       <div
         className="flex flex-wrap w-full cursor-pointer p-3"

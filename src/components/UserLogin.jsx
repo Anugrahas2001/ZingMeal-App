@@ -1,7 +1,7 @@
-import { text } from "@fortawesome/fontawesome-svg-core";
+
 import React, { useState } from "react";
 
-const Login = () => {
+const UserLogin = () => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -93,4 +93,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default UserLogin;

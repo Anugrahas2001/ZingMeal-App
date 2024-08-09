@@ -50,12 +50,12 @@ const RestuarentPage = () => {
               src={item.hotel_backdrop}
               alt={item.name}
             />
-            <div className="flex relative bottom-10 left-3/4">
+            {/* <div className="flex relative bottom-10 left-3/4">
               <div className="bg-white flex p-1 rounded-sm cursor-pointer">
                 <FontAwesomeIcon className="mt-1" icon={faPenToSquare} />
                 <button className="ml-1">Edit Info</button>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex w-full justify-between h-8 items-center rounded-lg">
@@ -80,9 +80,9 @@ const RestuarentPage = () => {
           {/* </div> */}
           <div className="flex w-full justify-between mt-4">
             <p className="text-3xl">Menu Items</p>
-            <div className="bg-gray-600 font-semibold text-white h-9 w-24 rounded-md">
+            {/* <div className="bg-gray-600 font-semibold text-white h-9 w-24 rounded-md">
               <button className="p-2">Add Menu</button>
-            </div>
+            </div> */}
           </div>
           <div className="mt-14">
             {foodItems

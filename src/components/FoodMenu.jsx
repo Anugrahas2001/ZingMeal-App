@@ -4,7 +4,6 @@ import { addMenu } from "../slices/menuSlice";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const FoodMenu = () => {
   const dispatch = useDispatch();
   const [foodMenu, setFoodMenu] = useState({
@@ -14,10 +13,10 @@ const FoodMenu = () => {
     isNonVeg: false,
     price: "",
     description: "",
-    // imageFile: null,
+    imageFile: null,
   });
 
-   const notify = () => {
+  const notify = () => {
     toast.success("New item added successfully!", {
       position: "top-right",
       autoClose: 2000,
@@ -35,14 +34,19 @@ const FoodMenu = () => {
     e.preventDefault();
     notify();
     dispatch(addMenu(foodMenu));
-    
   };
 
   return (
     <div className="flex justify-center items-center ">
-      <form onSubmit={handleSubmitMenu} className="bg-white p-7 rounded-md shadow-md w-full max-w-2xl">
+      <form
+        onSubmit={handleSubmitMenu}
+        className="bg-white p-7 rounded-md shadow-md w-full max-w-2xl"
+      >
         <div className="flex flex-col mt-4">
-          <label htmlFor="foodName" className="bg-gray-300 p-2  flex justify-center items-center">
+          <label
+            htmlFor="foodName"
+            className="bg-gray-300 p-2  flex justify-center items-center"
+          >
             Item Name
           </label>
           <input
@@ -59,7 +63,10 @@ const FoodMenu = () => {
         </div>
 
         <div className="flex flex-col mt-4">
-          <label htmlFor="foodCategory" className="bg-gray-300 p-2 w-full flex justify-center items-center">
+          <label
+            htmlFor="foodCategory"
+            className="bg-gray-300 p-2 w-full flex justify-center items-center"
+          >
             Item Category
           </label>
           <input
@@ -76,7 +83,10 @@ const FoodMenu = () => {
         </div>
 
         <div className="flex flex-col mt-4">
-          <label htmlFor="itemType" className="bg-gray-300 p-2 w-full flex justify-center items-center">
+          <label
+            htmlFor="itemType"
+            className="bg-gray-300 p-2 w-full flex justify-center items-center"
+          >
             Item Type
           </label>
           <select
@@ -95,7 +105,10 @@ const FoodMenu = () => {
         </div>
 
         <div className="flex flex-col mt-4">
-          <label htmlFor="price" className="bg-gray-300 p-2 w-full flex justify-center items-center">
+          <label
+            htmlFor="price"
+            className="bg-gray-300 p-2 w-full flex justify-center items-center"
+          >
             Price
           </label>
           <input
@@ -112,7 +125,10 @@ const FoodMenu = () => {
         </div>
 
         <div className="flex flex-col mt-4">
-          <label htmlFor="description" className="bg-gray-300 p-2 w-full flex justify-center items-center">
+          <label
+            htmlFor="description"
+            className="bg-gray-300 p-2 w-full flex justify-center items-center"
+          >
             Description
           </label>
           <textarea
@@ -127,8 +143,11 @@ const FoodMenu = () => {
           />
         </div>
 
-        {/* <div className="flex flex-col mt-4">
-          <label htmlFor="imageFile" className="bg-gray-300 p-2 w-full flex justify-center items-center">
+        <div className="flex flex-col mt-4">
+          <label
+            htmlFor="imageFile"
+            className="bg-gray-300 p-2 w-full flex justify-center items-center"
+          >
             Upload File
           </label>
           <input
@@ -139,15 +158,18 @@ const FoodMenu = () => {
               setFoodMenu({ ...foodMenu, imageFile: e.target.files[0] })
             }
           />
-        </div> */}
+        </div>
 
         <div className="flex justify-center items-center mt-4">
-          <button type="submit" className="w-24 p-2 rounded-md bg-green-500 text-white">
+          <button
+            type="submit"
+            className="w-24 p-2 rounded-md bg-green-500 text-white"
+          >
             Submit
           </button>
         </div>
       </form>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

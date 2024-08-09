@@ -5,7 +5,7 @@ import { faStar, faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 const Details = (props) => {
   return (
     <div className="m-4">
-      <div className=" flex mt-20 flex-row">
+      <div className=" flex mt-24 flex-row">
         <div className="flex justify-between w-64 h-5">
           <div className="ml-5 text-lg ">{props.hotelData.name}</div>
           <div className="flex justify-between ml-4 bg-green-500 ">

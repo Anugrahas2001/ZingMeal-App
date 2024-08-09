@@ -1,40 +1,36 @@
-
-import UseHomePage from './components/UserHomePage'
-import {BrowserRouter as Router,Route,Routes} from 'react-router-dom'
-import UserRestuarent from './components/UserRestuarent'
-import Cart from './components/Cart'
-import { Provider } from 'react-redux'
-import store from './slices/store'
-import Order from './components/Order'
-import FoodRecepies from './components/FoodRecepies'
-import RestuarentHomePage from './components/RestuarentHomePage'
-import FoodMenu from './components/FoodMenu'
-import EditFoodMenu from './components/EditFoodMenu'
-import Login from './components/Login'
-
-
+import UseHomePage from "./components/UserHomePage";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import UserRestuarent from "./components/UserRestuarent";
+import Cart from "./components/Cart";
+import { Provider } from "react-redux";
+import store from "./slices/store";
+import Order from "./components/Order";
+import FoodRecepies from "./components/FoodRecepies";
+import RestuarentHomePage from "./components/RestuarentHomePage";
+import FoodMenu from "./components/FoodMenu";
+import EditFoodMenu from "./components/EditFoodMenu";
+import UserLogin from "./components/UserLogin";
+import RestuarentLogin from "./components/RestuarentLogin";
 
 function App() {
   return (
-   
     <Provider store={store}>
       <Router>
-      <Routes>
-         <Route path='/' element={<RestuarentHomePage/>}/>
-         <Route path='/login' element={<Login/>}/>
-         <Route path='/add' element={<FoodMenu/>}/>
-         <Route path='/edit' element={<EditFoodMenu/>}/>
-        <Route path='/user' element={<UseHomePage/>} />
-        <Route path="/restuarent/:id" element={<UserRestuarent/>} />
-        <Route path="/food/:id" element={<FoodRecepies/>}/>
-        <Route path="/cart" element={<Cart/>} />
-        <Route path="/order" element={<Order/>} />
-       
-      </Routes>
-    </Router>
+        <Routes>
+          <Route path="/" element={<RestuarentHomePage />} />
+          <Route path="/login" element={<UserLogin />} />
+          <Route path="/restuarentlogin" element={<RestuarentLogin/>} />
+          <Route path="/add" element={<FoodMenu />} />
+          <Route path="/edit" element={<EditFoodMenu />} />
+          <Route path="/user" element={<UseHomePage />} />
+          <Route path="/restuarent/:id" element={<UserRestuarent />} />
+          <Route path="/food/:id" element={<FoodRecepies />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/order" element={<Order />} />
+        </Routes>
+      </Router>
     </Provider>
-   
-  )
+  );
 }
 
-export default App
+export default App;

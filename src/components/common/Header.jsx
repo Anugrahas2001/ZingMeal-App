@@ -1,13 +1,7 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectTotalQuantity } from "../../slices/cartSlice";
 
-const Header = ({ children }) => {
-  const count = useSelector(selectTotalQuantity);
-
+const Header = ({ children, cartLink }) => {
   return (
     <div className="flex items-center justify-between w-full h-[60px] m-4 ">
       <Link to="/">
@@ -20,22 +14,9 @@ const Header = ({ children }) => {
         </div>
       </Link>
       {children}
-
       <div className="flex m-2 w-40">
         <div className="w-16 flex justify-between">
-          <Link to="/cart">
-            <div className="flex">
-              <FontAwesomeIcon
-                className="margin-left w-9 mt-1"
-                icon={faShoppingCart}
-              />
-              <div className="flex relative bottom-3 right-4">
-                <p className="text-sm w-6 h-6 pl-2 rounded-full bg-red-500 text-white top-5 mb-4 flex items-center">
-                  {count}
-                </p>
-              </div>
-            </div>
-          </Link>
+          {cartLink}
           <Link to="/order">
             <p className="font-bold">Orders</p>
           </Link>

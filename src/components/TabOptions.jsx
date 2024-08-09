@@ -9,7 +9,7 @@ const TabOptions = () => {
         key={food.id}
       >
         <img
-          className="w-full object-cover rounded-full"
+          className="object-cover rounded-full w-44 h-44"
           src={food.foodImage}
           alt={food.category}
         />
@@ -19,7 +19,7 @@ const TabOptions = () => {
   });
 
   return (
-    <div className="overflow-x-hidden m-4">
+    <div className="overflow-x-hidden ml-16 mr-16">
       <p className="text-3xl mt-2">Eat what makes you happy</p>
       <div className="flex">{foodItemsToDisplay}</div>
     </div>
