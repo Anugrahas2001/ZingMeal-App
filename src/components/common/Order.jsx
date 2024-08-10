@@ -1,17 +1,18 @@
 import React from "react";
-import foodItems from "../json/FoodItems.json";
+import foodItems from "../../json/FoodItems.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndianRupeeSign, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { cancelOrder } from "../slices/orderSlice";
-import Search from "./Search";
+import { cancelOrder } from "../../slices/orderSlice";
 
-const Order = () => {
+const Order = (props) => {
   const orders = useSelector((store) => store.order);
   console.log(orders, "from order page");
   const dispatch = useDispatch();
+  const {children}=props;
+  console.log(children,"from order")
 
   const notify = () => {
     toast.error("Order Cancelled!", {
@@ -64,7 +65,7 @@ const Order = () => {
 
   return (
     <div className="w-full overflow-x-hidden">
-      <Search />
+      {children}
       <div className="ml-36 mr-36 h-auto">
         <div className="w-full mt-2">
           {orders.map((order) => (

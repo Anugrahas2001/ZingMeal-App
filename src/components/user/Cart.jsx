@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import foodItems from "../json/FoodItems.json";
+import foodItems from "../../json/FoodItems.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStar,
   faIndianRupeeSign,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { updateCart,clearCart } from "../slices/cartSlice";
+import { updateCart,clearCart } from "../../slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
-import { addOrder} from "../slices/orderSlice";
-import Search from "./Search";
+import { addOrder} from "../../slices/orderSlice";
+import Search from "../user/Search";
 // import {
 //   UPDATE_CART_DECREMENT,
 //   UPDATE_CART_INCREMENT,

@@ -1,6 +1,6 @@
 import React from "react";
-import hotelData from "../json/hotel.json";
-import Details from "./common/Details";
+import hotelData from "../../json/hotel.json";
+import Details from "../common/Details";
 import { Link } from "react-router-dom";
 
 const Hotels = () => {

@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "./common/Header";
+import Header from "../common/Header";
 import { Link } from "react-router-dom";
 
 const RestuarentPage = () => {
@@ -58,7 +58,7 @@ const RestuarentPage = () => {
 
   return (
     <div className="w-full overflow-x-hidden">
-      <Header />
+      <Header orderLink="/restaurantOrder" />
       <div className="ml-36 mr-36 ">
         <div className="max-w-full mt-8 rounded-md">
           <img

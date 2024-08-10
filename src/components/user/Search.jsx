@@ -4,9 +4,9 @@ import {
   faMagnifyingGlass,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
-import Header from "./common/Header";
+import Header from "../common/Header";
 import { useSelector } from "react-redux";
-import { selectTotalQuantity } from "../slices/cartSlice";
+import { selectTotalQuantity } from "../../slices/cartSlice";
 import { Link } from "react-router-dom";
 
 const Search = () => {
@@ -33,9 +33,10 @@ const Search = () => {
       </div>
     </Link>
   );
+
   return (
     <div>
-      <Header cartLink={cartLink}>
+      <Header cartLink={cartLink} orderLink="/userOrder">
         <div className="w-1/3 flexrounded-md text-gray-500 h-10  m-2 shadow rounded-md flex">
           <FontAwesomeIcon className="mt-3 ml-2" icon={faMagnifyingGlass} />
           <input

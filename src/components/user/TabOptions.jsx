@@ -1,5 +1,5 @@
 import React from "react";
-import foodItems from "../json/FoodItems.json";
+import foodItems from "../../json/FoodItems.json";
 
 const TabOptions = () => {
   const foodItemsToDisplay = foodItems.slice(0, 6).map((food) => {

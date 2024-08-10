@@ -1,6 +1,6 @@
 import React from "react";
 import Search from "./Search";
-import RestuarentPage from "./common/RestuarentPage";
+import RestuarentPage from "../common/RestuarentPage";
 
 const UserRestuarent = () => {
   return (
