@@ -7,7 +7,7 @@ const menuData =
 
 const menuSlicer = createSlice({
   name: "menu",
-  initialState: menuData,
+  initialState: [],
   reducers: {
     addMenu: (state, action) => {
       state.push({

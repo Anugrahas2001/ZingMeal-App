@@ -8,7 +8,7 @@ const orderData =
 
 const orderSlice = createSlice({
   name: "order",
-  initialState: orderData,
+  initialState: [],
   reducers: {
     addOrder: (state, action) => {
       state.push({

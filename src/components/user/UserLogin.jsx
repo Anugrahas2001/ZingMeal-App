@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "../../axios/axios";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../../slices/userSlice.js";
 
 const UserLogin = () => {
+  const userData = useSelector((store) => store.user);
+  // console.log(userData,"userrrrrr")
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -13,24 +21,149 @@ const UserLogin = () => {
   const [description, setDescription] = useState("New to ZingMeal?");
   const [changeText, setChangeText] = useState("Create an account");
 
-  const submitHandler = (e) => {
+  const notifySuccess = () => {
+    toast.success(`User ${title} successfully`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  const notifyFail = () => {
+    toast.error("Mandatory feilds required", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  const notifyInValidEmail = () => {
+    toast.error("Email already exist", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  const notifyInvalid = () => {
+    toast.error("Invalid Credentials", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  const notifyError = () => {
+    toast.error("An error occurred. Please try again.", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    navigate("/user");
+
+    if (!credentials.email || !credentials.password) {
+      notifyFail();
+      return;
+    }
+
+    try {
+      if (title === "Sign Up") {
+        console.log("Going to call Sign Up API");
+        const response = await axios.post("/user/signUp", {
+          email: credentials.email,
+          password: credentials.password,
+          confirmPassword: credentials.confirmPassword,
+        });
+        dispatch(
+          addUser({
+            id: response.data.user.id,
+            accessToken: response.data.accessToken,
+            refreshToken: response.data.refreshToken,
+          })
+        );
+        notifySuccess();
+      } else {
+        console.log("Going to call Login API");
+        const response = await axios.post("/user/login", {
+          email: credentials.email,
+          password: credentials.password,
+        });
+        console.log(response.data, "dataaa");
+        console.log(response.data.accessToken, "accesstoken");
+        if (response.data && response.data.accessToken) {
+          notifySuccess();
+          navigate("/user");
+        } else {
+          notifyInvalid();
+        }
+      }
+    } catch (error) {
+      if (
+        response.data &&
+        response.data.message === "User with this email is already present"
+      ) {
+        notifyInValidEmail();
+      } else {
+        console.log("API call failed", error);
+        notifyError();
+      }
+    }
+
+    setCredentials({
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
   };
 
   const changePage = () => {
     setTitle((prevState) => {
-      return prevState == "Sign Up" ? "Sign In" : "Sign Up";
+      return prevState === "Sign Up" ? "Sign In" : "Sign Up";
     });
 
     setDescription((prevState) => {
-      return prevState == "New to ZingMeal?"
+      return prevState === "New to ZingMeal?"
         ? "Already have an account?"
         : "New to ZingMeal?";
     });
 
     setChangeText((prevState) => {
-      return prevState == "Create an account" ? "Sign In" : "Create an account";
+      return prevState === "Create an account"
+        ? "Sign In"
+        : "Create an account";
     });
   };
 
@@ -42,7 +175,8 @@ const UserLogin = () => {
         </div>
         <div className="w-80 h-12 flex justify-center items-center p-1 rounded-sm border border-gray-300 mt-5">
           <input
-            type="text"
+            type="email"
+            required
             placeholder="Enter Email"
             className="outline-none p-1 w-80"
             value={credentials.email}
@@ -53,7 +187,8 @@ const UserLogin = () => {
         </div>
         <div className="w-80 h-12 mt-5 flex justify-center items-center p-1 rounded-sm border border-gray-300">
           <input
-            type="text"
+            type="password"
+            required
             placeholder="Enter Password"
             className="outline-none p-1 w-80"
             value={credentials.password}
@@ -65,8 +200,9 @@ const UserLogin = () => {
         {title === "Sign Up" && (
           <div className="w-80 h-12 mt-5 flex justify-center items-center p-1 rounded-sm border border-gray-300">
             <input
-              type="text"
+              type="password"
               placeholder="Enter Confirm Password"
+              required
               className="outline-none p-1 w-80"
               value={credentials.confirmPassword}
               onChange={(e) =>
@@ -93,6 +229,7 @@ const UserLogin = () => {
           <p className="text-lg text-red-500 cursor-pointer">{changeText}</p>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

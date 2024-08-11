@@ -1,7 +1,7 @@
+import { baseUrl } from "../constants/constants";
 import axios from "axios";
-import { baseURL } from "../../Constants/Constants";
-const instance=axios.get({
-    baseUrl:baseURL
-})
+const instance = axios.create({
+    baseURL: baseUrl,
+  });
 
-export default instance;
+  export default instance;

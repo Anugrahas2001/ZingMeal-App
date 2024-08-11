@@ -11,6 +11,7 @@ import RestuarentPage from "./components/restaurant/RestuarentHomePage";
 import UserOrder from "./components/user/UserOrder";
 import RestaurantOrder from "./components/restaurant/RestaurantOrder";
 import TabView from "./components/common/TabView";
+// import incerceptor from './components/common/interceptor'
 
 function App() {
   return (

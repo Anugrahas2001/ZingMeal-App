@@ -8,7 +8,7 @@ const items =
 
 const cartSlicer = createSlice({
   name: "cart",
-  initialState: items,
+  initialState: [],
   reducers: {
     addToCart: (state, action) => {
       const index = state.findIndex((item) => item.id === action.payload);

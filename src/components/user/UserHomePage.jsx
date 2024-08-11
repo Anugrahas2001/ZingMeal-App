@@ -1,5 +1,4 @@
 import React from "react";
-// import Header from "./common/Header";
 import TabOptions from "./TabOptions";
 import Footer from "../common/Footer";
 import Hotels from "./Dashboard";
