@@ -5,7 +5,7 @@ const userData = JSON.parse(localStorage.getItem("user")) || [];
 
 const userSlice = createSlice({
   name: "user",
-  initialState: userData,
+  initialState: [],
   reducers: {
     addUser: (state, action) => {
       const {id,accessToken,refreshToken}=action.payload;
@@ -13,8 +13,10 @@ const userSlice = createSlice({
         id
       });
 
-      localStorage.setItem("user", JSON.stringify(state));
-      Cookies.set("token", accessToken, { expiry: 1, secure: true });
+      localStorage.setItem("user", JSON.stringify(state)); 
+      Cookies.set("accessToken", accessToken, { expires: 1, secure: true });
+      Cookies.set("refreshToken", refreshToken, { expires: 7, secure: true });
+    
     },
     removeUser: () => {
       localStorage.removeItem("user");

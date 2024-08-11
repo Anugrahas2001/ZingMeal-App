@@ -4,14 +4,12 @@ const restuarentSlice = createSlice({
   name: "restuarent",
   initialState: [],
   reducers: {
-    addRestuarent: (state, action) => {
-      state.push({ resturent: action.payload, ratings: 1 });
+    addRestaurant: (state, action) => {
+      state.push({ restaurant: action.payload });
     },
-    editResturant: (state, action) => {
-      // we need id
-    },
+    editResturant: (state, action) => {},
   },
 });
 
-export const { addRestuarent, editResturant } = restuarentSlice.actions;
+export const { addRestaurant, editRestaurant } = restuarentSlice.actions;
 export default restuarentSlice.reducer;

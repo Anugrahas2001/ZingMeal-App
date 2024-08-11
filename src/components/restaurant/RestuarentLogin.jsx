@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const RestuarentLogin = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
-    name: "",
+    restaurantName: "",
     openingTime: "",
     closingTime: "",
     dayNight1: "AM",
@@ -17,6 +17,16 @@ const RestuarentLogin = () => {
   const [description, setDescription] = useState("New to ZingMeal");
   const [changeSection, setChangeSection] = useState("Create an account");
   console.log(title, "title");
+
+
+  // useEffect(()=>{
+  //   const response=axios.post("/restaurant/signUp",{
+  //     restaurantName:credentials,
+  //     restaurantAddress:credentials
+  //   })
+  // },[])
+
+
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -55,9 +65,9 @@ const RestuarentLogin = () => {
                 id="restaurantName"
                 className="outline-none p-1 w-2/3 ml-2"
                 placeholder="Enter Restaurant name"
-                value={credentials.name}
+                value={credentials.restaurantName}
                 onChange={(e) => {
-                  setCredentials({ ...credentials, name: e.target.value });
+                  setCredentials({ ...credentials, restaurantName: e.target.value });
                 }}
               />
             </div>
@@ -80,7 +90,26 @@ const RestuarentLogin = () => {
           </div>
 
           {title === "Sign Up" && (
-            <div>
+         
+
+          <div className="flex justify-center items-center flex-col">
+          <div>
+            <label htmlFor="restaurantName">Restaurant Name</label>
+            <div className="w-80 h-12 flex items-center p-1 rounded-sm border border-gray-300 mb-4">
+              <input
+                type="text"
+                id="restaurantName"
+                className="outline-none p-1 w-2/3 ml-2"
+                placeholder="Enter Restaurant name"
+                value={credentials.restaurantName}
+                onChange={(e) => {
+                  setCredentials({ ...credentials, restaurantName: e.target.value });
+                }}
+              />
+            </div>
+          
+
+
               <div className="w-80 h-12 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1">
                 <div className="flex items-center">
                   <label htmlFor="openingTime" className="mr-2">
@@ -164,6 +193,7 @@ const RestuarentLogin = () => {
                   }}
                 />
               </div>
+            </div>
             </div>
           )}
 
