@@ -1,36 +1,172 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "../../axios/axios";
+import { useDispatch } from "react-redux";
+import { addRestaurant } from "../../slices/restaurantSlice";
 
 const RestuarentLogin = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [credentials, setCredentials] = useState({
     restaurantName: "",
+    restaurantAddress: "",
     openingTime: "",
     closingTime: "",
     dayNight1: "AM",
     dayNight2: "PM",
     password: "",
-    restaurantImage: null,
+    restaurantImg: null,
+    restaurantStatus: "closed",
   });
 
   const [title, setTitle] = useState("Sign In");
   const [description, setDescription] = useState("New to ZingMeal");
   const [changeSection, setChangeSection] = useState("Create an account");
-  console.log(title, "title");
 
+  const notifySuccess = () => {
+    toast.success(`Restaurant ${title} successfully`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
 
-  // useEffect(()=>{
-  //   const response=axios.post("/restaurant/signUp",{
-  //     restaurantName:credentials,
-  //     restaurantAddress:credentials
-  //   })
-  // },[])
+  const notifyFail = () => {
+    toast.error("Mandatory feilds are required", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
 
+  const notifyInvalid = () => {
+    toast.error("Invalid Credentials", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
 
+  const notifyDuplicateName = () => {
+    toast.error("Restaurant with this name already exist", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
 
-  const submitHandler = (e) => {
+  const notifyError = () => {
+    toast.error("An error occurred. Please try again.", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    navigate("/restaurant");
+
+    if (!credentials.restaurantName || !credentials.password) {
+      notifyFail();
+    }
+
+    try {
+      let response;
+      if (title === "Sign Up") {
+        const formData = new FormData();
+
+        formData.append("restaurantName", credentials.restaurantName);
+        formData.append("restaurantAddress", credentials.restaurantAddress);
+        formData.append("openingTime", credentials.openingTime);
+        formData.append("closingTime", credentials.closingTime);
+        formData.append("dayNight1", credentials.dayNight1);
+        formData.append("dayNight2", credentials.dayNight2);
+        formData.append("restaurantPassword", credentials.password);
+        formData.append("restaurantImg", credentials.restaurantImg);
+        formData.append("restaurantStatus", credentials.restaurantStatus);
+
+        response = await axios.post("/restaurant/signUp", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log(response, "response from restuaurant sign up");
+      }
+
+      if (response.data && response.data.AccessToken) {
+        dispatch(
+          addRestaurant({
+            id: response.data.Data.id,
+            refreshToken: response.data.RefreshToken,
+            accessToken: response.data.AccessToken,
+          })
+        );
+        notifySuccess();
+      } else {
+        response = await axios.post("/restaurant/login", {
+          restaurantName: credentials.restaurantName,
+          restaurantPassword: credentials.password,
+        });
+
+        if (response.data && response.data.AccessToken) {
+          dispatch(
+            addRestaurant({
+              id: response.data.Data.id,
+              refreshToken: response.data.RefreshToken,
+              accessToken: response.data.AccessToken,
+            })
+          );
+          notifySuccess();
+          navigate("/restaurant");
+        } else {
+          notifyInvalid();
+        }
+      }
+    } catch (error) {
+   
+      if (
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === "Restaurant already exist"
+      ) {
+        console.log(error.response.data.message);
+        notifyDuplicateName();
+      } else {
+        notifyError();
+      }
+    }
   };
 
   const changePage = () => {
@@ -67,7 +203,10 @@ const RestuarentLogin = () => {
                 placeholder="Enter Restaurant name"
                 value={credentials.restaurantName}
                 onChange={(e) => {
-                  setCredentials({ ...credentials, restaurantName: e.target.value });
+                  setCredentials({
+                    ...credentials,
+                    restaurantName: e.target.value,
+                  });
                 }}
               />
             </div>
@@ -90,120 +229,141 @@ const RestuarentLogin = () => {
           </div>
 
           {title === "Sign Up" && (
-         
-
-          <div className="flex justify-center items-center flex-col">
-          <div>
-            <label htmlFor="restaurantName">Restaurant Name</label>
-            <div className="w-80 h-12 flex items-center p-1 rounded-sm border border-gray-300 mb-4">
-              <input
-                type="text"
-                id="restaurantName"
-                className="outline-none p-1 w-2/3 ml-2"
-                placeholder="Enter Restaurant name"
-                value={credentials.restaurantName}
-                onChange={(e) => {
-                  setCredentials({ ...credentials, restaurantName: e.target.value });
-                }}
-              />
-            </div>
-          
-
-
-              <div className="w-80 h-12 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1">
-                <div className="flex items-center">
-                  <label htmlFor="openingTime" className="mr-2">
-                    Opening Time:
-                  </label>
+            <div className="flex justify-center items-center flex-col">
+              <div>
+                <label htmlFor="restaurantAddress">Restaurant Address</label>
+                <div className="w-80 h-12 flex items-center p-1 rounded-sm border border-gray-300 mb-4">
                   <input
                     type="text"
-                    id="openingTime"
-                    className="outline-none p-1 w-20 shadow mr-2"
-                    value={credentials.openingTime}
+                    id="restaurantAddress"
+                    className="outline-none p-1 w-2/3 ml-2"
+                    placeholder="Enter Restaurant name"
+                    value={credentials.restaurantAddress}
                     onChange={(e) => {
                       setCredentials({
                         ...credentials,
-                        openingTime: e.target.value,
+                        restaurantAddress: e.target.value,
                       });
                     }}
                   />
-                  <select
-                    value={credentials.dayNight1}
-                    onChange={(e) => {
-                      setCredentials({
-                        ...credentials,
-                        dayNight1: e.target.value,
-                      });
-                    }}
-                    className="outline-none"
-                  >
-                    <option value="AM">AM</option>
-                    <option value="PM">PM</option>
-                  </select>
                 </div>
-              </div>
 
-              <div className="w-80 h-12 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1">
-                <div className="flex items-center">
-                  <label htmlFor="closingTime" className="mr-2">
-                    Closing Time:
+                <div className="w-80 h-12 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1">
+                  <div className="flex items-center">
+                    <label htmlFor="openingTime" className="mr-2">
+                      Opening Time:
+                    </label>
+                    <input
+                      type="text"
+                      id="openingTime"
+                      className="outline-none p-1 w-20 shadow mr-2"
+                      value={credentials.openingTime}
+                      onChange={(e) => {
+                        setCredentials({
+                          ...credentials,
+                          openingTime: e.target.value,
+                        });
+                      }}
+                    />
+                    <select
+                      value={credentials.dayNight1}
+                      onChange={(e) => {
+                        setCredentials({
+                          ...credentials,
+                          dayNight1: e.target.value,
+                        });
+                      }}
+                      className="outline-none"
+                    >
+                      <option value="AM">AM</option>
+                      <option value="PM">PM</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="w-80 h-12 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1">
+                  <div className="flex items-center">
+                    <label htmlFor="closingTime" className="mr-2">
+                      Closing Time:
+                    </label>
+                    <input
+                      type="text"
+                      id="closingTime"
+                      value={credentials.closingTime}
+                      onChange={(e) => {
+                        setCredentials({
+                          ...credentials,
+                          closingTime: e.target.value,
+                        });
+                      }}
+                      className="outline-none p-1 w-20 shadow mr-2"
+                    />
+                    <select
+                      value={credentials.dayNight2}
+                      onChange={(e) => {
+                        setCredentials({
+                          ...credentials,
+                          dayNight2: e.target.value,
+                        });
+                      }}
+                      className="outline-none"
+                    >
+                      <option value="AM">AM</option>
+                      <option value="PM">PM</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="w-80 h-12 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1">
+                  <div className="flex items-center">
+                    <label htmlFor="restaurantStatus" className="mr-2">
+                      Resturant Status:
+                    </label>
+
+                    <select
+                      id="restaurantStatus"
+                      value={credentials.restaurantStatus}
+                      onChange={(e) => {
+                        setCredentials({
+                          ...credentials,
+                          restaurantStatus: e.target.value,
+                        });
+                      }}
+                      className="outline-none ml-7"
+                    >
+                      <option value="Closed">Closed</option>
+                      <option value="Open">Open</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="w-80 h-auto flex flex-col mb-4">
+                  <label htmlFor="restaurantImg" className="mb-2">
+                    Upload Restaurant Image
                   </label>
                   <input
-                    type="text"
-                    id="closingTime"
-                    value={credentials.closingTime}
-                    onChange={(e) => {
-                      setCredentials({
-                        ...credentials,
-                        closingTime: e.target.value,
-                      });
-                    }}
-                    className="outline-none p-1 w-20 shadow mr-2"
-                  />
-                  <select
-                    value={credentials.dayNight2}
-                    onChange={(e) => {
-                      setCredentials({
-                        ...credentials,
-                        dayNight2: e.target.value,
-                      });
-                    }}
+                    type="file"
+                    id="restaurantImg"
                     className="outline-none"
-                  >
-                    <option value="AM">AM</option>
-                    <option value="PM">PM</option>
-                  </select>
+                    onChange={(e) => {
+                      setCredentials({
+                        ...credentials,
+                        restaurantImg: e.target.files[0],
+                      });
+                    }}
+                  />
                 </div>
               </div>
-
-              <div className="w-80 h-auto flex flex-col mb-4">
-                <label htmlFor="restaurantImage" className="mb-2">
-                  Upload Restaurant Image
-                </label>
-                <input
-                  type="file"
-                  id="restaurantImage"
-                  className="outline-none"
-                  value={credentials.restaurantImage}
-                  onChange={(e) => {
-                    setCredentials({
-                      ...credentials,
-                      restaurantImage: e.target.files[0],
-                    });
-                  }}
-                />
-              </div>
-            </div>
             </div>
           )}
 
           <div className="w-80 flex justify-center items-center">
-              <button
-                onClick={submitHandler}
-                className="bg-blue-700 w-80 h-10 text-center text-white rounded-sm"
-              >
-                Submit
-              </button>
+            <button
+              onClick={submitHandler}
+              className="bg-blue-700 w-80 h-10 text-center text-white rounded-sm"
+            >
+              Submit
+            </button>
           </div>
 
           <div className="flex mt-2 cursor-pointer" onClick={changePage}>
@@ -212,6 +372,7 @@ const RestuarentLogin = () => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

@@ -1,27 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 
-const userData = JSON.parse(localStorage.getItem("user")) || [];
+const userData = JSON.parse(localStorage.getItem("user")) || {};
 
 const userSlice = createSlice({
   name: "user",
-  initialState: [],
+  initialState: userData,
   reducers: {
     addUser: (state, action) => {
-      const {id,accessToken,refreshToken}=action.payload;
-      state.push({
-        id
-      });
+      const { id, accessToken, refreshToken } = action.payload;
 
-      localStorage.setItem("user", JSON.stringify(state)); 
+      state.id = id;
+
+      localStorage.setItem("user", JSON.stringify({ id }));
+
       Cookies.set("accessToken", accessToken, { expires: 1, secure: true });
       Cookies.set("refreshToken", refreshToken, { expires: 7, secure: true });
-    
     },
     removeUser: () => {
+      // Clear user details from local storage and cookies
       localStorage.removeItem("user");
-      Cookies.remove("token");
-      return [];
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+      return {};
     },
   },
 });

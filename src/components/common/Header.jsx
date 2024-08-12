@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = ({ children, cartLink,orderLink}) => {
-  console.log(orderLink,"linkkk")
+  
   return (
     <div className="flex items-center justify-between w-full h-[60px] m-4 ">
       <Link to="/">

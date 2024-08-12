@@ -6,17 +6,20 @@ import {
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import { addToCart } from "../../slices/cartSlice";
-import { useDispatch } from "react-redux";
+import { addToCart } from "../../slices/cartItemSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios/axios";
+import Cookies from "js-cookie";
 
 const RestuarentPage = () => {
   const [hotel, setHotel] = useState("");
   const [foods, setFoods] = useState([]);
   const { id } = useParams();
   const dispatch = useDispatch();
+  const userId = useSelector((store) => store.user.id);
+  const cartId = useSelector((store) => store.cart.id);
 
   useEffect(() => {
     axios
@@ -57,9 +60,29 @@ const RestuarentPage = () => {
     });
   };
 
-  const addToCartFunction = (id) => {
-    dispatch(addToCart(id));
-    notify();
+  const getAcessToken = () => {
+    return Cookies.get(`accessToken`);
+  };
+
+  const addToCartFunction = async (id) => {
+    const accessToken = getAcessToken();
+    console.log(accessToken, "sgshhsh");
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+console.log(id,"food id")
+    const cartItem = await axios.post(
+      `/user/addToCart/${userId}/${cartId}/${id}`,{},
+      config
+    );
+    console.log(cartItem.data.Data, "after addTocart api");
+    {
+      dispatch(addToCart(id));
+      notify();
+    }
   };
 
   return (
@@ -88,7 +111,8 @@ const RestuarentPage = () => {
           <div className="text-orange-400">{hotel.status}</div>
           <div className="text-lg">
             {/* {(hotel.openingTime).getTime()}-{(hotel.closingTime).getTime()} */}
-            {Math.round(new Date(hotel.openingTime).getTime())}-{Math.round(new Date(hotel.closingTime).getTime())}
+            {Math.round(new Date(hotel.openingTime).getTime())}-
+            {Math.round(new Date(hotel.closingTime).getTime())}
           </div>
         </div>
 
@@ -120,28 +144,33 @@ const RestuarentPage = () => {
                       </div>
                       <div className="text-lg">{dish.foodCategory}</div>
                       <div className="text-sm flex">
-                        {<FontAwesomeIcon className="test-sm mt-1" icon={faIndianRupeeSign} />}
+                        {
+                          <FontAwesomeIcon
+                            className="test-sm mt-1"
+                            icon={faIndianRupeeSign}
+                          />
+                        }
                         {!dish.discount ? (
                           dish.actualPrice
-                        ) : (<>
-                          <span>
-                            {dish.discountPrice}
-                          </span>
-                          <div>
-                          <div className="ml-5">
-                          <FontAwesomeIcon className="test-sm mt-1" icon={faIndianRupeeSign} />
-                          <span className="line-through text-green-600">
-                            {dish.actualPrice}
-                          </span>
-                          </div>
-                          </div>
-                          <span className="text-red-600 ml-2">
-                            {dish.discount}% off
-                          </span>
-                        </>
-                          
-                        )}  
-
+                        ) : (
+                          <>
+                            <span>{dish.discountPrice}</span>
+                            <div>
+                              <div className="ml-5">
+                                <FontAwesomeIcon
+                                  className="test-sm mt-1"
+                                  icon={faIndianRupeeSign}
+                                />
+                                <span className="line-through text-green-600">
+                                  {dish.actualPrice}
+                                </span>
+                              </div>
+                            </div>
+                            <span className="text-red-600 ml-2">
+                              {dish.discount}% off
+                            </span>
+                          </>
+                        )}
                       </div>
                       <div className="text-sm">{dish.description}</div>
                     </div>

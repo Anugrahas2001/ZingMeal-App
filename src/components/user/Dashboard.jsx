@@ -9,7 +9,6 @@ const Hotels = () => {
   const [hotelData,setHotel]=useState([]);
   useEffect(()=>{
     axios.get("/restaurant/allRestaurants").then((response)=>{
-      console.log(response.data.Data,"hotel data")
       setHotel(response.data.Data)
     }).catch((error)=>{
       console.log(error)
@@ -17,7 +16,7 @@ const Hotels = () => {
   },[])
 
   const hotelDetails =hotelData.map((hotel) => {
-    console.log(hotel,"hotel")
+
     return (
       <div
         className="flex flex-col w-1/4 rounded-md shadow ml-14 mt-7"

@@ -1,53 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { UPDATE_CART_REMOVE } from '../constants/constants'
 
-const items =
-  localStorage.getItem("cartItems") != 0
-    ? JSON.parse(localStorage.getItem("cartItems"))
-    : [];
+const cartData = JSON.parse(localStorage.getItem("cart")) || {};
 
 const cartSlicer = createSlice({
   name: "cart",
-  initialState: [],
+  initialState: cartData,
   reducers: {
-    addToCart: (state, action) => {
-      const index = state.findIndex((item) => item.id === action.payload);
-      if (index < 0) state.push({ id: action.payload, quantity: 1 });
-      else state[index].quantity += 1;
+    createCart: (state, action) => {
+      const { id } = action.payload;
+      console.log(id, "id from cart slice");
+      state.id = id;
+      localStorage.setItem("cart", JSON.stringify({ id }));
 
-      localStorage.setItem("cartItems", JSON.stringify(state));
     },
-    updateCart: (state, action) => {
-      const index = state.findIndex((item) => item.id === action.payload.id);
-      if (index < 0) return;
-      state[index].quantity += action.payload.value;
-      if (
-        state[index].quantity <= 0 ||
-        action.payload.value == 0
-      ) {
-        state.splice(index, 1);
-      }
-      localStorage.setItem("cartItems", JSON.stringify(state));
+    clearCart: (state) => {
+      localStorage.setItem("cart", JSON.stringify({}));
     },
-    clearCart:(state)=>{
-      localStorage.setItem("cartItems", JSON.stringify([]));
-    }
   },
 });
 
-export const { addToCart, updateCart, clearCart } = cartSlicer.actions;
-
-export const selectTotalQuantity = (state) => {
-  return state.cart.reduce((total, item) => total + item.quantity, 0);
-};
-
+export const { createCart, clearCart } = cartSlicer.actions;
 export default cartSlicer.reducer;
-
-// Number-11 -->{}
-// string-"anu" {0: 'a', 1: 'n', 2: 'u'}
-// boolean-false {}
-// array-["anu"]  {0: 'a', 1: 'b'}
-// object-{
-//     id:1,
-//     name:"anu"
-// }

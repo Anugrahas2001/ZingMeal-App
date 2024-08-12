@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../axios/axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { addUser } from "../../slices/userSlice.js";
+import { createCart } from "../../slices/cartSlice.js";
 
 const UserLogin = () => {
   // const userData = useSelector((store) => store.user);
@@ -107,12 +108,12 @@ const UserLogin = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-  
+
     if (!credentials.email || !credentials.password) {
       notifyFail();
       return;
     }
-  
+
     if (
       title === "Sign Up" &&
       credentials.password !== credentials.confirmPassword
@@ -120,10 +121,10 @@ const UserLogin = () => {
       notifyPassword();
       return;
     }
-  
+
     try {
       let response;
-  
+
       if (title === "Sign Up") {
         console.log("Going to call Sign Up API");
         response = await axios.post("/user/signUp", {
@@ -131,40 +132,43 @@ const UserLogin = () => {
           password: credentials.password,
           confirmPassword: credentials.confirmPassword,
         });
-  
-        if (response.data && response.data.accessToken) {
-          dispatch(
-            addUser({
-              id: response.data.user.id,
-              accessToken: response.data.accessToken,
-              refreshToken: response.data.refreshToken,
-            })
-          );
-          notifySuccess();
-        ;
-        }
+
       } else {
         console.log("Going to call Login API");
         response = await axios.post("/user/login", {
           email: credentials.email,
           password: credentials.password,
         });
-  
+        console.log(response, "response of user");
+    
+
         if (response.data && response.data.accessToken) {
+
+          const userId=response.data.Data.id;
+          const config = {
+            headers: {
+              Authorization: `Bearer ${response.data.accessToken}`,
+            },
+          };
+          const createCartResponse = await axios.get(`/user/getcart/${userId}`,config);
+          const cartId=createCartResponse.data.Data.id;
+      
+          dispatch(createCart({id:cartId}));
+
           dispatch(
             addUser({
-              id: response.data.user.id,
+              id: userId,
               accessToken: response.data.accessToken,
               refreshToken: response.data.refreshToken,
             })
           );
           notifySuccess();
-          navigate("/user");
-        } else {
-          notifyInvalid();
         }
+        setTimeout(() => {
+          navigate("/user");
+        }, 4000);
       }
-  
+
       setCredentials({
         email: "",
         password: "",
@@ -172,13 +176,16 @@ const UserLogin = () => {
       });
     } catch (error) {
       if (error.response && error.response.data.message) {
-        if (error.response.data.message === "User with this email is already present") {
+        if (
+          error.response.data.message ===
+          "User with this email is already present"
+        ) {
           notifyInValidEmail();
           setCredentials({
             email: "",
             password: "",
             confirmPassword: "",
-          })
+          });
         } else {
           notifyError();
         }
@@ -188,7 +195,6 @@ const UserLogin = () => {
       }
     }
   };
-  
 
   const changePage = () => {
     setTitle((prevState) => {

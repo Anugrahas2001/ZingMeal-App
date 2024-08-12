@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 
 const RestuarentPage = () => {
   const selector = useSelector((store) => store.menu);
-  console.log(selector, "the selector");
 
   const restuarentEditHandler = () => {};
 
