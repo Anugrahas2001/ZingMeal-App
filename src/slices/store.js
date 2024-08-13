@@ -12,7 +12,7 @@ const store=configureStore({
         cart:cartReducer,
         order:orderReducer,
         menu:menuReducer,
-        restuarent: restuarentReducer,
+        restaurant: restuarentReducer,
         user:userReducer
     }
 })

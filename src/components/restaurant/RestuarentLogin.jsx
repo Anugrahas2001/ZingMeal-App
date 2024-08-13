@@ -100,6 +100,7 @@ const RestuarentLogin = () => {
 
     if (!credentials.restaurantName || !credentials.password) {
       notifyFail();
+      return;
     }
 
     try {
@@ -107,33 +108,34 @@ const RestuarentLogin = () => {
       if (title === "Sign Up") {
         const formData = new FormData();
 
-        formData.append("restaurantName", credentials.restaurantName);
-        formData.append("restaurantAddress", credentials.restaurantAddress);
-        formData.append("openingTime", credentials.openingTime);
-        formData.append("closingTime", credentials.closingTime);
-        formData.append("dayNight1", credentials.dayNight1);
-        formData.append("dayNight2", credentials.dayNight2);
-        formData.append("restaurantPassword", credentials.password);
+        formData.set("restaurantName", credentials.restaurantName);
+        formData.set("restaurantAddress", credentials.restaurantAddress);
+        formData.set("openingTime", credentials.openingTime);
+        formData.set("closingTime", credentials.closingTime);
+        formData.set("dayNight1", credentials.dayNight1);
+        formData.set("dayNight2", credentials.dayNight2);
+        formData.set("restaurantPassword", credentials.password);
         formData.append("restaurantImg", credentials.restaurantImg);
-        formData.append("restaurantStatus", credentials.restaurantStatus);
+        formData.set("restaurantStatus", credentials.restaurantStatus);
 
         response = await axios.post("/restaurant/signUp", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log(response, "response from restuaurant sign up");
-      }
-
-      if (response.data && response.data.AccessToken) {
-        dispatch(
-          addRestaurant({
-            id: response.data.Data.id,
-            refreshToken: response.data.RefreshToken,
-            accessToken: response.data.AccessToken,
-          })
-        );
+        console.log("Response from Signup API:", response);
         notifySuccess();
+
+        setCredentials({
+          restaurantName: "",
+          restaurantAddress: "",
+          restaurantImg: null,
+          password: "",
+          dayNight1: "",
+          dayNight2: "",
+          openingTime: "",
+          closingTime: "",
+        });
       } else {
         response = await axios.post("/restaurant/login", {
           restaurantName: credentials.restaurantName,
@@ -141,6 +143,7 @@ const RestuarentLogin = () => {
         });
 
         if (response.data && response.data.AccessToken) {
+
           dispatch(
             addRestaurant({
               id: response.data.Data.id,
@@ -155,14 +158,27 @@ const RestuarentLogin = () => {
         }
       }
     } catch (error) {
-   
-      if (
-        error.response &&
-        error.response.data.message &&
-        error.response.data.message === "Restaurant already exist"
-      ) {
-        console.log(error.response.data.message);
-        notifyDuplicateName();
+      console.error("Error during API call:", error);
+
+      if (error.response && error.response.data.message) {
+        if (
+          error.response.data.message &&
+          error.response.data.message === "Restaurant already exist"
+        ) {
+          notifyDuplicateName();
+          setCredentials({
+            restaurantName: "",
+            restaurantAddress: "",
+            restaurantImg: null,
+            password: "",
+            dayNight1: "",
+            dayNight2: "",
+            openingTime: "",
+            closingTime: "",
+          });
+        } else {
+          notifyError();
+        }
       } else {
         notifyError();
       }
@@ -372,7 +388,7 @@ const RestuarentLogin = () => {
           </div>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

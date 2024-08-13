@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
-const restaurantData = JSON.parse(localStorage.getItem("restaurant")) || [];
+const restaurantData = JSON.parse(localStorage.getItem("restaurant")) || {};
 
 const restuarentSlice = createSlice({
   name: "restuarent",
@@ -9,11 +9,9 @@ const restuarentSlice = createSlice({
   reducers: {
     addRestaurant: (state, action) => {
       const { id, accessToken, refreshToken } = action.payload;
-      state.push({
-        id,
-      });
+      state.id = id;
 
-      localStorage.setItem("restaurant", JSON.stringify(state));
+      localStorage.setItem("restaurant", JSON.stringify({ id }));
       Cookies.set("accessToken", accessToken, { expires: 1, secure: true });
       Cookies.set("refreshToken", refreshToken, { expires: 7, secure: true });
     },

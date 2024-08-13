@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../axios/axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../slices/userSlice.js";
 import { createCart } from "../../slices/cartSlice.js";
 
@@ -12,6 +12,7 @@ const UserLogin = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -132,7 +133,6 @@ const UserLogin = () => {
           password: credentials.password,
           confirmPassword: credentials.confirmPassword,
         });
-
       } else {
         console.log("Going to call Login API");
         response = await axios.post("/user/login", {
@@ -140,20 +140,22 @@ const UserLogin = () => {
           password: credentials.password,
         });
         console.log(response, "response of user");
-    
 
         if (response.data && response.data.accessToken) {
-
-          const userId=response.data.Data.id;
+          const userId = response.data.Data.id;
           const config = {
             headers: {
               Authorization: `Bearer ${response.data.accessToken}`,
             },
           };
-          const createCartResponse = await axios.get(`/user/getcart/${userId}`,config);
-          const cartId=createCartResponse.data.Data.id;
-      
-          dispatch(createCart({id:cartId}));
+          const createCartResponse = await axios.get(
+            `/user/getcart/${userId}`,
+            config
+          );
+
+          const cartId = createCartResponse.data.Data.id;
+
+          dispatch(createCart({ id: cartId }));
 
           dispatch(
             addUser({

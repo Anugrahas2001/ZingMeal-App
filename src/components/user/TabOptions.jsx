@@ -9,7 +9,7 @@ console.log(foodItems,"items")
 
   useEffect(() => {
     axios.get("/restaurant/allFoods").then((response) => {
-      console.log(response.data,"data")
+      // console.log(response.data,"data")
       setFoodItems(response.data.allFoods)
     }).catch((error)=>{
       console.log(error)

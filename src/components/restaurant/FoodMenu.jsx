@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addMenu } from "../../slices/menuSlice";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from '../../axios/axios'
 
 const FoodMenu = () => {
   const dispatch = useDispatch();
+  const restaurantId=useSelector((store)=>store.restaurant.id);
   const [foodMenu, setFoodMenu] = useState({
     foodName: "",
     foodCategory: "",
     isVeg: false,
     isNonVeg: false,
-    price: "",
+    actualPrice: "",
+    discount:"",
     description: "",
     imageFile: null,
   });
@@ -30,8 +33,19 @@ const FoodMenu = () => {
     });
   };
 
-  const handleSubmitMenu = (e) => {
+  const handleSubmitMenu =async (e) => {
     e.preventDefault();
+
+
+    const formData=new FormData();
+    formData.set("foodName",foodMenu.foodName);
+    formData.set("foodCategory",foodCategory);
+    formData.set("isVeg")
+
+    const response=await axios.post(`/restaurant/createFood/${restaurantId}`)
+
+
+
     notify();
     dispatch(addMenu(foodMenu));
   };

@@ -20,6 +20,7 @@ const RestuarentPage = () => {
   const dispatch = useDispatch();
   const userId = useSelector((store) => store.user.id);
   const cartId = useSelector((store) => store.cart.id);
+  const restaurantId = useSelector((store) => store.restaurant.id);
 
   useEffect(() => {
     axios
@@ -64,25 +65,33 @@ const RestuarentPage = () => {
     return Cookies.get(`accessToken`);
   };
 
-  const addToCartFunction = async (id) => {
-    const accessToken = getAcessToken();
-    console.log(accessToken, "sgshhsh");
+  const addToCartFunction = async (foodId) => {
+    const accessToken = getAcessToken(); 
 
     const config = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     };
-console.log(id,"food id")
+
     const cartItem = await axios.post(
-      `/user/addToCart/${userId}/${cartId}/${id}`,{},
+      `/user/addToCart/${userId}/${cartId}/${foodId}`,{},
       config
     );
-    console.log(cartItem.data.Data, "after addTocart api");
+  //   console.log(cartItem, "after addTocart api");
+  //  const Id=cartItem.data.Data.id;
+  //   {
+  //   // console.log(Id,"cartId") for evry item getting same value i don't know why
+  //   //   dispatch(addToCart(Id));
+  //   }
+    const totalPrice =await axios.patch(
+      `/restaurant/totalPrice/${restaurantId}/${cartId}`
+    );
     {
-      dispatch(addToCart(id));
+      console.log(totalPrice, "price");
       notify();
     }
+    
   };
 
   return (

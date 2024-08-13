@@ -8,7 +8,7 @@ const cartSlicer = createSlice({
   reducers: {
     createCart: (state, action) => {
       const { id } = action.payload;
-      console.log(id, "id from cart slice");
+      // console.log(id, "id from cart slice");
       state.id = id;
       localStorage.setItem("cart", JSON.stringify({ id }));
 
