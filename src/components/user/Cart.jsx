@@ -6,7 +6,7 @@ import {
   faIndianRupeeSign,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { clearCartItems, cartItemCount} from "../../slices/cartItemSlice";
+import { addToCart, cartItemCounter,clearCartItems } from "../../slices/cartItemSlice";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
 import { addOrder } from "../../slices/orderSlice";
@@ -66,8 +66,9 @@ const Cart = () => {
     const fetchInitialCartItemCount = async () => {
       try {
         const countData = await axios.get("/restaurant/getCount", config);
-        setCartItemCount(countData.data.Count);
-        dispatch(setCartItemCount(newCount));
+        const newCount=countData.data.Count;
+        setCartItemCount(newCount);
+        dispatch(cartItemCounter(newCount));
       } catch (error) {
         console.error("Error fetching initial cart item count:", error);
       }
@@ -94,7 +95,7 @@ const Cart = () => {
         { value: val },
         config
       );
-
+      const id = cartItemId.id;
       const updatedQuantity = response.data.Data.quantity;
       if (updatedQuantity === 0 || val === 0) {
         setFoodItems((prevItems) =>
@@ -117,10 +118,16 @@ const Cart = () => {
 
       try {
         const countData = await axios.get("/restaurant/getCount", config);
-        setCartItemCount(countData.data.Count);
+        const newCount = countData.data.Count;
+        console.log(newCount, "count from carttt")
+        setCartItemCount(newCount);
+        dispatch(cartItemCounter(newCount));
+        dispatch(addToCart(id));
       } catch (error) {
         console.error("Error fetching count data:", error);
       }
+
+      // onUpdateCount(newCount);
     } catch (error) {
       console.log(error);
     }

@@ -16,7 +16,9 @@ const cartItemSlice = createSlice({
       localStorage.setItem("cartItems", JSON.stringify(state));
     },
     updateCart: (state, action) => {
-      const index = state.findIndex((item) => item.id === action.payload.cartItemId);
+      const index = state.findIndex(
+        (item) => item.id === action.payload.cartItemId
+      );
       if (index < 0) return;
 
       state[index].quantity += action.payload.value;
@@ -27,9 +29,9 @@ const cartItemSlice = createSlice({
 
       localStorage.setItem("cartItems", JSON.stringify(state));
     },
-    cartItemCount: (state, action) => {
+    cartItemCounter: (state, action) => {
       const count = action.payload;
-      localStorage.setItem("cartItemCount", JSON.stringify(count));
+      localStorage.setItem("cartItemCounter", JSON.stringify(count));
     },
     clearCartItems: (state) => {
       return [];
@@ -37,7 +39,8 @@ const cartItemSlice = createSlice({
   },
 });
 
-export const { addToCart, updateCart, clearCartItems, cartItemCount } = cartItemSlice.actions;
+export const { addToCart, updateCart, clearCartItems, cartItemCounter } =
+  cartItemSlice.actions;
 
 export const selectTotalQuantity = (state) => {
   return state.cartItem.reduce((total, item) => total + item.quantity, 0);

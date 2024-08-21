@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndianRupeeSign, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import { addToCart, cartItemCount } from "../../slices/cartItemSlice";
+import { addToCart, cartItemCounter } from "../../slices/cartItemSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -66,7 +66,7 @@ const RestuarentPage = ({ onUpdateCount }) => {
       const newCount = countData.data.Count;
    
       onUpdateCount(newCount);
-      dispatch(cartItemCount(newCount));
+      dispatch(cartItemCounter(newCount));
       dispatch(addToCart(id));
 
       notify();
