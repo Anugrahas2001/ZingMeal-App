@@ -1,18 +1,88 @@
-import React from "react";
-import foodItems from "../../json/FoodItems.json";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndianRupeeSign, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { cancelOrder } from "../../slices/orderSlice";
+import axios from "../../axios/axios";
+import Cookies from "js-cookie";
 
 const Order = (props) => {
-  const orders = useSelector((store) => store.order);
-  console.log(orders, "from order page");
   const dispatch = useDispatch();
-  const {children}=props;
-  console.log(children,"from order")
+  const { isUserPage, children } = props;
+  const restaurantId = useSelector((store) => store.restaurant.id);
+  const [orders, setOrders] = useState([]);
+  const [pastOrders, setPastOrders] = useState([]);
+  console.log(pastOrders, "paasttts");
+
+  const accessToken = Cookies.get("accessToken");
+  const [orderStatuses, setOrderStatuses] = useState({});
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = isUserPage
+          ? await axios.get(`/restaurant/filterPending`)
+          : await axios.get(
+              `/restaurant/allOrdersInRestaurant/${restaurantId}`
+            );
+        console.log(response.data.sortedOrders, "the dataaaaaaa");
+        setOrders(response.data.sortedOrders);
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      }
+    };
+    fetchOrders();
+  }, [isUserPage, dispatch]);
+
+  useEffect(() => {
+    axios
+      .get(`/restaurant/cancelAndDelivered`)
+      .then((response) => {
+        console.log(response.data.Data, "resshdkkdc,,d");
+        setPastOrders(response.data.Data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const cancelOrderHandler = async (orderId) => {
+    try {
+      const response = await axios.delete(
+        `/user/cancelOrder/${orderId}`,
+        config
+      );
+      // const updatedOrder = await axios.get(`/restaurant/filterPending`);
+      // setOrders(updatedOrder.data.sortedOrders);
+
+      // const newOrderStatuses = { ...orderStatuses };
+      // delete newOrderStatuses[orderId];
+      // setOrderStatuses(newOrderStatuses);
+      console.log(response, "after cancel");
+
+      notify();
+    } catch (error) {
+      console.error("Failed to cancel order:", error);
+      toast.error("Failed to cancel order.", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
 
   const notify = () => {
     toast.error("Order Cancelled!", {
@@ -28,34 +98,38 @@ const Order = (props) => {
     });
   };
 
-  const cancelOrderHandler = (id) => {
-    notify();
-    dispatch(cancelOrder(id));
+  const changeOrderStatusHandler = async (orderId, newStatus) => {
+    console.log(newStatus, orderId, "new");
+    setOrderStatuses(newStatus);
+    const response = await axios.patch(
+      `/restaurant/updateOrderStatus/${restaurantId}/${orderId}`,
+      {
+        orderStatus: newStatus,
+      },
+      config
+    );
+    console.log(response, "response daaaaataaaa");
   };
 
-  const renderOrderItems = (order) => {
-    return order.map((item) => {
-      const foodData = foodItems.find((foodItem) => foodItem.id === item.id);
-      if (!foodData) {
-        return null;
-      }
+  const renderOrderItems = (orderItems) => {
+    return orderItems.map((item) => {
       return (
-        <div key={item.id} className="mt-1 ">
+        <div key={item.food.id} className="mt-1 ">
           <div className="flex">
             <img
               className="w-20 rounded-sm m-2"
-              src={foodData.foodImage}
-              alt={foodData.foodName}
+              src={item.food.imageFile}
+              alt={item.food.foodName}
             />
             <div className="flex flex-col m-2  w-96">
               <div className="flex">
-                <p>{foodData.foodName}</p>
+                <p>{item.food.foodName}</p>
                 <div className="flex  ml-2">
                   <FontAwesomeIcon className="mt-1 text-sm" icon={faXmark} />
                   <p>{item.quantity}</p>
                 </div>
               </div>
-              <p className="text-gray-400">{foodData.category}</p>
+              <p className="text-gray-400">{item.food.foodCategory}</p>
             </div>
           </div>
         </div>
@@ -70,24 +144,41 @@ const Order = (props) => {
         <div className="w-full mt-2">
           {orders.map((order) => (
             <div
-              key={order.orderId}
+              key={order.id}
               className="w-full h-auto m-2 flex justify-between shadow mb-4 p-5"
             >
               <div className="w-80 ml-4">
-                <p>OrderID: {order.orderId}</p>
-                <div>{renderOrderItems(order.order)}</div>
+                <p className="font-semibold">OrderID: {order.id}</p>
+                <div>{renderOrderItems(order.orderItems)}</div>
               </div>
               <div>
-                <div className="flex justify-center flex-col">
-                  {/* <p className="ml-10 mt-3">{order.status}</p> */}
-                  <select className="ml-10 mt-2 outline-none">
-                    <option value="Preparing">Preparing</option>
-                    <option value="Packed">Packed</option>
-                    <option value="Dispatched">Dispatched</option>
-                    <option value="Delivered">Delivered</option>
-                  </select>
-                  <p className="text-sm">Your item has been preparing</p>
-                </div>
+
+                {isUserPage && (
+                  <div className="flex justify-center items-center flex-col">
+                    <p>{order.orderStatus}</p>
+                    <p className="text-sm">
+                      Your item has been
+                      {order.orderStatus}
+                    </p>
+                  </div>
+                )}
+
+                {/* {isRestaurantPage && (
+                  <div className="flex justify-center flex-col">
+                    <select
+                      className="ml-10 mt-2 outline-none"
+                      value={orderStatuses[order.id] || "PREPARING"}
+                      onChange={(e) => {
+                        changeOrderStatusHandler(order.id, e.target.value);
+                      }}
+                    >
+                      <option value="PREPARING">PREPARING</option>
+                      <option value="PACKED">PACKED</option>
+                      <option value="DISPATCHED">DISPATCHED</option>
+                      <option value="DELIVERED">DELIVERED</option>
+                    </select>
+                  </div>
+                )} */}
               </div>
               <div className="h-auto ml-20 flex flex-col justify-between">
                 <div className="flex">
@@ -102,7 +193,7 @@ const Order = (props) => {
                 </div>
                 <button
                   className="w-20 p-1 text-white self-center cursor-pointer rounded-md bg-red-500 mt-4 mb-4"
-                  onClick={() => cancelOrderHandler(order.orderId)}
+                  onClick={() => cancelOrderHandler(order.id)}
                 >
                   Cancel
                 </button>
@@ -112,34 +203,49 @@ const Order = (props) => {
         </div>
         <ToastContainer />
         <p className="font-semibold text-xl">Past Orders</p>
-        <div className="w-full h-auto m-2 flex justify-between shadow mb-4 p-5">
-          <div className="w-80 ml-4">
-            <p>OrderID: CHE672#16</p>
-            <img
-              className="w-20 rounded-sm m-2"
-              src="https://t3.ftcdn.net/jpg/02/55/42/50/360_F_255425068_CyDrGsVcu1Bl2SdJ2yXx35Rlp8jyNCCQ.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <div className=" flex justify-center flex-col">
-              <p className="ml-10 mt-3">Delivered</p>
-              <p className="text-sm">Your item has been Delivered</p>
-            </div>
-          </div>
-          <div className="h-auto ml-20 flex flex-col justify-between">
-            <div className="flex">
-              <p className="mt-5">Total Price:</p>
-              <div className="bg-yellow-400 flex p-1 rounded-md mt-5 h-7">
-                <FontAwesomeIcon className="mt-1" icon={faIndianRupeeSign} />
-                <p className="ml-1">1700</p>
+        {pastOrders.map((order) => {
+          return (
+            <div
+              key={order.id}
+              className="w-full h-auto m-2 flex justify-between shadow mb-4 p-5"
+            >
+              <div className="w-80 ml-4">
+                <p>Order ID: {order.id}</p>
+                {order.orderItems.map((item) => {
+                  return (
+                    <div key={item.id}>
+                      <img
+                        className="w-20 rounded-sm m-2"
+                        src={item.food.imageFile}
+                        alt={item.food.foodName}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div>
+                <div className="flex justify-center flex-col">
+                  <p className="ml-10 mt-3">{order.orderStatus}</p>
+                  <p className="text-sm">
+                    Your item has been {order.orderStatus}
+                  </p>
+                </div>
+              </div>
+              <div className="h-auto ml-20 flex flex-col justify-between">
+                <div className="flex">
+                  <p className="mt-5">Total Price:</p>
+                  <div className="bg-yellow-400 flex p-1 rounded-md mt-5 h-7">
+                    <FontAwesomeIcon
+                      className="mt-1"
+                      icon={faIndianRupeeSign}
+                    />
+                    <p className="ml-1">{order.totalPrice}</p>{" "}
+                  </div>
+                </div>
               </div>
             </div>
-            <button className="w-20 p-1 text-white self-center cursor-pointer rounded-md bg-red-500 mt-4 mb-4">
-              Cancel
-            </button>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

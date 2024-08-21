@@ -6,36 +6,39 @@ import {
   faIndianRupeeSign,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { clearCartItems, updateCart } from "../../slices/cartItemSlice";
+import { clearCartItems, cartItemCount} from "../../slices/cartItemSlice";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
 import { addOrder } from "../../slices/orderSlice";
 import Search from "../user/Search";
 import axios from "../../axios/axios";
 import Cookies from "js-cookie";
+import { ToastContainer } from "react-toastify";
 
 const Cart = () => {
   const cartId = useSelector((store) => store.cart.id);
-  const cartItems = useSelector((store) => store.cartItem);
+  const userId = useSelector((store) => store.user.id);
+  const restaurantId = useSelector((store) => store.restaurant.id);
   const accessToken = Cookies.get("accessToken");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [foodItems, setFoodItems] = useState([]);
+  const [orderItems, setOrderItems] = useState([]);
+  const [cartItemCount, setCartItemCount] = useState(0);
   const [btnState, setBtnState] = useState("Place Order");
   const [btn, setBtn] = useState(false);
+  const [option, setOption] = useState("");
   const [dimension, setDimension] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
 
-  var min = 50;
-  var max = 200;
-  const random = Math.floor(min + Math.random() * (max - min));
   let totalAmountWithoutDiscount = 0;
   let totalDiscountPrice = 0;
   let totalAmountWithActualPrice = 0;
   let deliveryCharges = 0;
+  let payableAmount = 0;
 
   const config = {
     headers: {
@@ -52,55 +55,183 @@ const Cart = () => {
       .get(`/user/getAllCartItems/${cartId}`)
       .then((response) => {
         setFoodItems(response.data.Data);
+        updateTotalPrice();
       })
       .catch((error) => {
         console.log(error);
       });
   }, [cartId]);
 
-  const updateCartItemHandler = (cartItemId, val) => {
+  useEffect(() => {
+    const fetchInitialCartItemCount = async () => {
+      try {
+        const countData = await axios.get("/restaurant/getCount", config);
+        setCartItemCount(countData.data.Count);
+        dispatch(setCartItemCount(newCount));
+      } catch (error) {
+        console.error("Error fetching initial cart item count:", error);
+      }
+    };
+
+    fetchInitialCartItemCount();
+  }, []);
+
+  const updateTotalPrice = () => {
     axios
-      .patch(`/user/updateCartItem/${cartItemId.id}`, { value: val }, config)
+      .patch(`/restaurant/totalPrice/${restaurantId}/${cartId}`, config)
       .then((response) => {
-        const updatedQuantity = response.data.Data.quantity;
-
-        if (updatedQuantity === 0 || val===0) {
-          setFoodItems((prevItems) =>
-            prevItems.filter((item) => item.id !== cartItemId.id)
-          );
-        } else {
-          setFoodItems((prevItems) =>
-            prevItems.map((item) =>
-              item.id === cartItemId.id
-                ? { ...item, quantity: updatedQuantity }
-                : item
-            )
-          );
-          // console.log(cartItemId.id,"update cart")
-          // dispatch(updateCart({ id: cartItemId.id, quantity: val }));
-        
-        }
-
-       
+        const totalPrice = response.data.totalPrice;
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  
-  
 
-  const cartHandler = (totalPrice) => {
-    dispatch(addOrder({ cart: cartItems, price: totalPrice }));
-    setBtn(!btn);
-    setBtnState((prevState) =>
-      prevState === "Place Order" ? "Order Placed" : "Place Order"
+  const updateCartItemHandler = async (cartItemId, val) => {
+    try {
+      const response = await axios.patch(
+        `/user/updateCartItem/${cartItemId.id}`,
+        { value: val },
+        config
+      );
+
+      const updatedQuantity = response.data.Data.quantity;
+      if (updatedQuantity === 0 || val === 0) {
+        setFoodItems((prevItems) =>
+          prevItems.filter((item) => item.id !== cartItemId.id)
+        );
+        setCartItemCount((prevCount) => prevCount - 1);
+      } else {
+        setFoodItems((prevItems) =>
+          prevItems.map((item) =>
+            item.id === cartItemId.id
+              ? { ...item, quantity: updatedQuantity }
+              : item
+          )
+        );
+        if (val > 0) {
+          setCartItemCount((prevCount) => prevCount + 1);
+        }
+      }
+      updateTotalPrice();
+
+      try {
+        const countData = await axios.get("/restaurant/getCount", config);
+        setCartItemCount(countData.data.Count);
+      } catch (error) {
+        console.error("Error fetching count data:", error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const handleRazorpayHandler = async (amount, currency, orderId) => {
+    console.log("inside handler");
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
     );
 
-    setTimeout(() => {
-      dispatch(clearCartItems());
-      navigate("/order", { state: { idArray } });
-    }, 5000);
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+
+    const options = {
+      key: "rzp_test_dcM4CwYb7Oe9M2",
+      amount: amount,
+      currency: currency,
+      name: "Anugraha S",
+      description: "Payment to order food",
+      order_id: orderId,
+      handler: async function (response) {
+        try {
+          const paymentDetails = {
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpayOrderId: orderId,
+            razorpaySignature: response.razorpay_signature,
+            paymentMethod: "Online Payment",
+          };
+
+          const res = await axios.post(
+            `/user/paymentSuccess/${userId}/${cartId}`,
+            paymentDetails,
+            config
+          );
+
+          setOrderItems(res.data);
+          const id = res.data.Data.id;
+          dispatch(addOrder(id));
+          setBtn(!btn);
+          setBtnState((prevState) =>
+            prevState === "Place Order" ? "Order Placed" : "Place Order"
+          );
+
+          setTimeout(() => {
+            dispatch(clearCartItems());
+            navigate("/userOrder", { state: { orderItems } });
+          }, 5000);
+        } catch (err) {
+          console.log(err);
+        }
+      },
+      prefill: {
+        name: "Anugraha S",
+        email: "anugrahas2001@gmail.com",
+        contact: "7306634251",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
+  const createRazorpayOrder = async (amount, currency) => {
+    try {
+      const response = await axios.post("/user/createOrder", {
+        amount,
+        currency,
+      });
+      const { orderId } = response.data;
+
+      if (option === "Online Payment" && orderId) {
+        handleRazorpayHandler(amount, currency, orderId);
+      } else if (option === "Cash On Delivery") {
+        const res = await axios.post(
+          `/user/paymentSuccess/${userId}/${cartId}`,
+          { razorpayOrderId: orderId, paymentMethod: "Cash On Delivery" },
+          config
+        );
+        console.log(res, "result");
+        setOrderItems(res.data);
+        const id = res.data.Data.id;
+        dispatch(addOrder(id));
+        setBtn(!btn);
+        setBtnState((prevState) =>
+          prevState === "Place Order" ? "Order Placed" : "Place Order"
+        );
+
+        setTimeout(() => {
+          dispatch(clearCartItems());
+          navigate("/userOrder", { state: { foodItems } });
+        }, 5000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const data = foodItems.map((item) => {
@@ -125,7 +256,10 @@ const Cart = () => {
               </div>
 
               <div className="text-sm flex">
-                <FontAwesomeIcon className="test-sm mt-1" icon={faIndianRupeeSign} />
+                <FontAwesomeIcon
+                  className="test-sm mt-1"
+                  icon={faIndianRupeeSign}
+                />
                 {!item.food.discount ? (
                   item.food.actualPrice
                 ) : (
@@ -175,11 +309,12 @@ const Cart = () => {
       </div>
     );
   });
+
   return (
     <div className="w-full overflow-x-hidden">
-      <Search />
-      <div className=" w-full ml-10 mr-10">
-        <div className="flex flex-wrap ml-5" key={data.id}>
+      <Search cartItemCount={cartItemCount} />
+      <div className=" w-full ml-10 mr-10" key={data.id}>
+        <div className="flex flex-wrap ml-5">
           {data}
           <div className="w-96 h-auto shadow-lg ml-3 absolute right-5">
             <div className="m-5">
@@ -205,6 +340,8 @@ const Cart = () => {
                   item.cart.deliveryCharge == 0
                     ? "Free"
                     : item.cart.deliveryCharge;
+
+                payableAmount = totalAmountWithoutDiscount + deliveryCharges;
 
                 return (
                   <div className="text-lg h-5 m-5 mt-2 flex justify-between ">
@@ -244,60 +381,91 @@ const Cart = () => {
                     className="text-sm mt-2 text-green-600"
                     icon={faIndianRupeeSign}
                   />
-                  <p className="mb-2 text-md text-green-600">
-                    {totalDiscountPrice}
+                  <p className="text-green-600">
+                    {totalDiscountPrice ? totalDiscountPrice : 0}
                   </p>
                 </div>
               </div>
               <div className="text-lg h-5 m-5 mt-2 flex justify-between">
                 <p>Delivery Charges</p>
                 <div className="flex">
-                  <p className="mb-2 text-md text-green-600">
-                    {deliveryCharges}
-                  </p>
+                  <FontAwesomeIcon
+                    className="text-sm mt-2"
+                    icon={faIndianRupeeSign}
+                  />
+                  {deliveryCharges}
                 </div>
+              </div>
+              <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2">
+                <p>Total Amount</p>
+                <div className="flex">
+                  <FontAwesomeIcon
+                    className="text-sm mt-2"
+                    icon={faIndianRupeeSign}
+                  />
+                  {payableAmount}
+                </div>
+              </div>
+              <div className="flex justify-center items-center">
+                <input
+                  type="checkbox"
+                  name="option"
+                  value="Cash On Delivery"
+                  className="text-sm ml-6 "
+                  checked={option === "Cash On Delivery"}
+                  onChange={(e) => {
+                    setOption(e.target.value);
+                  }}
+                />
+                <label htmlFor="pay" className="text-sm text-red-500">
+                  Cash On Delivery
+                </label>
+                <input
+                  type="checkbox"
+                  name="option"
+                  value="Online Payment"
+                  className="text-sm ml-6 "
+                  checked={option === "Online Payment"}
+                  onChange={(e) => {
+                    setOption(e.target.value);
+                  }}
+                />
+                <label htmlFor="pay" className="text-sm text-red-500">
+                  Online Payment
+                </label>
               </div>
               <div className="flex flex-col">
-                <div className="text-lg h-6 m-5 mt-2 font-semibold flex justify-between border-dashed border-gray-400 border-t-2">
-                  <p>Total Amount</p>
-                  <div className="flex">
-                    <p className="mb-2 text-md text-green-600">
-                      {/* {ItemsPrice - random} */}
-                    </p>
-                  </div>
+                <div className="flex justify-center items-center">
+                  <button
+                    onClick={() =>
+                      createRazorpayOrder(payableAmount, "INR", "recept_id")
+                    }
+                    className="h-10 ml-4 mt-3 bg-blue-600 w-72 text-white text-lg font-semibold rounded-sm"
+                  >
+                    {btnState}
+                  </button>
+
+                  {option === "Cash On Delivery" && btn && (
+                    <Confetti
+                      width={dimension.width}
+                      height={dimension.height}
+                      numberOfPieces={1000}
+                      recycle={false}
+                      gravity={0.1}
+                    />
+                  )}
                 </div>
-                <div className="flex justify-between">
-                  <p className="text-sm ml-6 text-red-500 cursor-pointer">
-                    Cash On Delivery
-                  </p>
-                  <p className="text-sm ml-6 text-red-500 mr-7 cursor-pointer">
-                    Online Pyment
+                <div className="text-lg flex justify-between items-center">
+                  <p className="text-sm text-green-800 font-bold mt-1 ml-9">
+                    You will save ₹{totalDiscountPrice} on this order
                   </p>
                 </div>
-              </div>
-              <div className="text-lg h-6 m-5 mt-2 flex justify-between border-dashed border-gray-400 border-t-2">
-                <p className="text-sm text-green-800 font-bold mt-1">
-                  You will save ₹{totalDiscountPrice} on this order
-                </p>
-              </div>
-              <div
-                className="text-lg h-14 rounded-sm m-5 mt-2 flex justify-between bg-blue-600 cursor-pointer"
-                onClick={() => {
-                  // cartHandler(ItemsPrice + random);
-                }}
-              >
-                {/* {console.log(ItemsPrice - random, "cart")} */}
-                <p className=" text-white text-lg font-bold flex justify-center items-center ml-24">
-                  {btnState}
-                </p>
-                {btn && (
-                  <Confetti width={dimension.width} height={dimension.height} />
-                )}
               </div>
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

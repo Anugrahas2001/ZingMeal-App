@@ -6,13 +6,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Header from "../common/Header";
 import { useSelector } from "react-redux";
-// import { selectTotalQuantity } from "../../slices/cartItemSlice";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-const Search = () => {
+const Search = ({cartItemCount}) => {
   const inputRef = useRef(null);
   const [dishname, setDishName] = useState("");
-  // const count = useSelector(selectTotalQuantity);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -27,7 +26,7 @@ const Search = () => {
         />
         <div className="flex relative bottom-3 right-4">
           <p className="text-sm w-6 h-6 pl-2 rounded-full bg-red-500 text-white top-5 mb-4 flex items-center">
-            {/* {count} */}
+            {cartItemCount || 0}
           </p>
         </div>
       </div>

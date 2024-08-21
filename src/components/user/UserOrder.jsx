@@ -5,7 +5,7 @@ import Search from './Search'
 const UserOrder = () => {
   return (
     <div>
-      <Order><Search/></Order>
+      <Order isUserPage={true}><Search/></Order>
     </div>
   )
 }

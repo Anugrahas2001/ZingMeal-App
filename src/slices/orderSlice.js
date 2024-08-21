@@ -1,22 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { PREPARING } from "../constants/constants";
 
-const orderData =
-  localStorage.getItem("orderItems") != 0
-    ? JSON.parse(localStorage.getItem("orderItems"))
-    : [];
+const orderData = JSON.parse(localStorage.getItem("orderItems")) || [];
 
 const orderSlice = createSlice({
   name: "order",
-  initialState: [],
+  initialState: orderData,
   reducers: {
     addOrder: (state, action) => {
       state.push({
-        orderId: Math.floor(Math.random() * (200 - 10 + 1)) + 10,
-        order: action.payload.cart,
-        totalPrice: action.payload.price,
-        status: PREPARING,
-      });
+id:action.payload
+      })
 
       localStorage.setItem("orderItems", JSON.stringify(state));
     },
