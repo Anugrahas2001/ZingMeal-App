@@ -5,7 +5,7 @@ import Header from '../common/Header'
 const RestaurantOrder = () => {
   return (
     <div>
-      <Order><Header/></Order>
+      <Order isRestaurantPage={true}><Header/></Order>
     </div>
   )
 }

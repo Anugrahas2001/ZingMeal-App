@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 import axios from "../../axios/axios";
 
 const Hotels = () => {
+  let min = 17;
+  let max = 50;
+  
+
   const [hotelData, setHotel] = useState([]);
   useEffect(() => {
     axios
@@ -18,12 +22,13 @@ const Hotels = () => {
   }, []);
 
   const hotelDetails = hotelData.map((hotel) => {
+    const random = Math.floor(Math.random() * (max - min + 1) + min);
     return (
       <div className="flex flex-col w-1/4 rounded-md shadow ml-14 mt-7">
         <Link to={`/restuarent/${hotel.id}`}>
-          <div className="w-80 h-28 rounded-md ">
+          <div className="h-28 rounded-md ">
             <img
-              className="w-full object-cover rounded-md p-3 ml-1"
+              className="w-full object-cover rounded-md p-3 ml-1 h-56"
               src={hotel.restaurantImg}
               alt={hotel.restaurantName}
             />
@@ -34,7 +39,8 @@ const Hotels = () => {
             <div className="flex justify-between w-64 h-5">
               <div className="ml-5 text-lg ">{hotel.restaurantName}</div>
               <div className="flex justify-between ml-4 bg-green-500 ">
-                <FontAwesomeIcon icon={faStar} />
+                <FontAwesomeIcon icon={faStar} className="text-sm mt-1" />
+                <p>1</p>
               </div>
             </div>
           </div>
@@ -45,7 +51,7 @@ const Hotels = () => {
                 ? "Currently Available"
                 : "Currently Not avilable"}
             </p>
-            <p className="">27 min</p>
+            <p>{random} min</p>
           </div>
         </div>
       </div>

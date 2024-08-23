@@ -9,11 +9,12 @@ import Cookies from "js-cookie";
 
 const Order = (props) => {
   const dispatch = useDispatch();
-  const { isUserPage, children } = props;
+  const { isUserPage, children, isRestaurantPage } = props;
   const restaurantId = useSelector((store) => store.restaurant.id);
+  console.log(restaurantId, "iddd of resturant");
   const [orders, setOrders] = useState([]);
   const [pastOrders, setPastOrders] = useState([]);
-  console.log(pastOrders, "paasttts");
+  // console.log(pastOrders, "paasttts");
 
   const accessToken = Cookies.get("accessToken");
   const [orderStatuses, setOrderStatuses] = useState({});
@@ -32,8 +33,12 @@ const Order = (props) => {
           : await axios.get(
               `/restaurant/allOrdersInRestaurant/${restaurantId}`
             );
-        console.log(response.data.sortedOrders, "the dataaaaaaa");
-        setOrders(response.data.sortedOrders);
+        console.log(response.data.orders, "the dataaaaaaa restauranttt");
+        {
+          isUserPage
+            ? setOrders(response.data.sortedOrders)
+            : setOrders(response.data.orders);
+        }
       } catch (error) {
         console.error("Failed to fetch orders:", error);
       }
@@ -45,7 +50,7 @@ const Order = (props) => {
     axios
       .get(`/restaurant/cancelAndDelivered`)
       .then((response) => {
-        console.log(response.data.Data, "resshdkkdc,,d");
+        // console.log(response.data.Data, "resshdkkdc,,d");
         setPastOrders(response.data.Data);
       })
       .catch((error) => {
@@ -65,7 +70,7 @@ const Order = (props) => {
       // const newOrderStatuses = { ...orderStatuses };
       // delete newOrderStatuses[orderId];
       // setOrderStatuses(newOrderStatuses);
-      console.log(response, "after cancel");
+      // console.log(response, "after cancel");
 
       notify();
     } catch (error) {
@@ -98,19 +103,35 @@ const Order = (props) => {
     });
   };
 
-  const changeOrderStatusHandler = async (orderId, newStatus) => {
-    console.log(newStatus, orderId, "new");
-    setOrderStatuses(newStatus);
+  // const changeOrderStatusHandler = async (orderId, newStatus) => {
+  //   console.log(newStatus, orderId, "new");
+  //   setOrderStatuses(newStatus);
+  //   const response = await axios.patch(
+  //     `/restaurant/updateOrderStatus/${restaurantId}/${orderId}`,
+  //     {
+  //       orderStatus: newStatus,
+  //     },
+  //     config
+  //   );
+  //   console.log(response, "response daaaaataaaa");
+  //   console.log(orderStatuses, "statusss");
+  // };
+
+  const changeOrderStatusHandler = async (orderId, status) => {
+    setOrderStatuses((prevStatuses) => ({
+      ...prevStatuses,
+      [orderId]: status,
+    }));
     const response = await axios.patch(
       `/restaurant/updateOrderStatus/${restaurantId}/${orderId}`,
       {
-        orderStatus: newStatus,
+        orderStatus: status,
       },
       config
     );
-    console.log(response, "response daaaaataaaa");
   };
 
+  console.log(orderStatuses, "statusss");
   const renderOrderItems = (orderItems) => {
     return orderItems.map((item) => {
       return (
@@ -152,7 +173,6 @@ const Order = (props) => {
                 <div>{renderOrderItems(order.orderItems)}</div>
               </div>
               <div>
-
                 {isUserPage && (
                   <div className="flex justify-center items-center flex-col">
                     <p>{order.orderStatus}</p>
@@ -163,14 +183,14 @@ const Order = (props) => {
                   </div>
                 )}
 
-                {/* {isRestaurantPage && (
+                {isRestaurantPage && (
                   <div className="flex justify-center flex-col">
                     <select
                       className="ml-10 mt-2 outline-none"
                       value={orderStatuses[order.id] || "PREPARING"}
-                      onChange={(e) => {
-                        changeOrderStatusHandler(order.id, e.target.value);
-                      }}
+                      onChange={(e) =>
+                        changeOrderStatusHandler(order.id, e.target.value)
+                      }
                     >
                       <option value="PREPARING">PREPARING</option>
                       <option value="PACKED">PACKED</option>
@@ -178,7 +198,7 @@ const Order = (props) => {
                       <option value="DELIVERED">DELIVERED</option>
                     </select>
                   </div>
-                )} */}
+                )}
               </div>
               <div className="h-auto ml-20 flex flex-col justify-between">
                 <div className="flex">
@@ -188,7 +208,7 @@ const Order = (props) => {
                       className="mt-1"
                       icon={faIndianRupeeSign}
                     />
-                    <p className="ml-1">{order.totalPrice}</p>
+                    <p className="ml-1">{Math.round(order.totalPrice)}</p>
                   </div>
                 </div>
                 <button
@@ -202,50 +222,55 @@ const Order = (props) => {
           ))}
         </div>
         <ToastContainer />
-        <p className="font-semibold text-xl">Past Orders</p>
-        {pastOrders.map((order) => {
-          return (
-            <div
-              key={order.id}
-              className="w-full h-auto m-2 flex justify-between shadow mb-4 p-5"
-            >
-              <div className="w-80 ml-4">
-                <p>Order ID: {order.id}</p>
-                {order.orderItems.map((item) => {
-                  return (
-                    <div key={item.id}>
-                      <img
-                        className="w-20 rounded-sm m-2"
-                        src={item.food.imageFile}
-                        alt={item.food.foodName}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-              <div>
-                <div className="flex justify-center flex-col">
-                  <p className="ml-10 mt-3">{order.orderStatus}</p>
-                  <p className="text-sm">
-                    Your item has been {order.orderStatus}
-                  </p>
+        {isUserPage && (
+          <p className="font-semibold text-2xl bg-gray-300 flex justify-center mt-10">
+            Past Orders
+          </p>
+        )}
+        {isUserPage &&
+          pastOrders.map((order) => {
+            return (
+              <div
+                key={order.id}
+                className="w-full h-auto m-2 flex justify-between shadow mb-4 p-5"
+              >
+                <div className="w-80 ml-4">
+                  <p>Order ID: {order.id}</p>
+                  {order.orderItems.map((item) => {
+                    return (
+                      <div key={item.id}>
+                        <img
+                          className="w-20 rounded-sm m-2"
+                          src={item.food.imageFile}
+                          alt={item.food.foodName}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
-              </div>
-              <div className="h-auto ml-20 flex flex-col justify-between">
-                <div className="flex">
-                  <p className="mt-5">Total Price:</p>
-                  <div className="bg-yellow-400 flex p-1 rounded-md mt-5 h-7">
-                    <FontAwesomeIcon
-                      className="mt-1"
-                      icon={faIndianRupeeSign}
-                    />
-                    <p className="ml-1">{order.totalPrice}</p>{" "}
+                <div>
+                  <div className="flex justify-center flex-col">
+                    <p className="ml-10 mt-3">{order.orderStatus}</p>
+                    <p className="text-sm">
+                      Your item has been {order.orderStatus}
+                    </p>
+                  </div>
+                </div>
+                <div className="h-auto ml-20 flex flex-col justify-between">
+                  <div className="flex">
+                    <p className="mt-5">Total Price:</p>
+                    <div className="bg-yellow-400 flex p-1 rounded-md mt-5 h-7">
+                      <FontAwesomeIcon
+                        className="mt-1"
+                        icon={faIndianRupeeSign}
+                      />
+                      <p className="ml-1">{order.totalPrice}</p>{" "}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );

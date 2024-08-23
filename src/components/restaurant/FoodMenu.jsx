@@ -3,19 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { addMenu } from "../../slices/menuSlice";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from '../../axios/axios'
+import axios from "../../axios/axios";
 
 const FoodMenu = () => {
   const dispatch = useDispatch();
-  const restaurantId=useSelector((store)=>store.restaurant.id);
+  const restaurantId = useSelector((store) => store.restaurant.id);
   const [foodMenu, setFoodMenu] = useState({
     foodName: "",
     foodCategory: "",
-    isVeg: false,
-    isNonVeg: false,
+    foodDescription:"",
     actualPrice: "",
-    discount:"",
-    description: "",
+    discount: "",
+    preparingTime:"",
+    foodType: "",
     imageFile: null,
   });
 
@@ -33,21 +33,39 @@ const FoodMenu = () => {
     });
   };
 
-  const handleSubmitMenu =async (e) => {
+  const handleSubmitMenu = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.set("foodName", foodMenu.foodName);
+    formData.set("foodCategory", foodMenu.foodCategory);
+    formData.set("foodType", foodMenu.foodType);
+    formData.set("actualPrice", foodMenu.actualPrice);
+    formData.set("discount", foodMenu.discount);
+    formData.set("preparingTime",foodMenu.preparingTime)
+    formData.set("foodDescription", foodMenu.foodDescription);
+    formData.append("imageFile", foodMenu.imageFile);
 
-    const formData=new FormData();
-    formData.set("foodName",foodMenu.foodName);
-    formData.set("foodCategory",foodCategory);
-    formData.set("isVeg")
-
-    const response=await axios.post(`/restaurant/createFood/${restaurantId}`)
-
-
+    const response = await axios.post(`/restaurant/createFood/${restaurantId}`,formData,{
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(response,"responsfgdhhd")
 
     notify();
     dispatch(addMenu(foodMenu));
+    
+    setFoodMenu({
+      foodName: "",
+      foodCategory: "",
+      foodDescription:"",
+      actualPrice: "",
+      discount: "",
+      preparingTime:"",
+      foodType: "",
+      imageFile: null,
+    })
   };
 
   return (
@@ -96,31 +114,52 @@ const FoodMenu = () => {
           />
         </div>
 
-        <div className="flex flex-col mt-4">
-          <label
-            htmlFor="itemType"
-            className="bg-gray-300 p-2 w-full flex justify-center items-center"
-          >
-            Item Type
-          </label>
-          <select
-            id="itemType"
-            required
-            className="w-full p-2 border border-gray-600 rounded-sm outline-none"
-            value={foodMenu.isVeg ? "Veg" : "Non-Veg"}
-            onChange={(e) =>
-              setFoodMenu({ ...foodMenu, isVeg: e.target.value === "Veg" })
-            }
-          >
-            <option value="Veg">Veg</option>
-            <option value="Non-Veg">Non-Veg</option>
-            <option value="Veg">Select</option>
-          </select>
+        <div className="flex justify-around">
+          <div className="flex flex-col mt-4 w-80">
+            <label
+              htmlFor="foodType"
+              className="bg-gray-300 p-2 w-full flex justify-center items-center"
+            >
+              Item Type
+            </label>
+            <select
+              id="foodType"
+              required
+              className="w-full p-2 border border-gray-600 rounded-sm outline-none"
+              value={foodMenu.foodType}
+              onChange={(e) =>
+                setFoodMenu({ ...foodMenu, foodType: e.target.value})
+              }
+            >
+              <option value="">Select</option>
+              <option value="Veg">Veg</option>
+              <option value="Non-Veg">Non-Veg</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col mt-4 w-80 ml-2">
+            <label
+              htmlFor="discount"
+              className="bg-gray-300 p-2 w-full flex justify-center items-center"
+            >
+              Item Discount
+            </label>
+            <input
+              type="number"
+              id="discount"
+              required
+              className="w-full p-2 border border-gray-600 rounded-sm outline-none"
+              value={foodMenu.discount}
+              onChange={(e) =>
+                setFoodMenu({ ...foodMenu, discount: e.target.value })
+              }
+            />
+          </div>
         </div>
 
         <div className="flex flex-col mt-4">
           <label
-            htmlFor="price"
+            htmlFor="actualPrice"
             className="bg-gray-300 p-2 w-full flex justify-center items-center"
           >
             Price
@@ -130,29 +169,49 @@ const FoodMenu = () => {
             placeholder="Add item price"
             type="text"
             required
-            id="price"
-            value={foodMenu.price}
+            id="actualPrice"
+            value={foodMenu.actualPrice}
             onChange={(e) =>
-              setFoodMenu({ ...foodMenu, price: e.target.value })
+              setFoodMenu({ ...foodMenu, actualPrice: e.target.value })
             }
           />
         </div>
 
         <div className="flex flex-col mt-4">
           <label
-            htmlFor="description"
+            htmlFor="preparingTime"
+            className="bg-gray-300 p-2 w-full flex justify-center items-center"
+          >
+            Preparation Time
+          </label>
+          <input
+            className="w-full p-2 border border-gray-600 rounded-sm outline-none"
+            placeholder="Add item preparation time"
+            type="text"
+            required
+            id="preparingTime"
+            value={foodMenu.preparingTime}
+            onChange={(e) =>
+              setFoodMenu({ ...foodMenu, preparingTime: e.target.value })
+            }
+          />
+        </div>
+
+        <div className="flex flex-col mt-4">
+          <label
+            htmlFor="foodDescription"
             className="bg-gray-300 p-2 w-full flex justify-center items-center"
           >
             Description
           </label>
           <textarea
             className="w-full p-2 h-40 border border-gray-600 rounded-sm outline-none"
-            id="description"
+            id="foodDescription"
             required
             placeholder="Add item description"
-            value={foodMenu.description}
+            value={foodMenu.foodDescription}
             onChange={(e) =>
-              setFoodMenu({ ...foodMenu, description: e.target.value })
+              setFoodMenu({ ...foodMenu, foodDescription: e.target.value })
             }
           />
         </div>

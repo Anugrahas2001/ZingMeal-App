@@ -11,6 +11,8 @@ import RestuarentPage from "./components/restaurant/RestuarentHomePage";
 import UserOrder from "./components/user/UserOrder";
 import RestaurantOrder from "./components/restaurant/RestaurantOrder";
 import TabView from "./components/common/TabView";
+import EditRestaurantMenu from "./components/restaurant/EditRestaurantMenu";
+// import RestuarentHomePage from "./components/restaurant/RestuarentHomePage";
 // import incerceptor from './components/common/interceptor'
 
 function App() {
@@ -19,9 +21,10 @@ function App() {
       <Router>
         <Routes>
         <Route path="/" element={<TabView/>} />
-          <Route path="/restaurant" element={<RestuarentPage />} />
+          <Route path="/restaurant" element={<RestuarentPage/>} />
           <Route path="/add" element={<FoodMenu />} />
-          <Route path="/edit" element={<EditFoodMenu />} />
+          <Route path="/editRestaurant" element={<EditRestaurantMenu/>} />
+          <Route path="/editFood/:id" element={<EditFoodMenu/>} />
           <Route path="/user" element={<UseHomePage />} />
           <Route path="/restuarent/:id" element={<UserRestuarent />} />
           <Route path="/food/:id" element={<FoodRecepies />} />
