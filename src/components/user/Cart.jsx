@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,6 +14,7 @@ import Search from "../user/Search";
 import axios from "../../axios/axios";
 import Cookies from "js-cookie";
 import { ToastContainer } from "react-toastify";
+import { CounterContext } from "../common/CountContext";
 
 const Cart = () => {
   const cartId = useSelector((store) => store.cart.id);
@@ -25,7 +26,6 @@ const Cart = () => {
   const navigate = useNavigate();
   const [foodItems, setFoodItems] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
-  const [cartItemCount, setCartItemCount] = useState(0);
   const [btnState, setBtnState] = useState("Place Order");
   const [btn, setBtn] = useState(false);
   const [option, setOption] = useState("");
@@ -33,6 +33,7 @@ const Cart = () => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const {cartItemCount, setCartItemCount}=useContext(CounterContext);
 
   let totalAmountWithoutDiscount = 0;
   let totalDiscountPrice = 0;

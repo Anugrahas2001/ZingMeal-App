@@ -13,11 +13,9 @@ const Order = (props) => {
   const dispatch = useDispatch();
   const { isUserPage, children, isRestaurantPage } = props;
   const restaurantId = useSelector((store) => store.restaurant.id);
-  console.log(restaurantId, "iddd of resturant");
   const [orders, setOrders] = useState([]);
   const [pastOrders, setPastOrders] = useState([]);
   const { loading, setLoading } = useContext(LoadingContext);
-  // console.log(pastOrders, "paasttts");
 
   const accessToken = Cookies.get("accessToken");
   const [orderStatuses, setOrderStatuses] = useState({});

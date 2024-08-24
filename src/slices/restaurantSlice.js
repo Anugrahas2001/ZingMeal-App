@@ -17,7 +17,14 @@ const restuarentSlice = createSlice({
     },
     editResturant: (state, action) => {},
   },
+  removeRestaurant: (state) => {
+    localStorage.removeItem("restaurant");
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    return {};
+  },
 });
 
-export const { addRestaurant, editRestaurant } = restuarentSlice.actions;
+export const { addRestaurant, editRestaurant, removeRestaurant } =
+  restuarentSlice.actions;
 export default restuarentSlice.reducer;

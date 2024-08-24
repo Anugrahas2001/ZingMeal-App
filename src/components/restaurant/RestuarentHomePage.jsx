@@ -56,6 +56,33 @@ const RestuarentPage = () => {
     });
   };
 
+  const notifyCart = () => {
+    toast.error("Can't delete the food.Food is associated with the cart", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  const notifyOrder = () => {
+    toast.error("Can't delete the food.Food is associated with the order", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
   function formatTimeWithMeridian(date) {
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -79,6 +106,21 @@ const RestuarentPage = () => {
       })
       .catch((error) => {
         console.error("Failed to delete food or fetch updated list:", error);
+
+        if (
+          error.response &&
+          error.response.data.message ===
+            "Can't delete this food as it is related to some cart items"
+        ) {
+          notifyCart();
+        } else if (
+          error.response &&
+          error.response.data.message ===
+            "Can't delete this food as it related to some orders"
+        ) {
+          notifyOrder();
+        }
+
         setLoading(false);
       });
   };
@@ -159,7 +201,7 @@ const RestuarentPage = () => {
 
   return (
     <div className="w-full overflow-x-hidden">
-      <Header orderLink="/restaurantOrder" />
+      <Header isRestaurantPage={true} orderLink="/restaurantOrder"/>
       {loading ? (
         <Loader />
       ) : (
@@ -260,17 +302,3 @@ const RestuarentPage = () => {
 };
 
 export default RestuarentPage;
-
-// import RestuarentPage from '../common/RestuarentPage'
-// import Header from '../common/Header'
-
-// const RestuarentHomePage = () => {
-//   return (
-//     <div>
-//       <Header orderLink="/restaurantOrder" />
-//       <RestuarentPage isRestaurantPage={true}/>
-//     </div>
-//   )
-// }
-
-// export default RestuarentHomePage

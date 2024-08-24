@@ -10,8 +10,9 @@ import axios from "../../axios/axios";
 import Cookies from "js-cookie";
 import { LoadingContext } from "./LoaderContext";
 import Loader from "./Loader";
+import { CounterContext } from "./CountContext";
 
-const RestuarentPage = ({ onUpdateCount, isRestaurantPage }) => {
+const RestuarentPage = ({ isRestaurantPage }) => {
   const [hotel, setHotel] = useState({});
   const [foods, setFoods] = useState([]);
   const [type, setType] = useState("");
@@ -20,8 +21,11 @@ const RestuarentPage = ({ onUpdateCount, isRestaurantPage }) => {
   const cartId = useSelector((store) => store.cart.id);
   const restaurantId = useSelector((store) => store.restaurant.id);
   const cartItems = useSelector((store) => store.cartItem);
+  const {cartItemCount, setCartItemCount}=useContext(CounterContext);
   const { loading, setLoading } = useContext(LoadingContext);
   const dispatch = useDispatch();
+
+  const getAccessToken = () => Cookies.get("accessToken");
 
   useEffect(() => {
     setLoading(true);
@@ -49,10 +53,31 @@ const RestuarentPage = ({ onUpdateCount, isRestaurantPage }) => {
         console.log(error);
         setLoading(false);
       });
+  }, [id]);
+
+  useEffect(() => {
+    const fetchInitialCartItemCount = async () => {
+      const config = {
+        headers: { Authorization: getAccessToken() },
+      };
+
+      try {
+        const countData = await axios.get("/restaurant/getCount", config);
+        console.log(countData, "dataaa");
+        const newCount = countData.data.Count;
+        setCartItemCount(newCount);
+        dispatch(cartItemCounter(newCount));
+      } catch (error) {
+        console.error("Error fetching initial cart item count:", error);
+      }
+    };
+
+    fetchInitialCartItemCount();
   }, []);
 
   useEffect(() => {
     setLoading(true);
+    console.log(id, type, "dattaa");
     axios
       .get(`/restaurant/foodByType/${id}/${type}`)
       .then((response) => {
@@ -67,9 +92,9 @@ const RestuarentPage = ({ onUpdateCount, isRestaurantPage }) => {
   }, [type]);
 
   const notify = () => {
-    toast.success("Item added successfully!", {
+    toast.success('Food successfully added to cart', {
       position: "top-right",
-      autoClose: 2000,
+      autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -77,7 +102,7 @@ const RestuarentPage = ({ onUpdateCount, isRestaurantPage }) => {
       progress: undefined,
       theme: "light",
       transition: Bounce,
-    });
+      });
   };
 
   function formatTimeWithMeridian(date) {
@@ -89,11 +114,8 @@ const RestuarentPage = ({ onUpdateCount, isRestaurantPage }) => {
     return `${formattedHours}:${formattedMinutes} ${period}`;
   }
 
-  const getAccessToken = () => Cookies.get("accessToken");
-
   const addToCartFunction = async (foodId) => {
-    const accessToken = getAccessToken();
-
+    const accessToken = Cookies.get("accessToken");
     const config = {
       headers: { Authorization: `Bearer ${accessToken}` },
     };
@@ -106,7 +128,7 @@ const RestuarentPage = ({ onUpdateCount, isRestaurantPage }) => {
         config
       );
       const id = cartItem.data.Data.id;
-      console.log(id, "cart idd");
+      console.log(id, "cart idd after add to cart");
 
       await axios.patch(
         `/restaurant/totalPrice/${restaurantId}/${cartId}`,
@@ -117,13 +139,14 @@ const RestuarentPage = ({ onUpdateCount, isRestaurantPage }) => {
       const countData = await axios.get("/restaurant/getCount", config);
       const newCount = countData.data.Count;
 
-      onUpdateCount(newCount);
+      setCartItemCount(newCount);
       dispatch(cartItemCounter(newCount));
       dispatch(addToCart(id));
-      setLoading(false);
       notify();
     } catch (error) {
       console.error("Error in addToCartFunction:", error);
+      setLoading(false);
+    } finally {
       setLoading(false);
     }
   };

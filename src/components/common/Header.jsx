@@ -4,8 +4,9 @@ import { removeUser } from "../../slices/userSlice";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { removeRestaurant } from "../../slices/restaurantSlice";
 
-const Header = ({ children, cartLink, orderLink }) => {
+const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
   const dispatch = useDispatch();
 
   const notifySuccess = () => {
@@ -25,12 +26,14 @@ const Header = ({ children, cartLink, orderLink }) => {
   const LogOutHandler = () => {
     console.log("log out action");
     notifySuccess();
+    if (isRestaurantPage) {
+      dispatch(removeRestaurant());
+    }
     dispatch(removeUser());
-   
   };
 
   return (
-    <div className="flex items-center justify-between w-full h-[60px] m-4 ">
+    <div className="flex items-center justify-between w-full h-[60px] m-4 ml-16 mr-10">
       <Link to="/">
         <div className="w-36">
           <img
@@ -41,8 +44,8 @@ const Header = ({ children, cartLink, orderLink }) => {
         </div>
       </Link>
       {children}
-      <div className="flex m-2 w-40">
-        <div className="w-40 flex justify-between">
+      <div className="flex">
+        <div className="flex justify-between mt-2 right-28">
           {cartLink}
           <Link to={orderLink}>
             <p className="font-bold">Orders</p>

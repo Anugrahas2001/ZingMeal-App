@@ -4,13 +4,14 @@ import { addMenu } from "../../slices/menuSlice";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios/axios";
-import LoaderContext from "../common/LoaderContext";
+import LoaderContext, { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
 
 const FoodMenu = () => {
   const dispatch = useDispatch();
   const restaurantId = useSelector((store) => store.restaurant.id);
-  const { loading, setLoading } = useContext(LoaderContext);
+  const {loading, setLoading } = useContext(LoadingContext);
+  console.log(loading,"dattaaaa loading")
   const [foodMenu, setFoodMenu] = useState({
     foodName: "",
     foodCategory: "",

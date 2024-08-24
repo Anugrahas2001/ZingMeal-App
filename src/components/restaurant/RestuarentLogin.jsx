@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios/axios";
 import { useDispatch } from "react-redux";
 import { addRestaurant } from "../../slices/restaurantSlice";
-import LoaderContext from "../common/LoaderContext";
+import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
 
 const RestuarentLogin = () => {
@@ -26,7 +26,7 @@ const RestuarentLogin = () => {
   const [title, setTitle] = useState("Sign In");
   const [description, setDescription] = useState("New to ZingMeal");
   const [changeSection, setChangeSection] = useState("Create an account");
-  const { loading, setLoading } = useContext(LoaderContext);
+  const { loading, setLoading } = useContext(LoadingContext);
 
   const notifySuccess = () => {
     toast.success(`Restaurant ${title} successfully`, {
@@ -100,14 +100,15 @@ const RestuarentLogin = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!credentials.restaurantName || !credentials.password) {
+      setLoading(false);
       notifyFail();
       return;
     }
 
     try {
-      setLoading(true);
       let response;
       if (title === "Sign Up") {
         const formData = new FormData();
@@ -128,7 +129,7 @@ const RestuarentLogin = () => {
           },
         });
         console.log("Response from Signup API:", response);
-        setLoading(false);
+
         notifySuccess();
 
         setCredentials({
@@ -142,7 +143,6 @@ const RestuarentLogin = () => {
           closingTime: "",
         });
       } else {
-        setLoading(true);
         response = await axios.post("/restaurant/login", {
           restaurantName: credentials.restaurantName,
           restaurantPassword: credentials.password,
@@ -156,7 +156,7 @@ const RestuarentLogin = () => {
               accessToken: response.data.AccessToken,
             })
           );
-          setLoading(false);
+
           notifySuccess();
           navigate("/restaurant");
         } else {
@@ -211,7 +211,7 @@ const RestuarentLogin = () => {
 
   return (
     <div className="flex justify-center items-center mt-20">
-      {loading && <Loader />}
+      {/* {loading && <Loader />} */}
       <div className="flex flex-col w-96  h-auto justify-center items-center border border-gray-400 p-5">
         <div className="text-gray-500 font-semibold text-3xl mb-5">
           <p>{title}</p>

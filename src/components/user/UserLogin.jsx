@@ -4,7 +4,7 @@ import axios from "../../axios/axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
-import { addUser,removeUser } from "../../slices/userSlice.js";
+import { addUser, removeUser } from "../../slices/userSlice.js";
 import { createCart } from "../../slices/cartSlice.js";
 import Loader from "../common/Loader.jsx";
 import { LoadingContext } from "../common/LoaderContext.jsx";
@@ -18,12 +18,11 @@ const UserLogin = () => {
     password: "",
     confirmPassword: "",
   });
-  
 
   const [title, setTitle] = useState("Sign In");
   const [description, setDescription] = useState("New to ZingMeal?");
   const [changeText, setChangeText] = useState("Create an account");
-  const {loading,setLoading}=useContext(LoadingContext);
+  const { loading, setLoading } = useContext(LoadingContext);
 
   const notifySuccess = () => {
     toast.success(`User ${title} successfully`, {
@@ -83,24 +82,23 @@ const UserLogin = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
+    setLoading(true); 
+  
     if (!credentials.email || !credentials.password) {
+      setLoading(false);
       notifyFail();
       return;
     }
-
-    if (
-      title === "Sign Up" &&
-      credentials.password !== credentials.confirmPassword
-    ) {
+  
+    if (title === "Sign Up" && credentials.password !== credentials.confirmPassword) {
+      setLoading(false);
       notifyPassword();
       return;
     }
-
+  
     try {
-      setLoading(true);
       let response;
-
+  
       if (title === "Sign Up") {
         response = await axios.post("/user/signUp", {
           email: credentials.email,
@@ -112,7 +110,7 @@ const UserLogin = () => {
           email: credentials.email,
           password: credentials.password,
         });
-
+  
         if (response.data && response.data.accessToken) {
           const userId = response.data.Data.id;
           const config = {
@@ -120,47 +118,33 @@ const UserLogin = () => {
               Authorization: `Bearer ${response.data.accessToken}`,
             },
           };
-          const createCartResponse = await axios.get(
-            `/user/getcart/${userId}`,
-            config
-          );
-
+          const createCartResponse = await axios.get(`/user/getcart/${userId}`, config);
           const cartId = createCartResponse.data.Data.id;
-
+  
           dispatch(createCart({ id: cartId }));
-
-          dispatch(
-            addUser({
-              id: userId,
-              accessToken: response.data.accessToken,
-              refreshToken: response.data.refreshToken,
-            })
-          );
+          dispatch(addUser({
+            id: userId,
+            accessToken: response.data.accessToken,
+            refreshToken: response.data.refreshToken,
+          }));
           notifySuccess();
         }
-
+  
         setTimeout(() => {
           navigate("/user");
         }, 4000);
       }
-
+  
       setCredentials({
         email: "",
         password: "",
         confirmPassword: "",
       });
+  
     } catch (error) {
       if (error.response && error.response.data.message) {
-        if (
-          error.response.data.message ===
-          "User with this email is already present"
-        ) {
+        if (error.response.data.message === "User with this email is already present") {
           notifyInValidEmail();
-          setCredentials({
-            email: "",
-            password: "",
-            confirmPassword: "",
-          });
         } else {
           notifyFail();
         }
@@ -168,9 +152,10 @@ const UserLogin = () => {
         notifyFail();
       }
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
+  
 
   const changePage = () => {
     setTitle((prevState) => {
@@ -239,9 +224,9 @@ const UserLogin = () => {
           </div>
         )}
 
-        <div className="w-80 cursor-pointer flex justify-center items-center mt-5 rounded-sm">
+        <div className="w-80 flex justify-center items-center mt-5 rounded-sm cursor-pointer">
           <button
-            className="bg-blue-700 w-80 h-10 text-center text-white"
+            className="bg-blue-700 w-80 h-10 text-center text-white cursor-pointer"
             onClick={submitHandler}
             disabled={loading}
           >

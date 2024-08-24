@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../../axios/axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../common/Loader";
+import { LoadingContext } from "../common/LoaderContext";
 
 const EditRestaurantMenu = () => {
   const restaurantId = useSelector((store) => store.restaurant.id);
-  const { loading, setLoading } = useState(true);
+  const { loading, setLoading } = useContext(LoadingContext);
   const [restaurant, setRestaurant] = useState({
     restaurantName: "",
     restaurantImg: null,

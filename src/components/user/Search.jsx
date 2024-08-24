@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
@@ -7,19 +7,44 @@ import {
 import Header from "../common/Header";
 import { Link } from "react-router-dom";
 import axios from "../../axios/axios";
+import { CounterContext } from "../common/CountContext";
+import { cartItemCounter } from "../../slices/cartItemSlice";
+import Cookies from "js-cookie";
 
-const Search = ({ cartItemCount }) => {
+const Search = () => {
   const inputRef = useRef(null);
   const [dishname, setDishName] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [restaurantData, setRestaurantData] = useState(null);
+  const { cartItemCount, setCartItemCount } = useContext(CounterContext);
+  console.log(cartItemCount, "from search");
+  const getAccessToken = () => Cookies.get("accessToken");
 
   useEffect(() => {
     inputRef.current.focus();
   });
 
+  useEffect(() => {
+    const fetchInitialCartItemCount = async () => {
+      const config = {
+        headers: { Authorization: getAccessToken() },
+      };
+
+      try {
+        const countData = await axios.get("/restaurant/getCount", config);
+        console.log(countData, "dataaa");
+        const newCount = countData.data.Count;
+        setCartItemCount(newCount);
+        dispatch(cartItemCounter(newCount));
+      } catch (error) {
+        console.error("Error fetching initial cart item count:", error);
+      }
+    };
+
+    fetchInitialCartItemCount();
+  }, []);
+
   const searchItemHandler = () => {
-    console.log("hello iam search,dishname ");
     axios.get(`/user/search/${dishname}`).then((response) => {
       console.log(response.data.Data, "yeaggg");
       setSuggestions(response.data.Data);
@@ -47,7 +72,7 @@ const Search = ({ cartItemCount }) => {
         />
         <div className="flex relative bottom-3 right-4">
           <p className="text-sm w-6 h-6 pl-2 rounded-full bg-red-500 text-white top-5 mb-4 flex items-center">
-            {cartItemCount || 0}
+            {cartItemCount}
           </p>
         </div>
       </div>
@@ -73,28 +98,36 @@ const Search = ({ cartItemCount }) => {
             />
           </div>
           {suggestions.length > 0 && (
-            <div className="absolute top-full left-0 w-full bg-white border border-gray-300 shadow-lg z-10">
+            <div className="absolute top-full left-0 w-full bg-white border border-gray-300 shadow-lg">
               {suggestions.map((suggestion) => (
                 <Link to={`/restuarent/${suggestion.id}`}>
-                <div
-                  key={suggestion.id}
-                  className="p-2 hover:bg-gray-200 cursor-pointer"
-                  onClick={() => handleSuggestionClick(suggestion)}
-                >
-                  <div className="flex">
-                    <img
-                      className="w-10 rounded object-cover h-10 mr-3"
-                      src={suggestion.restaurantImg}
-                      alt=""
-                    />
-                     <div className="flex flex-col">
-                      <span className="font-semibold">{suggestion.restaurantName}</span>
-                      <span className={`${suggestion.restaurantStatus==="Open"?"text-green-500":"text-red-500"}`}>
-                        {suggestion.restaurantStatus}
-                      </span>
+                  <div
+                    key={suggestion.id}
+                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    <div className="flex">
+                      <img
+                        className="w-10 rounded object-cover h-10 mr-3"
+                        src={suggestion.restaurantImg}
+                        alt=""
+                      />
+                      <div className="flex flex-col">
+                        <span className="font-semibold">
+                          {suggestion.restaurantName}
+                        </span>
+                        <span
+                          className={`${
+                            suggestion.restaurantStatus === "Open"
+                              ? "text-green-500"
+                              : "text-red-500"
+                          }`}
+                        >
+                          {suggestion.restaurantStatus}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </Link>
               ))}
             </div>
@@ -106,4 +139,3 @@ const Search = ({ cartItemCount }) => {
 };
 
 export default Search;
-

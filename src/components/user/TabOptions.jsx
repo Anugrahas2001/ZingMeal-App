@@ -25,14 +25,14 @@ const TabOptions = () => {
   }, []);
 
   const categoryHandler = (category) => {
-    setLoading(true);
+    // setLoading(true);
     axios.get(`/restaurant/foodsByCategory/${category}`).then((response) => {
       setFoodCategories(response.data.Data);
       setShow(!show);
-      setLoading(false);
+      // setLoading(false);
     }).catch((error) => {
       console.log(error);
-      setLoading(false);
+      // setLoading(false);
     });
   };
 
@@ -60,27 +60,27 @@ const TabOptions = () => {
   });
 
   return (
-    <div className="overflow-x-hidden ml-16 mr-16">
+    <div className="overflow-x-hidden ml-16 mr-16 mt-5">
       <p className="text-3xl mt-2">Eat what makes you happy</p>
       {loading ? (
         <Loader />
       ) : (
         <>
           <div className="flex">{foodItemsToDisplay}</div>
-          <div className="w-full flex mt-3">
+          <div className="w-full flex justify-center">
             {foodCategories && show && (
-              <div className="flex justify-center rounded-md shadow p-3 flex-wrap">
+              <div className="flex justify-center rounded-md shadow p-3 flex-wrap mt-4">
                 {foodCategories.map((food) => (
                   <Link to={`/restuarent/${food.restaurant.id}`} key={food.id}>
                     <div
                       className="flex rounded-md h-64 p-3 shadow mb-4 m-7"
                     >
                       <div className="flex flex-col w-72">
-                        <img
+                        {loading?(<Loader/>):(<> <img
                           className="h-40 rounded-md"
                           src={food.imageFile}
                           alt={food.foodName}
-                        />
+                        /></>)}
                         <div className="flex justify-between">
                           <p>{food.foodName}</p>
                           <p>{food.preparingTime} min</p>

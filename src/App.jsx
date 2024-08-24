@@ -13,6 +13,7 @@ import RestaurantOrder from "./components/restaurant/RestaurantOrder";
 import TabView from "./components/common/TabView";
 import EditRestaurantMenu from "./components/restaurant/EditRestaurantMenu";
 import LoaderContext from "./components/common/LoaderContext";
+import CountContext from "./components/common/CountContext";
 // import RestuarentHomePage from "./components/restaurant/RestuarentHomePage";
 // import incerceptor from './components/common/interceptor'
 
@@ -20,21 +21,23 @@ function App() {
   return (
     <Provider store={store}>
       <LoaderContext>
-        <Router>
-          <Routes>
-            <Route path="/" element={<TabView />} />
-            <Route path="/restaurant" element={<RestuarentPage />} />
-            <Route path="/add" element={<FoodMenu />} />
-            <Route path="/editRestaurant" element={<EditRestaurantMenu />} />
-            <Route path="/editFood/:id" element={<EditFoodMenu />} />
-            <Route path="/user" element={<UseHomePage />} />
-            <Route path="/restuarent/:id" element={<UserRestuarent />} />
-            <Route path="/food/:id" element={<FoodRecepies />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/userOrder" element={<UserOrder />} />
-            <Route path="/restaurantOrder" element={<RestaurantOrder />} />
-          </Routes>
-        </Router>
+        <CountContext>
+          <Router>
+            <Routes>
+              <Route path="/" element={<TabView />} />
+              <Route path="/restaurant" element={<RestuarentPage />} />
+              <Route path="/add" element={<FoodMenu />} />
+              <Route path="/editRestaurant" element={<EditRestaurantMenu />} />
+              <Route path="/editFood/:id" element={<EditFoodMenu />} />
+              <Route path="/user" element={<UseHomePage />} />
+              <Route path="/restuarent/:id" element={<UserRestuarent />} />
+              <Route path="/food/:id" element={<FoodRecepies />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/userOrder" element={<UserOrder />} />
+              <Route path="/restaurantOrder" element={<RestaurantOrder />} />
+            </Routes>
+          </Router>
+        </CountContext>
       </LoaderContext>
     </Provider>
   );
