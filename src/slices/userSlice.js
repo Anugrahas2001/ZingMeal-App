@@ -17,8 +17,7 @@ const userSlice = createSlice({
       Cookies.set("accessToken", accessToken, { expires: 1, secure: true });
       Cookies.set("refreshToken", refreshToken, { expires: 7, secure: true });
     },
-    removeUser: () => {
-      // Clear user details from local storage and cookies
+    removeUser: (state) => {
       localStorage.removeItem("user");
       Cookies.remove("accessToken");
       Cookies.remove("refreshToken");

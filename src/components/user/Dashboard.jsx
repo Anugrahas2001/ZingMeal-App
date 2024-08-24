@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import axios from "../../axios/axios";
+import { LoadingContext } from "../common/LoaderContext";
+import Loader from "../common/Loader";
 
 const Hotels = () => {
   let min = 17;
   let max = 50;
-  
 
   const [hotelData, setHotel] = useState([]);
+  const { loading, setLoading } = useContext(LoadingContext);
   useEffect(() => {
+    setLoading(true);
     axios
       .get("/restaurant/allRestaurants")
       .then((response) => {
         setHotel(response.data.Data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   }, []);
 
@@ -61,12 +66,18 @@ const Hotels = () => {
   return (
     <div className="w-full ml-16 mr-16">
       <p className="text-3xl mt-2 w-full">Explore the food life!</p>
-      <div
-        className="flex flex-wrap w-full cursor-pointer p-3"
-        key={hotelDetails.id}
-      >
-        {hotelDetails}
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div
+            className="flex flex-wrap w-full cursor-pointer p-3"
+            key={hotelDetails.id}
+          >
+            {hotelDetails}
+          </div>
+        </>
+      )}
     </div>
   );
 };

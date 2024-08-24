@@ -1,27 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../axios/axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../../slices/userSlice.js";
+import { useDispatch } from "react-redux";
+import { addUser,removeUser } from "../../slices/userSlice.js";
 import { createCart } from "../../slices/cartSlice.js";
+import Loader from "../common/Loader.jsx";
+import { LoadingContext } from "../common/LoaderContext.jsx";
 
 const UserLogin = () => {
-  // const userData = useSelector((store) => store.user);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
+  
 
   const [title, setTitle] = useState("Sign In");
   const [description, setDescription] = useState("New to ZingMeal?");
   const [changeText, setChangeText] = useState("Create an account");
+  const {loading,setLoading}=useContext(LoadingContext);
 
   const notifySuccess = () => {
     toast.success(`User ${title} successfully`, {
@@ -38,7 +40,7 @@ const UserLogin = () => {
   };
 
   const notifyFail = () => {
-    toast.error("Mandatory feilds required", {
+    toast.error("Mandatory fields required", {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -52,35 +54,7 @@ const UserLogin = () => {
   };
 
   const notifyInValidEmail = () => {
-    toast.error("Email already exist", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
-
-  const notifyInvalid = () => {
-    toast.error("Invalid Credentials", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
-
-  const notifyError = () => {
-    toast.error("An error occurred. Please try again.", {
+    toast.error("Email already exists", {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -124,22 +98,20 @@ const UserLogin = () => {
     }
 
     try {
+      setLoading(true);
       let response;
 
       if (title === "Sign Up") {
-        console.log("Going to call Sign Up API");
         response = await axios.post("/user/signUp", {
           email: credentials.email,
           password: credentials.password,
           confirmPassword: credentials.confirmPassword,
         });
       } else {
-        console.log("Going to call Login API");
         response = await axios.post("/user/login", {
           email: credentials.email,
           password: credentials.password,
         });
-        console.log(response, "response of user");
 
         if (response.data && response.data.accessToken) {
           const userId = response.data.Data.id;
@@ -166,6 +138,7 @@ const UserLogin = () => {
           );
           notifySuccess();
         }
+
         setTimeout(() => {
           navigate("/user");
         }, 4000);
@@ -189,12 +162,13 @@ const UserLogin = () => {
             confirmPassword: "",
           });
         } else {
-          notifyError();
+          notifyFail();
         }
       } else {
-        notifyError();
-        console.log("API call failed", error);
+        notifyFail();
       }
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -218,6 +192,7 @@ const UserLogin = () => {
 
   return (
     <div className="flex justify-center items-center mt-24">
+      {loading && <Loader />}
       <div className="flex flex-col w-96  h-96 justify-center items-center border border-gray-400">
         <div className="text-gray-500 font-semibold text-3xl">
           <p>{title}</p>
@@ -268,6 +243,7 @@ const UserLogin = () => {
           <button
             className="bg-blue-700 w-80 h-10 text-center text-white"
             onClick={submitHandler}
+            disabled={loading}
           >
             Submit
           </button>

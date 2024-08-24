@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import axios from "../../axios/axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../common/Loader";
 
 const EditRestaurantMenu = () => {
   const restaurantId = useSelector((store) => store.restaurant.id);
-  console.log(restaurantId, "id data");
-  // const [hotel, setHotel] = useState({});
+  const { loading, setLoading } = useState(true);
   const [restaurant, setRestaurant] = useState({
     restaurantName: "",
     restaurantImg: null,
@@ -17,6 +17,7 @@ const EditRestaurantMenu = () => {
   });
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`/restaurant/getRestaurant/${restaurantId}`)
       .then((response) => {
@@ -28,8 +29,12 @@ const EditRestaurantMenu = () => {
           closingTime: data.closingTime,
           restaurantStatus: data.restaurantStatus,
         });
+        setLoading(false);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, [restaurantId]);
 
   const notify = () => {
@@ -62,6 +67,7 @@ const EditRestaurantMenu = () => {
 
   const handleSubmitMenu = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const formData = new FormData();
     formData.set("restaurantName", restaurant.restaurantName);
@@ -78,10 +84,12 @@ const EditRestaurantMenu = () => {
       })
       .then((response) => {
         console.log(response.data, "dataaa");
+        setLoading(false);
         notify();
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
         notifyFail();
       });
 
@@ -98,125 +106,140 @@ const EditRestaurantMenu = () => {
 
   return (
     <div className="flex justify-center items-center ">
-      <form
-        onSubmit={handleSubmitMenu}
-        className="bg-white p-7 rounded-md shadow-md w-full max-w-2xl"
-      >
-        <div className="flex flex-col mt-4">
-          <label
-            htmlFor="restaurantName"
-            className="bg-gray-300 p-2  flex justify-center items-center"
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <form
+            onSubmit={handleSubmitMenu}
+            className="bg-white p-7 rounded-md shadow-md w-full max-w-2xl"
           >
-            Restuarent Name
-          </label>
-          <input
-            className="w-full p-2 border border-gray-600 rounded-sm outline-none"
-            type="text"
-            required
-            id="restaurantName"
-            placeholder="Add restuarent name"
-            value={restaurant.restaurantName}
-            onChange={(e) => {
-              setRestaurant({ ...restaurant, restaurantName: e.target.value });
-            }}
-          />
-        </div>
+            <div className="flex flex-col mt-4">
+              <label
+                htmlFor="restaurantName"
+                className="bg-gray-300 p-2  flex justify-center items-center"
+              >
+                Restuarent Name
+              </label>
+              <input
+                className="w-full p-2 border border-gray-600 rounded-sm outline-none"
+                type="text"
+                required
+                id="restaurantName"
+                placeholder="Add restuarent name"
+                value={restaurant.restaurantName}
+                onChange={(e) => {
+                  setRestaurant({
+                    ...restaurant,
+                    restaurantName: e.target.value,
+                  });
+                }}
+              />
+            </div>
 
-        <div className="flex justify-around">
-          <div className="flex flex-col mt-4 w-80">
-            <label
-              htmlFor="openingTime"
-              className="bg-gray-300 p-2 w-full flex justify-center items-center"
-            >
-              Opening Time
-            </label>
-            <input
-              type="text"
-              id="openingTime"
-              required
-              placeholder="Opening Time"
-              className="w-full p-2 border border-gray-600 rounded-sm outline-none"
-              value={restaurant.openingTime}
-              onChange={(e) => {
-                setRestaurant({ ...restaurant, openingTime: e.target.value });
-              }}
-            />
-          </div>
+            <div className="flex justify-around">
+              <div className="flex flex-col mt-4 w-80">
+                <label
+                  htmlFor="openingTime"
+                  className="bg-gray-300 p-2 w-full flex justify-center items-center"
+                >
+                  Opening Time
+                </label>
+                <input
+                  type="text"
+                  id="openingTime"
+                  required
+                  placeholder="Opening Time"
+                  className="w-full p-2 border border-gray-600 rounded-sm outline-none"
+                  value={restaurant.openingTime}
+                  onChange={(e) => {
+                    setRestaurant({
+                      ...restaurant,
+                      openingTime: e.target.value,
+                    });
+                  }}
+                />
+              </div>
 
-          <div className="flex flex-col mt-4 w-80 ml-2">
-            <label
-              htmlFor="closingTime"
-              className="bg-gray-300 p-2 w-full flex justify-center items-center"
-            >
-              Closing Time
-            </label>
-            <input
-              type="text"
-              id="closingTime"
-              required
-              placeholder="Closing Time"
-              className="w-full p-2 border border-gray-600 rounded-sm outline-none"
-              value={restaurant.closingTime}
-              onChange={(e) => {
-                setRestaurant({ ...restaurant, closingTime: e.target.value });
-              }}
-            />
-          </div>
-        </div>
+              <div className="flex flex-col mt-4 w-80 ml-2">
+                <label
+                  htmlFor="closingTime"
+                  className="bg-gray-300 p-2 w-full flex justify-center items-center"
+                >
+                  Closing Time
+                </label>
+                <input
+                  type="text"
+                  id="closingTime"
+                  required
+                  placeholder="Closing Time"
+                  className="w-full p-2 border border-gray-600 rounded-sm outline-none"
+                  value={restaurant.closingTime}
+                  onChange={(e) => {
+                    setRestaurant({
+                      ...restaurant,
+                      closingTime: e.target.value,
+                    });
+                  }}
+                />
+              </div>
+            </div>
 
-        <div className="flex flex-col mt-4">
-          <label
-            htmlFor="restaurantStatus"
-            className="bg-gray-300 p-2 w-full flex justify-center items-center"
-          >
-            Restuarent Status
-          </label>
-          <select
-            id="restaurantStatus"
-            required
-            className="w-full p-2 border border-gray-600 rounded-sm outline-none"
-            value={restaurant.restaurantStatus}
-            onChange={(e) => {
-              setRestaurant({
-                ...restaurant,
-                restaurantStatus: e.target.value,
-              });
-            }}
-          >
-            <option value="">Select</option>
-            <option value="Closed">Closed</option>
-            <option value="Open">Open</option>
-          </select>
-        </div>
+            <div className="flex flex-col mt-4">
+              <label
+                htmlFor="restaurantStatus"
+                className="bg-gray-300 p-2 w-full flex justify-center items-center"
+              >
+                Restuarent Status
+              </label>
+              <select
+                id="restaurantStatus"
+                required
+                className="w-full p-2 border border-gray-600 rounded-sm outline-none"
+                value={restaurant.restaurantStatus}
+                onChange={(e) => {
+                  setRestaurant({
+                    ...restaurant,
+                    restaurantStatus: e.target.value,
+                  });
+                }}
+              >
+                <option value="">Select</option>
+                <option value="Closed">Closed</option>
+                <option value="Open">Open</option>
+              </select>
+            </div>
 
-        <div className="flex flex-col mt-4">
-          <label
-            htmlFor="restaurantImg"
-            className="bg-gray-300 p-2 w-full flex justify-center items-center"
-          >
-            Restuarent Image
-          </label>
-          <input
-            type="file"
-            id="restaurantImg"
-            onChange={(e) => {
-              setRestaurant({
-                ...restaurant,
-                restaurantImg: e.target.files[0],
-              });
-            }}
-          />
-        </div>
+            <div className="flex flex-col mt-4">
+              <label
+                htmlFor="restaurantImg"
+                className="bg-gray-300 p-2 w-full flex justify-center items-center"
+              >
+                Restuarent Image
+              </label>
+              <input
+                type="file"
+                id="restaurantImg"
+                onChange={(e) => {
+                  setRestaurant({
+                    ...restaurant,
+                    restaurantImg: e.target.files[0],
+                  });
+                }}
+              />
+            </div>
 
-        <div className="flex justify-center items-center mt-4">
-          <button
-            type="submit"
-            className="w-24 p-2 rounded-md bg-green-500 text-white"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
+            <div className="flex justify-center items-center mt-4">
+              <button
+                type="submit"
+                className="w-24 p-2 rounded-md bg-green-500 text-white"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </>
+      )}
       <ToastContainer />
     </div>
   );
