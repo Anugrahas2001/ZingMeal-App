@@ -7,8 +7,8 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, Bounce } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../axios/axios";
 import Header from "../common/Header";
@@ -296,7 +296,7 @@ const RestuarentPage = () => {
           </div>
         </>
       )}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };

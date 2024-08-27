@@ -4,8 +4,8 @@ import { faIndianRupeeSign, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { addToCart, cartItemCounter } from "../../slices/cartItemSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, Bounce } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios/axios";
 import Cookies from "js-cookie";
 import { LoadingContext } from "./LoaderContext";
@@ -94,7 +94,7 @@ const RestuarentPage = ({ isRestaurantPage }) => {
   const notify = () => {
     toast.success('Food successfully added to cart', {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -286,7 +286,7 @@ const RestuarentPage = ({ isRestaurantPage }) => {
           </div>
         </>
       )}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };

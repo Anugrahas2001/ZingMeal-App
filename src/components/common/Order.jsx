@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndianRupeeSign, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { ToastContainer, toast, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, Bounce } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../axios/axios";
 import Cookies from "js-cookie";
@@ -218,7 +218,7 @@ const Order = (props) => {
                 </div>
               ))}
             </div>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             {isUserPage && (
               <p className="font-semibold text-2xl bg-gray-300 flex justify-center mt-10">
                 Past Orders

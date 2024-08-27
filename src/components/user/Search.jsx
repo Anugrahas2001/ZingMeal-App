@@ -10,13 +10,15 @@ import axios from "../../axios/axios";
 import { CounterContext } from "../common/CountContext";
 import { cartItemCounter } from "../../slices/cartItemSlice";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
 
 const Search = () => {
   const inputRef = useRef(null);
   const [dishname, setDishName] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [restaurantData, setRestaurantData] = useState(null);
+  // const [restaurantData, setRestaurantData] = useState(null);
   const { cartItemCount, setCartItemCount } = useContext(CounterContext);
+  const dispatch=useDispatch();
   console.log(cartItemCount, "from search");
   const getAccessToken = () => Cookies.get("accessToken");
 
@@ -57,8 +59,7 @@ const Search = () => {
     }
   };
 
-  const handleSuggestionClick = (restaurant) => {
-    setRestaurantData(restaurant);
+  const handleSuggestionClick = () => {
     setSuggestions([]);
     setDishName("");
   };

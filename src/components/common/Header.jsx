@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { removeUser } from "../../slices/userSlice";
 import { useDispatch } from "react-redux";
-import { ToastContainer, toast, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, Bounce } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import { removeRestaurant } from "../../slices/restaurantSlice";
 
 const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
@@ -55,7 +55,7 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
           </p>
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };

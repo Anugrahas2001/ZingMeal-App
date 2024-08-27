@@ -14,6 +14,8 @@ import TabView from "./components/common/TabView";
 import EditRestaurantMenu from "./components/restaurant/EditRestaurantMenu";
 import LoaderContext from "./components/common/LoaderContext";
 import CountContext from "./components/common/CountContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import RestuarentHomePage from "./components/restaurant/RestuarentHomePage";
 // import incerceptor from './components/common/interceptor'
 
@@ -37,6 +39,7 @@ function App() {
               <Route path="/restaurantOrder" element={<RestaurantOrder />} />
             </Routes>
           </Router>
+          <ToastContainer/>
         </CountContext>
       </LoaderContext>
     </Provider>

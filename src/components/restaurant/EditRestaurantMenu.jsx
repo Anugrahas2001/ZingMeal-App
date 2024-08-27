@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../../axios/axios";
-import { ToastContainer, toast, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, Bounce } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import Loader from "../common/Loader";
 import { LoadingContext } from "../common/LoaderContext";
 
@@ -241,7 +241,7 @@ const EditRestaurantMenu = () => {
           </form>
         </>
       )}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };

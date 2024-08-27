@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, Bounce } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios/axios";
 import { useDispatch } from "react-redux";
 import { addRestaurant } from "../../slices/restaurantSlice";
@@ -397,7 +397,7 @@ const RestuarentLogin = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };

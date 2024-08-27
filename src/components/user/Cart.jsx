@@ -6,14 +6,18 @@ import {
   faIndianRupeeSign,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { addToCart, cartItemCounter,clearCartItems } from "../../slices/cartItemSlice";
+import {
+  addToCart,
+  cartItemCounter,
+  clearCartItems,
+} from "../../slices/cartItemSlice";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
 import { addOrder } from "../../slices/orderSlice";
 import Search from "../user/Search";
 import axios from "../../axios/axios";
 import Cookies from "js-cookie";
-import { ToastContainer } from "react-toastify";
+import { toast, Bounce } from "react-toastify";
 import { CounterContext } from "../common/CountContext";
 
 const Cart = () => {
@@ -33,7 +37,7 @@ const Cart = () => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  const {cartItemCount, setCartItemCount}=useContext(CounterContext);
+  const { cartItemCount, setCartItemCount } = useContext(CounterContext);
 
   let totalAmountWithoutDiscount = 0;
   let totalDiscountPrice = 0;
@@ -67,7 +71,7 @@ const Cart = () => {
     const fetchInitialCartItemCount = async () => {
       try {
         const countData = await axios.get("/restaurant/getCount", config);
-        const newCount=countData.data.Count;
+        const newCount = countData.data.Count;
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
       } catch (error) {
@@ -120,7 +124,7 @@ const Cart = () => {
       try {
         const countData = await axios.get("/restaurant/getCount", config);
         const newCount = countData.data.Count;
-        console.log(newCount, "count from carttt")
+        console.log(newCount, "count from carttt");
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
         dispatch(addToCart(id));
@@ -244,7 +248,7 @@ const Cart = () => {
 
   const data = foodItems.map((item) => {
     return (
-      <div className="border h-48 w-2/3 key={item.id} ">
+      <div className="border h-48 max-w-3xl key={item.id} ">
         <div className="flex mt-3 items-center">
           <div className="flex justify-center items-center mb-1">
             <img
@@ -259,8 +263,8 @@ const Cart = () => {
               <p className="line-clamp-1 w-3/4 ">{item.food.foodDescription}</p>
               <p>{item.food.foodType}</p>
               <div className="flex">
-                <p>{item.rating}</p>
                 <FontAwesomeIcon className="w-3 mt-1" icon={faStar} />
+                <p>1</p>
               </div>
 
               <div className="text-sm flex">
@@ -288,24 +292,24 @@ const Cart = () => {
                 )}
               </div>
 
-              <div className="flex justify-center items-center ml-10">
-                <button
-                  className="w-14 ml-2 bg-slate-200 text-lg font-semibold rounded-full"
-                  onClick={() => updateCartItemHandler({ id: item.id }, 1)}
-                >
-                  +
-                </button>
-                <button className="w-14 ml-2 bg-slate-300 text-lg font-semibold rounded-sm ">
-                  {item.quantity}
-                </button>
+              <div className="flex justify-center">
                 <button
                   className="w-14 ml-2 bg-slate-200 text-lg font-semibold rounded-full"
                   onClick={() => updateCartItemHandler({ id: item.id }, -1)}
                 >
                   -
                 </button>
+                <button className="w-14 ml-2 bg-slate-300 text-lg font-semibold rounded-sm ">
+                  {item.quantity}
+                </button>
                 <button
-                  className="w-20 h-8 ml-5 bg-orange-500 text-white text-lg font-semibold rounded-sm mr-1"
+                  className="w-14 ml-2 bg-slate-200 text-lg font-semibold rounded-full"
+                  onClick={() => updateCartItemHandler({ id: item.id }, 1)}
+                >
+                  +
+                </button>
+                <button
+                  className="w-20 h-8 ml-2 bg-orange-500 text-white text-lg font-semibold rounded-sm"
                   onClick={() => updateCartItemHandler({ id: item.id }, 0)}
                 >
                   Remove
@@ -321,38 +325,41 @@ const Cart = () => {
   return (
     <div className="w-full overflow-x-hidden">
       <Search cartItemCount={cartItemCount} />
-      <div className=" w-full ml-10 mr-10" key={data.id}>
-        <div className="flex flex-wrap ml-5">
-          {data}
-          <div className="w-96 h-auto shadow-lg ml-3 absolute right-5">
+      <div className="w-full px-4 md:px-10" key={data.id}>
+        <div className="flex flex-wrap md:flex-nowrap justify-center items-start ml-16 mr-16">
+          <div className="flex flex-wrap justify-start">
+            {data}
+          </div>
+  
+          <div className="w-full md:w-2/3 h-auto shadow-lg mt-8 md:mt-0 md:ml-3">
             <div className="m-5">
-              <div className="text-lg h-10 m-5 mt-2 flex justify-center items-center font-semibold shadow-lg ">
-                <p className="text-lg text-gray-500 h-5 ">Price Details</p>
+              <div className="text-lg h-10 m-5 mt-2 flex justify-center items-center font-semibold shadow-lg">
+                <p className="text-lg text-gray-500 h-5">Price Details</p>
               </div>
-
+  
               {foodItems.map((item) => {
                 const originalPrice = item.food.actualPrice * item.quantity;
                 totalAmountWithActualPrice += originalPrice;
-
+  
                 const foodPrice = !item.food.discount
                   ? item.food.actualPrice
                   : item.food.discountPrice;
-
+  
                 const totalAmount = foodPrice * item.quantity;
                 totalAmountWithoutDiscount += Math.round(totalAmount);
-
+  
                 totalDiscountPrice =
                   totalAmountWithActualPrice - totalAmountWithoutDiscount;
-
+  
                 deliveryCharges =
                   item.cart.deliveryCharge == 0
                     ? "Free"
                     : item.cart.deliveryCharge;
-
+  
                 payableAmount = totalAmountWithoutDiscount + deliveryCharges;
-
+  
                 return (
-                  <div className="text-lg h-5 m-5 mt-2 flex justify-between ">
+                  <div className="text-lg m-4 flex justify-between">
                     <div className="flex">
                       <p className="text-md">
                         {item.food.foodName} <FontAwesomeIcon icon={faXmark} />
@@ -371,6 +378,7 @@ const Cart = () => {
                   </div>
                 );
               })}
+  
               <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2">
                 <p>Price ({data.length} items)</p>
                 <div className="flex">
@@ -381,6 +389,7 @@ const Cart = () => {
                   {totalAmountWithoutDiscount}
                 </div>
               </div>
+  
               <div className="text-lg h-5 m-5 mt-2 flex justify-between">
                 <p>Discount</p>
                 <div className="flex">
@@ -394,6 +403,7 @@ const Cart = () => {
                   </p>
                 </div>
               </div>
+  
               <div className="text-lg h-5 m-5 mt-2 flex justify-between">
                 <p>Delivery Charges</p>
                 <div className="flex">
@@ -404,6 +414,7 @@ const Cart = () => {
                   {deliveryCharges}
                 </div>
               </div>
+  
               <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2">
                 <p>Total Amount</p>
                 <div className="flex">
@@ -414,68 +425,72 @@ const Cart = () => {
                   {payableAmount}
                 </div>
               </div>
-              <div className="flex justify-center items-center">
-                <input
-                  type="checkbox"
-                  name="option"
-                  value="Cash On Delivery"
-                  className="text-sm ml-6 "
-                  checked={option === "Cash On Delivery"}
-                  onChange={(e) => {
-                    setOption(e.target.value);
-                  }}
-                />
-                <label htmlFor="pay" className="text-sm text-red-500">
-                  Cash On Delivery
-                </label>
-                <input
-                  type="checkbox"
-                  name="option"
-                  value="Online Payment"
-                  className="text-sm ml-6 "
-                  checked={option === "Online Payment"}
-                  onChange={(e) => {
-                    setOption(e.target.value);
-                  }}
-                />
-                <label htmlFor="pay" className="text-sm text-red-500">
-                  Online Payment
-                </label>
-              </div>
-              <div className="flex flex-col">
+  
+              <div className="flex justify-between items-center flex-col md:flex-row">
                 <div className="flex justify-center items-center">
-                  <button
-                    onClick={() =>
-                      createRazorpayOrder(payableAmount, "INR", "recept_id")
-                    }
-                    className="h-10 ml-4 mt-3 bg-blue-600 w-72 text-white text-lg font-semibold rounded-sm"
-                  >
-                    {btnState}
-                  </button>
-
-                  {option === "Cash On Delivery" && btn && (
-                    <Confetti
-                      width={dimension.width}
-                      height={dimension.height}
-                      numberOfPieces={1000}
-                      recycle={false}
-                      gravity={0.1}
-                    />
-                  )}
+                  <input
+                    type="checkbox"
+                    name="option"
+                    value="Cash On Delivery"
+                    className="text-sm ml-6"
+                    checked={option === "Cash On Delivery"}
+                    onChange={(e) => {
+                      setOption(e.target.value);
+                    }}
+                  />
+                  <label htmlFor="pay" className="text-sm text-red-500">
+                    Cash On Delivery
+                  </label>
                 </div>
-                <div className="text-lg flex justify-between items-center">
-                  <p className="text-sm text-green-800 font-bold mt-1 ml-9">
-                    You will save ₹{totalDiscountPrice} on this order
-                  </p>
+                <div className="flex justify-center items-center mt-4 md:mt-0">
+                  <input
+                    type="checkbox"
+                    name="option"
+                    value="Online Payment"
+                    className="text-sm ml-6"
+                    checked={option === "Online Payment"}
+                    onChange={(e) => {
+                      setOption(e.target.value);
+                    }}
+                  />
+                  <label htmlFor="pay" className="text-sm text-red-500">
+                    Online Payment
+                  </label>
                 </div>
+              </div>
+  
+              <div className="flex flex-col justify-center items-center mt-4">
+                <button
+                  onClick={() =>
+                    createRazorpayOrder(payableAmount, "INR", "recept_id")
+                  }
+                  className="h-10 ml-4 mt-3 bg-blue-600 w-full text-white text-lg font-semibold rounded-sm"
+                >
+                  {btnState}
+                </button>
+  
+                {option === "Cash On Delivery" && btn && (
+                  <Confetti
+                    width={dimension.width}
+                    height={dimension.height}
+                    numberOfPieces={1000}
+                    recycle={false}
+                    gravity={0.1}
+                  />
+                )}
+              </div>
+  
+              <div className="text-lg flex justify-between items-center mt-4">
+                <p className="text-sm text-green-800 font-bold ml-2">
+                  You will save ₹{totalDiscountPrice} on this order
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <ToastContainer />
-    </div>
-  );
+      </div></div>
+    );
+  
 };
 
 export default Cart;

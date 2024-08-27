@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../axios/axios";
-import { ToastContainer, toast, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, Bounce } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../../slices/userSlice.js";
 import { createCart } from "../../slices/cartSlice.js";
@@ -127,7 +127,7 @@ const UserLogin = () => {
             accessToken: response.data.accessToken,
             refreshToken: response.data.refreshToken,
           }));
-          notifySuccess();
+          // notifySuccess();
         }
   
         setTimeout(() => {
@@ -239,7 +239,7 @@ const UserLogin = () => {
           <p className="text-lg text-red-500 cursor-pointer">{changeText}</p>
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };
