@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../../axios/axios";
 import { toast, Bounce } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 import Loader from "../common/Loader";
 import { LoadingContext } from "../common/LoaderContext";
 
@@ -103,7 +102,6 @@ const EditRestaurantMenu = () => {
     });
   };
 
-  // console.log(restaurant," shsjjj  kskkk hotel data");
 
   return (
     <div className="flex justify-center items-center ">

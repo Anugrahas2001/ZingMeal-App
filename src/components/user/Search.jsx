@@ -10,17 +10,17 @@ import axios from "../../axios/axios";
 import { CounterContext } from "../common/CountContext";
 import { cartItemCounter } from "../../slices/cartItemSlice";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useDebouncedCallback } from "use-debounce";
 
 const Search = () => {
   const inputRef = useRef(null);
   const [dishname, setDishName] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  // const [restaurantData, setRestaurantData] = useState(null);
   const { cartItemCount, setCartItemCount } = useContext(CounterContext);
-  const dispatch=useDispatch();
-  console.log(cartItemCount, "from search");
+  const dispatch = useDispatch();
   const getAccessToken = () => Cookies.get("accessToken");
+  const userId = useSelector((store) => store.user.id);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -46,17 +46,24 @@ const Search = () => {
     fetchInitialCartItemCount();
   }, []);
 
-  const searchItemHandler = () => {
-    axios.get(`/user/search/${dishname}`).then((response) => {
-      console.log(response.data.Data, "yeaggg");
-      setSuggestions(response.data.Data);
-    });
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      searchItemHandler();
+  const debouncedSearch = useDebouncedCallback(async (dishname) => {
+    if (dishname) {
+      try {
+        axios.get(`/user/search/${dishname}`).then((response) => {
+          console.log(response.data.Data, "yeaggg");
+          setSuggestions(response.data.Data);
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
+    setSuggestions([]);
+  }, 300);
+
+  const searchItemHandler = (e) => {
+    const value = e.target.value;
+    setDishName(value);
+    debouncedSearch(value);
   };
 
   const handleSuggestionClick = () => {
@@ -73,7 +80,7 @@ const Search = () => {
         />
         <div className="flex relative bottom-3 right-4">
           <p className="text-sm w-6 h-6 pl-2 rounded-full bg-red-500 text-white top-5 mb-4 flex items-center">
-            {cartItemCount}
+            {userId ? cartItemCount : 0}
           </p>
         </div>
       </div>
@@ -92,10 +99,7 @@ const Search = () => {
               placeholder="Search for restaurant, cuisine or a dish"
               ref={inputRef}
               value={dishname}
-              onChange={(e) => {
-                setDishName(e.target.value);
-              }}
-              onKeyPress={handleKeyPress}
+              onChange={searchItemHandler}
             />
           </div>
           {suggestions.length > 0 && (

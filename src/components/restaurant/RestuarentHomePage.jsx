@@ -6,18 +6,15 @@ import {
   faPenToSquare,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast, Bounce } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "../../axios/axios";
 import Header from "../common/Header";
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
 
 const RestuarentPage = () => {
-  // const selector = useSelector((store) => store.menu);
-  const navigate = useNavigate();
   const restaurantId = useSelector((store) => store.restaurant.id);
   const [hotel, setHotel] = useState({});
   const [foods, setFoods] = useState([]);
@@ -201,7 +198,7 @@ const RestuarentPage = () => {
 
   return (
     <div className="w-full overflow-x-hidden">
-      <Header isRestaurantPage={true} orderLink="/restaurantOrder"/>
+      <Header isRestaurantPage={true} orderLink="/restaurantOrder" />
       {loading ? (
         <Loader />
       ) : (

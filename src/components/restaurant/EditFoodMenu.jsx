@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast, Bounce } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios/axios";
 import { useParams } from "react-router-dom";
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
 
 const EditFoodMenu = () => {
-  const dispatch = useDispatch();
+
   const { id } = useParams();
   console.log(id, "for editing");
   const restaurantId = useSelector((store) => store.restaurant.id);

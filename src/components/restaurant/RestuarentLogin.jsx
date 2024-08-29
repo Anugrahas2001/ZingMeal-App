@@ -1,12 +1,10 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, Bounce } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 import axios from "../../axios/axios";
 import { useDispatch } from "react-redux";
 import { addRestaurant } from "../../slices/restaurantSlice";
 import { LoadingContext } from "../common/LoaderContext";
-import Loader from "../common/Loader";
 
 const RestuarentLogin = () => {
   const navigate = useNavigate();
@@ -27,20 +25,6 @@ const RestuarentLogin = () => {
   const [description, setDescription] = useState("New to ZingMeal");
   const [changeSection, setChangeSection] = useState("Create an account");
   const { loading, setLoading } = useContext(LoadingContext);
-
-  const notifySuccess = () => {
-    toast.success(`Restaurant ${title} successfully`, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
 
   const notifyFail = () => {
     toast.error("Mandatory feilds are required", {
@@ -130,7 +114,13 @@ const RestuarentLogin = () => {
         });
         console.log("Response from Signup API:", response);
 
-        notifySuccess();
+        dispatch(
+          addRestaurant({
+            id: response.data.Data.id,
+            refreshToken: response.data.RefreshToken,
+            accessToken: response.data.AccessToken,
+          })
+        );
 
         setCredentials({
           restaurantName: "",
@@ -143,21 +133,26 @@ const RestuarentLogin = () => {
           closingTime: "",
         });
       } else {
+        console.log(
+          credentials.restaurantName,
+          credentials.password,
+          "data for restaurant sign in"
+        );
         response = await axios.post("/restaurant/login", {
           restaurantName: credentials.restaurantName,
           restaurantPassword: credentials.password,
         });
+        console.log(response, "responsee");
 
-        if (response.data && response.data.AccessToken) {
+        if (response.data && response.data.accessToken) {
+          console.log(addRestaurant());
           dispatch(
             addRestaurant({
               id: response.data.Data.id,
-              refreshToken: response.data.RefreshToken,
-              accessToken: response.data.AccessToken,
+              refreshToken: response.data.refreshToken,
+              accessToken: response.data.accessToken,
             })
           );
-
-          notifySuccess();
           navigate("/restaurant");
         } else {
           notifyInvalid();

@@ -17,7 +17,6 @@ import { addOrder } from "../../slices/orderSlice";
 import Search from "../user/Search";
 import axios from "../../axios/axios";
 import Cookies from "js-cookie";
-import { toast, Bounce } from "react-toastify";
 import { CounterContext } from "../common/CountContext";
 
 const Cart = () => {
@@ -212,47 +211,50 @@ const Cart = () => {
   };
 
   const createRazorpayOrder = async (amount, currency) => {
-    try {
-      const response = await axios.post("/user/createOrder", {
-        amount,
-        currency,
-      });
-      const { orderId } = response.data;
+    if (userId) {
+      try {
+        const response = await axios.post("/user/createOrder", {
+          amount,
+          currency,
+        });
+        const { orderId } = response.data;
 
-      if (option === "Online Payment" && orderId) {
-        handleRazorpayHandler(amount, currency, orderId);
-      } else if (option === "Cash On Delivery") {
-        const res = await axios.post(
-          `/user/paymentSuccess/${userId}/${cartId}`,
-          { razorpayOrderId: orderId, paymentMethod: "Cash On Delivery" },
-          config
-        );
-        console.log(res, "result");
-        setOrderItems(res.data);
-        const id = res.data.Data.id;
-        dispatch(addOrder(id));
-        setBtn(!btn);
-        setBtnState((prevState) =>
-          prevState === "Place Order" ? "Order Placed" : "Place Order"
-        );
+        if (option === "Online Payment" && orderId) {
+          handleRazorpayHandler(amount, currency, orderId);
+        } else if (option === "Cash On Delivery") {
+          const res = await axios.post(
+            `/user/paymentSuccess/${userId}/${cartId}`,
+            { razorpayOrderId: orderId, paymentMethod: "Cash On Delivery" },
+            config
+          );
+          console.log(res, "result");
+          setOrderItems(res.data);
+          const id = res.data.Data.id;
+          dispatch(addOrder(id));
+          setBtn(!btn);
+          setBtnState((prevState) =>
+            prevState === "Place Order" ? "Order Placed" : "Place Order"
+          );
 
-        setTimeout(() => {
-          dispatch(clearCartItems());
-          navigate("/userOrder", { state: { foodItems } });
-        }, 5000);
+          setTimeout(() => {
+            dispatch(clearCartItems());
+            navigate("/userOrder", { state: { foodItems } });
+          }, 5000);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
+    navigate("/");
   };
 
   const data = foodItems.map((item) => {
     return (
-      <div className="border h-48 max-w-3xl key={item.id} ">
+      <div className="border h-48 max-w-5xl key={item.id} ">
         <div className="flex mt-3 items-center">
-          <div className="flex justify-center items-center mb-1">
+          <div className="flex items-center mb-1">
             <img
-              className="w-48 ml-7 mb-2 h-36 rounded-lg p-1"
+              className="w-full object-cover mb-2 h-36 rounded-lg p-3"
               src={item.food.imageFile}
               alt={item.food.foodName}
             />
@@ -260,7 +262,7 @@ const Cart = () => {
               <div className="flex">
                 <p className="text-lg w-96">{item.food.foodName}</p>
               </div>
-              <p className="line-clamp-1 w-3/4 ">{item.food.foodDescription}</p>
+              {/* <p className="line-clamp-1 w-3/4 ">{item.food.foodDescription}</p> */}
               <p>{item.food.foodType}</p>
               <div className="flex">
                 <FontAwesomeIcon className="w-3 mt-1" icon={faStar} />
@@ -326,59 +328,59 @@ const Cart = () => {
     <div className="w-full overflow-x-hidden">
       <Search cartItemCount={cartItemCount} />
       <div className="w-full px-4 md:px-10" key={data.id}>
-        <div className="flex flex-wrap md:flex-nowrap justify-center items-start ml-16 mr-16">
-          <div className="flex flex-wrap justify-start">
-            {data}
-          </div>
-  
-          <div className="w-full md:w-2/3 h-auto shadow-lg mt-8 md:mt-0 md:ml-3">
+        <div className="w-full flex flex-wrap md:flex-nowrap justify-center items-start">
+          <div className="flex flex-wrap justify-start">{userId && data}</div>
+
+          <div className="w-3/4 md:w-2/6 h-auto shadow-lg mt-8 md:mt-0 md:ml-3">
             <div className="m-5">
               <div className="text-lg h-10 m-5 mt-2 flex justify-center items-center font-semibold shadow-lg">
                 <p className="text-lg text-gray-500 h-5">Price Details</p>
               </div>
-  
-              {foodItems.map((item) => {
-                const originalPrice = item.food.actualPrice * item.quantity;
-                totalAmountWithActualPrice += originalPrice;
-  
-                const foodPrice = !item.food.discount
-                  ? item.food.actualPrice
-                  : item.food.discountPrice;
-  
-                const totalAmount = foodPrice * item.quantity;
-                totalAmountWithoutDiscount += Math.round(totalAmount);
-  
-                totalDiscountPrice =
-                  totalAmountWithActualPrice - totalAmountWithoutDiscount;
-  
-                deliveryCharges =
-                  item.cart.deliveryCharge == 0
-                    ? "Free"
-                    : item.cart.deliveryCharge;
-  
-                payableAmount = totalAmountWithoutDiscount + deliveryCharges;
-  
-                return (
-                  <div className="text-lg m-4 flex justify-between">
-                    <div className="flex">
-                      <p className="text-md">
-                        {item.food.foodName} <FontAwesomeIcon icon={faXmark} />
-                      </p>
-                      <p>{item.quantity}</p>
+
+              {userId &&
+                foodItems.map((item) => {
+                  const originalPrice = item.food.actualPrice * item.quantity;
+                  totalAmountWithActualPrice += originalPrice;
+
+                  const foodPrice = !item.food.discount
+                    ? item.food.actualPrice
+                    : item.food.discountPrice;
+
+                  const totalAmount = foodPrice * item.quantity;
+                  totalAmountWithoutDiscount += Math.round(totalAmount);
+
+                  totalDiscountPrice =
+                    totalAmountWithActualPrice - totalAmountWithoutDiscount;
+
+                  deliveryCharges =
+                    item.cart.deliveryCharge == 0
+                      ? "Free"
+                      : item.cart.deliveryCharge;
+
+                  payableAmount = totalAmountWithoutDiscount + deliveryCharges;
+
+                  return (
+                    <div className="text-lg m-4 flex justify-between">
+                      <div className="flex">
+                        <p className="text-md">
+                          {item.food.foodName}{" "}
+                          <FontAwesomeIcon icon={faXmark} />
+                        </p>
+                        <p>{item.quantity}</p>
+                      </div>
+                      <div className="flex">
+                        <FontAwesomeIcon
+                          className="text-sm mt-2"
+                          icon={faIndianRupeeSign}
+                        />
+                        <p className="mb-2 text-md">
+                          {Math.round(foodPrice * item.quantity)}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex">
-                      <FontAwesomeIcon
-                        className="text-sm mt-2"
-                        icon={faIndianRupeeSign}
-                      />
-                      <p className="mb-2 text-md">
-                        {Math.round(foodPrice * item.quantity)}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-  
+                  );
+                })}
+
               <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2">
                 <p>Price ({data.length} items)</p>
                 <div className="flex">
@@ -389,7 +391,7 @@ const Cart = () => {
                   {totalAmountWithoutDiscount}
                 </div>
               </div>
-  
+
               <div className="text-lg h-5 m-5 mt-2 flex justify-between">
                 <p>Discount</p>
                 <div className="flex">
@@ -403,7 +405,7 @@ const Cart = () => {
                   </p>
                 </div>
               </div>
-  
+
               <div className="text-lg h-5 m-5 mt-2 flex justify-between">
                 <p>Delivery Charges</p>
                 <div className="flex">
@@ -414,7 +416,7 @@ const Cart = () => {
                   {deliveryCharges}
                 </div>
               </div>
-  
+
               <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2">
                 <p>Total Amount</p>
                 <div className="flex">
@@ -425,7 +427,7 @@ const Cart = () => {
                   {payableAmount}
                 </div>
               </div>
-  
+
               <div className="flex justify-between items-center flex-col md:flex-row">
                 <div className="flex justify-center items-center">
                   <input
@@ -458,7 +460,7 @@ const Cart = () => {
                   </label>
                 </div>
               </div>
-  
+
               <div className="flex flex-col justify-center items-center mt-4">
                 <button
                   onClick={() =>
@@ -468,7 +470,7 @@ const Cart = () => {
                 >
                   {btnState}
                 </button>
-  
+
                 {option === "Cash On Delivery" && btn && (
                   <Confetti
                     width={dimension.width}
@@ -479,7 +481,7 @@ const Cart = () => {
                   />
                 )}
               </div>
-  
+
               <div className="text-lg flex justify-between items-center mt-4">
                 <p className="text-sm text-green-800 font-bold ml-2">
                   You will save ₹{totalDiscountPrice} on this order
@@ -488,9 +490,9 @@ const Cart = () => {
             </div>
           </div>
         </div>
-      </div></div>
-    );
-  
+      </div>
+    </div>
+  );
 };
 
 export default Cart;

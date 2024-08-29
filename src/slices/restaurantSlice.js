@@ -16,12 +16,12 @@ const restuarentSlice = createSlice({
       Cookies.set("refreshToken", refreshToken, { expires: 7, secure: true });
     },
     editResturant: (state, action) => {},
-  },
-  removeRestaurant: (state) => {
-    localStorage.removeItem("restaurant");
-    Cookies.remove("accessToken");
-    Cookies.remove("refreshToken");
-    return {};
+    removeRestaurant: (state) => {
+      localStorage.removeItem("restaurant");
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+      return {};
+    },
   },
 });
 
