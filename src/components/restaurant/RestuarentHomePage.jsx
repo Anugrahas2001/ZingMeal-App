@@ -13,11 +13,14 @@ import axios from "../../axios/axios";
 import Header from "../common/Header";
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
+import moment from "moment/moment";
+import ReadMore from "../common/ReadMore";
 
 const RestuarentPage = () => {
   const restaurantId = useSelector((store) => store.restaurant.id);
   const [hotel, setHotel] = useState({});
   const [foods, setFoods] = useState([]);
+  // const [isReadMore, setReadMore] = useState({});
   const { loading, setLoading } = useContext(LoadingContext);
 
   useEffect(() => {
@@ -80,14 +83,6 @@ const RestuarentPage = () => {
       transition: Bounce,
     });
   };
-  function formatTimeWithMeridian(date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const formattedMinutes = minutes.toString().padStart(2, "0");
-    const period = hours >= 12 ? "PM" : "AM";
-    const formattedHours = (hours % 12 || 12).toString().padStart(2, "0");
-    return `${formattedHours}:${formattedMinutes} ${period}`;
-  }
 
   const deleteFoodHandler = (foodId) => {
     setLoading(true);
@@ -122,7 +117,17 @@ const RestuarentPage = () => {
       });
   };
 
+  // const toggleReadMore = (foodId) => {
+  //   console.log("hello");
+  //   setReadMore((prevStates) => ({
+  //     ...prevStates,
+  //     [foodId]: !prevStates[foodId],
+  //   }));
+  // };
+
   const menuData = foods.map((food) => {
+    // const isFoodReadMore = isReadMore[food.id] || false;
+
     return (
       <div className="p-4 w-full">
         <div className="flex justify-between items-center">
@@ -170,19 +175,30 @@ const RestuarentPage = () => {
                   )}
                 </div>
               </div>
-              <div className="text-sm line-clamp-1">{food.foodDescription}</div>
+              {/* {food.foodDescription.length > 150
+                ? isFoodReadMore
+                  ? food.foodDescription
+                  : `${food.foodDescription.slice(0, 150)}...`
+                : food.foodDescription}
+              {food.foodDescription.length > 150 && (
+                <span
+                  onClick={() => toggleReadMore(food.id)}
+                  className="text-blue-500 cursor-pointer"
+                >
+                  {isFoodReadMore ? " show less" : " read more"}
+                </span>
+              )} */}
+
+              <ReadMore text={food.foodDescription} foodId={food.id} />
               <div className="flex mt-1">
                 <Link to={`/editFood/${food.id}`}>
                   <FontAwesomeIcon
                     icon={faPenToSquare}
                     className="cursor-pointer"
-                    onClick={() => {
-                      // updateFoddMenuHandler(food.id);
-                    }}
                   />
                 </Link>
                 <FontAwesomeIcon
-                  className="ml-2 cursor-pointer"
+                  className="ml-2 cursor-pointer mt-1"
                   icon={faTrash}
                   onClick={() => {
                     deleteFoodHandler(food.id);
@@ -238,8 +254,8 @@ const RestuarentPage = () => {
             <div className="flex text-lg mt-2 ">
               <div className="text-orange-400">{hotel.restaurantStatus}</div>
               <div className="text-lg ml-5 w-52">
-                {formatTimeWithMeridian(new Date(hotel.openingTime))}-
-                {formatTimeWithMeridian(new Date(hotel.closingTime))}
+                {moment(hotel.openingTime).format("hh:mm A")}-
+                {moment(hotel.closingTime).format("hh:mm A")}
               </div>
             </div>
 
@@ -253,7 +269,7 @@ const RestuarentPage = () => {
             </div>
             <div className="mt-4">{menuData}</div>
 
-            <div className="p-4 w-full mt-4">
+            {/* <div className="p-4 w-full mt-4">
               {foods.map((food) => {
                 <div className="flex justify-between items-center">
                   <div className="flex">
@@ -289,11 +305,10 @@ const RestuarentPage = () => {
                   </div>
                 </div>;
               })}
-            </div>
+            </div> */}
           </div>
         </>
       )}
-      {/* <ToastContainer /> */}
     </div>
   );
 };

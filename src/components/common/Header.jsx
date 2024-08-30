@@ -71,11 +71,7 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
     <div className="flex items-center justify-between h-[60px] m-4 ml-16 mr-16">
       <Link to="/">
         <div className="w-36">
-          <img
-            src="https://b.zmtcdn.com/web_assets/b40b97e677bc7b2ca77c58c61db266fe1603954218.png"
-            alt="app-logo"
-            className="w-36 object-cover"
-          />
+          <h1 className="text-4xl font-bold text-black italic">ZingMeal</h1>
         </div>
       </Link>
       {children}

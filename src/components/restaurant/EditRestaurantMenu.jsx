@@ -4,6 +4,7 @@ import axios from "../../axios/axios";
 import { toast, Bounce } from "react-toastify";
 import Loader from "../common/Loader";
 import { LoadingContext } from "../common/LoaderContext";
+import moment from "moment/moment";
 
 const EditRestaurantMenu = () => {
   const restaurantId = useSelector((store) => store.restaurant.id);
@@ -24,9 +25,9 @@ const EditRestaurantMenu = () => {
         const data = response.data.Data;
         setRestaurant({
           restaurantName: data.restaurantName,
-          restaurantImg: null,
-          openingTime: data.openingTime,
-          closingTime: data.closingTime,
+          restaurantImg: data.restaurantImg,
+          openingTime: moment(data.openingTime).format("hh:mm A"),
+          closingTime: moment(data.closingTime).format("hh:mm A"),
           restaurantStatus: data.restaurantStatus,
         });
         setLoading(false);
@@ -101,7 +102,6 @@ const EditRestaurantMenu = () => {
       restaurantStatus: "",
     });
   };
-
 
   return (
     <div className="flex justify-center items-center ">
@@ -209,6 +209,7 @@ const EditRestaurantMenu = () => {
               </select>
             </div>
 
+            
             <div className="flex flex-col mt-4">
               <label
                 htmlFor="restaurantImg"
@@ -216,9 +217,12 @@ const EditRestaurantMenu = () => {
               >
                 Restuarent Image
               </label>
+              <div className="flex">
+              {<img className="w-20 h-14 object-cover p-1 rounded-lg" src={restaurant.restaurantImg}/>}
               <input
                 type="file"
                 id="restaurantImg"
+                className="mt-3"
                 onChange={(e) => {
                   setRestaurant({
                     ...restaurant,
@@ -226,6 +230,7 @@ const EditRestaurantMenu = () => {
                   });
                 }}
               />
+              </div>
             </div>
 
             <div className="flex justify-center items-center mt-4">

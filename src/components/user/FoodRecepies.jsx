@@ -1,6 +1,4 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
-import foodItems from '../../json/FoodItems.json'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import Header from '../common/Header'

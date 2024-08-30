@@ -7,7 +7,6 @@ import axios from "../../axios/axios";
 import Cookies from "js-cookie";
 import { LoadingContext } from "./LoaderContext";
 import Loader from "./Loader";
-import store from "../../slices/store";
 
 const Order = (props) => {
   const dispatch = useDispatch();
@@ -16,9 +15,7 @@ const Order = (props) => {
   const [orders, setOrders] = useState([]);
   const [pastOrders, setPastOrders] = useState([]);
   const userId = useSelector((store) => store.user.id);
-  console.log(userId, "iddddddd");
   const { loading, setLoading } = useContext(LoadingContext);
-
   const accessToken = Cookies.get("accessToken");
   const [orderStatuses, setOrderStatuses] = useState({});
 
@@ -37,11 +34,10 @@ const Order = (props) => {
           : await axios.get(
               `/restaurant/allOrdersInRestaurant/${restaurantId}`
             );
-        {
-          isUserPage
-            ? setOrders(response.data.sortedOrders)
-            : setOrders(response.data.orders);
-        }
+
+        setOrders(
+          isUserPage ? response.data.sortedOrders : response.data.orders
+        );
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch orders:", error);
@@ -49,7 +45,7 @@ const Order = (props) => {
       }
     };
     fetchOrders();
-  }, [isUserPage, dispatch]);
+  }, [isUserPage, dispatch, restaurantId, setLoading]);
 
   useEffect(() => {
     setLoading(true);
@@ -63,76 +59,47 @@ const Order = (props) => {
         console.log(error);
         setLoading(false);
       });
-  }, []);
+  }, [setLoading]);
 
   const cancelOrderHandler = async (orderId) => {
     try {
-      setLoading(true);
-      const response = await axios
-        .delete(`/user/cancelOrder/${orderId}`, config)
-        .then((response) => {
-          console.log(response);
-          // setLoading(true);
-          notify();
-        })
-        .catch((error) => {
-          if (
-            error.response &&
-            error.response.data.message ===
-              "Order can only be cancelled within 30 minutes of being placed"
-          ) {
-            toast.error(
-              "Order can only be cancelled within 30 minutes of being placed",
-              {
-                position: "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-              }
-            );
-          }
-          if (
-            error.response &&
-            error.response.data.message ===
-              `Can't cancel this order.Food order already ${orders.orderStatus}`
-          ) {
-            toast.error(
-              `Can't cancel this order.Food order already ${orders.orderStatus}`,
-              {
-                position: "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-              }
-            );
-          }
-          console.log(error);
-          setLoading(false);
-        });
+      await axios.delete(`/user/cancelOrder/${orderId}`, config);
+      notify();
     } catch (error) {
       console.error("Failed to cancel order:", error);
-      toast.error("Failed to cancel order.", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      const errorMessage = error.response?.data?.message;
+      if (
+        errorMessage ===
+        "Order can only be cancelled within 30 minutes of being placed"
+      ) {
+        showErrorToast(
+          "Order can only be cancelled within 30 minutes of being placed"
+        );
+      } else if (
+        errorMessage ===
+        `Can't cancel this order.Food order already ${orders.orderStatus}`
+      ) {
+        showErrorToast(
+          `Can't cancel this order.Food order already ${orders.orderStatus}`
+        );
+      } else {
+        showErrorToast("Failed to cancel order.");
+      }
     }
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   };
 
   const notify = () => {
@@ -154,46 +121,41 @@ const Order = (props) => {
       ...prevStatuses,
       [orderId]: status,
     }));
-    const response = await axios.patch(
+    await axios.patch(
       `/restaurant/updateOrderStatus/${restaurantId}/${orderId}`,
-      {
-        orderStatus: status,
-      },
+      { orderStatus: status },
       config
     );
-    await axios
-      .get(`/restaurant/allOrdersInRestaurant/${restaurantId}`)
-      .then((response) => {
-        setOrders(response.data.orders);
-      });
+    const response = await axios.get(
+      `/restaurant/allOrdersInRestaurant/${restaurantId}`
+    );
+    setOrders(response.data.orders);
   };
 
   const renderOrderItems = (orderItems) => {
-    return orderItems.map((item) => {
-      return (
-        <div key={item.food.id} className="mt-1 ">
-          <div className="flex">
-            <img
-              className="w-20 rounded-sm m-2"
-              src={item.food.imageFile}
-              alt={item.food.foodName}
-            />
-            <div className="flex flex-col m-2 w-full md:w-96">
-              <div className="flex justify-between">
-                <p className="text-sm md:text-base">{item.food.foodName}</p>
-                <div className="flex ml-2">
-                  <FontAwesomeIcon className="mt-1 text-sm" icon={faXmark} />
-                  <p>{item.quantity}</p>
-                </div>
+    return orderItems.map((item) => (
+      <div key={item.food.id} className="mt-1">
+        <div className="flex">
+          <img
+            className="w-20 rounded-sm m-2"
+            src={item.food.imageFile}
+            alt={item.food.foodName}
+          />
+          <div className="flex flex-col m-2 w-full md:w-96">
+            <div className="flex justify-between">
+              <p className="text-sm md:text-base">{item.food.foodName}</p>
+              <div className="flex ml-2">
+                <FontAwesomeIcon className="mt-1 text-sm" icon={faXmark} />
+                <p>{item.quantity}</p>
               </div>
-              <p className="text-gray-400 text-sm md:text-base">
-                {item.food.foodCategory}
-              </p>
             </div>
+            <p className="text-gray-400 text-sm md:text-base">
+              {item.food.foodCategory}
+            </p>
           </div>
         </div>
-      );
-    });
+      </div>
+    ));
   };
 
   return (
@@ -201,125 +163,120 @@ const Order = (props) => {
       {children}
       {loading ? (
         <Loader />
-      ) : (
-        <>
-          <div className="ml-32 mr-36 h-auto">
-            <div className="w-full mt-2">
-              {userId &&
-                orders.map((order) => (
-                  <div
-                    key={order.id}
-                    className="w-full h-auto m-2 flex flex-col md:flex-row justify-between shadow mb-4 p-5"
-                  >
-                    <div className="w-full md:w-80 ml-0 md:ml-4">
-                      <p className="font-semibold">OrderID: {order.id}</p>
-                      <div>{renderOrderItems(order.orderItems)}</div>
+      ) : userId || restaurantId ? (
+        <div className="ml-32 mr-36 h-auto">
+          <div className="w-full mt-2">
+            {orders.map((order) => (
+              <div
+                key={order.id}
+                className="w-full h-auto m-2 flex flex-col md:flex-row justify-between shadow mb-4 p-5"
+              >
+                <div className="w-full md:w-80 ml-0 md:ml-4">
+                  <p className="font-semibold">OrderID: {order.id}</p>
+                  <div>{renderOrderItems(order.orderItems)}</div>
+                </div>
+                <div>
+                  {isUserPage && (
+                    <div className="flex justify-between md:justify-center items-center flex-col">
+                      <p>{order.orderStatus}</p>
+                      <p className="text-sm">
+                        Your item has been {order.orderStatus}
+                      </p>
                     </div>
-                    <div>
-                      {isUserPage && (
-                        <div className="flex justify-between md:justify-center items-center flex-col">
-                          <p>{order.orderStatus}</p>
-                          <p className="text-sm ">
-                            Your item has been
-                            {order.orderStatus}
-                          </p>
-                        </div>
-                      )}
-
-                      {isRestaurantPage && (
-                        <div className="flex mt-4 md:mt-0">
-                          <p>{order.orderStatus}</p>
-                          <select
-                            className="outline-none mt-0 w-4"
-                            value={orderStatuses[order.id]}
-                            onChange={(e) =>
-                              changeOrderStatusHandler(order.id, e.target.value)
-                            }
-                          >
-                            <option value=""></option>
-                            <option value="PREPARING">PREPARING</option>
-                            <option value="PACKED">PACKED</option>
-                            <option value="DISPATCHED">DISPATCHED</option>
-                            <option value="DELIVERED">DELIVERED</option>
-                          </select>
-                        </div>
-                      )}
+                  )}
+                  {isRestaurantPage && (
+                    <div className="flex mt-4 md:mt-0">
+                      <p>{order.orderStatus}</p>
+                      <select
+                        className="outline-none mt-0 w-4"
+                        value={orderStatuses[order.id]}
+                        onChange={(e) =>
+                          changeOrderStatusHandler(order.id, e.target.value)
+                        }
+                      >
+                        <option value=""></option>
+                        <option value="Preparing">Preparing</option>
+                        <option value="Packed">Packed</option>
+                        <option value="Dispatched">Dispatched</option>
+                        <option value="Delivered">Delivered</option>
+                      </select>
                     </div>
-                    <div className="h-auto flex flex-col justify-between mt-4 md:mt-0">
-                      <div className="flex flex-nowrap justify-between md:justify-start">
-                        <p className="mt-5">Total Price:</p>
-                        <div className="bg-yellow-400 flex p-1 rounded-md mt-5 h-7">
-                          <FontAwesomeIcon
-                            className="mt-1"
-                            icon={faIndianRupeeSign}
-                          />
-                          <p className="ml-1">{Math.round(order.totalPrice)}</p>
-                        </div>
-                      </div>
-                      {isUserPage && (
-                        <button
-                          className="w-20 p-1 text-white self-center cursor-pointer rounded-md bg-red-500 mt-4 mb-4"
-                          onClick={() => cancelOrderHandler(order.id)}
-                        >
-                          Cancel
-                        </button>
-                      )}
+                  )}
+                </div>
+                <div className="h-auto flex flex-col justify-between mt-4 md:mt-0">
+                  <div className="flex flex-nowrap justify-between md:justify-start">
+                    <p className="mt-5">Total Price:</p>
+                    <div className="bg-yellow-400 flex p-1 rounded-md mt-5 h-7">
+                      <FontAwesomeIcon
+                        className="mt-1"
+                        icon={faIndianRupeeSign}
+                      />
+                      <p className="ml-1">{Math.round(order.totalPrice)}</p>
                     </div>
                   </div>
-                ))}
-            </div>
-            {isUserPage && (
+                  {isUserPage && (
+                    <button
+                      className="w-20 p-1 text-white self-center cursor-pointer rounded-md bg-red-500 mt-4 mb-4"
+                      onClick={() => cancelOrderHandler(order.id)}
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          {isUserPage && (
+            <>
               <p className="font-semibold text-2xl bg-gray-300 flex justify-center mt-10">
                 Past Orders
               </p>
-            )}
-            {isUserPage &&
-              userId &&
-              pastOrders.map((order) => {
-                return (
-                  <div
-                    key={order.id}
-                    className="w-full h-auto m-2 flex flex-col md:flex-row justify-between shadow mb-4 p-5"
-                  >
-                    <div className="w-full md:w-80 ml-0 md:ml-4">
-                      <p>Order ID: {order.id}</p>
-                      {order.orderItems.map((item) => {
-                        return (
-                          <div key={item.id}>
-                            <img
-                              className="w-20 rounded-sm m-2"
-                              src={item.food.imageFile}
-                              alt={item.food.foodName}
-                            />
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div>
-                      <div className="flex justify-between md:justify-center flex-col">
-                        <p className="ml-10 mt-3">{order.orderStatus}</p>
-                        <p className="text-sm">
-                          Your item has been {order.orderStatus}
-                        </p>
+              {pastOrders.map((order) => (
+                <div
+                  key={order.id}
+                  className="w-full h-auto m-2 flex flex-col md:flex-row justify-between shadow mb-4 p-5"
+                >
+                  <div className="w-full md:w-80 ml-0 md:ml-4">
+                    <p className="font-semibold">Order ID: {order.id}</p>
+                    {order.orderItems.map((item) => (
+                      <div key={item.id}>
+                        <img
+                          className="w-20 rounded-sm m-2"
+                          src={item.food.imageFile}
+                          alt={item.food.foodName}
+                        />
                       </div>
+                    ))}
+                  </div>
+                  <div>
+                    <div className="flex justify-between md:justify-center flex-col">
+                      <p className="ml-10 mt-3">{order.orderStatus}</p>
+                      <p className="text-sm">
+                        Your item has been {order.orderStatus}
+                      </p>
                     </div>
-                    <div className="h-auto ml-20 flex flex-col justify-between">
-                      <div className="flex justify-between md:justify-start">
-                        <p className="mt-5">Total Price:</p>
-                        <div className="bg-yellow-400 flex p-1 rounded-md mt-5 h-7">
-                          <FontAwesomeIcon
-                            className="mt-1"
-                            icon={faIndianRupeeSign}
-                          />
-                          <p className="ml-1">{order.totalPrice}</p>{" "}
-                        </div>
+                  </div>
+                  <div className="h-auto ml-20 flex flex-col justify-between">
+                    <div className="flex justify-between md:justify-start">
+                      <p className="mt-5">Total Price:</p>
+                      <div className="bg-yellow-400 flex p-1 rounded-md mt-5 h-7">
+                        <FontAwesomeIcon
+                          className="mt-1"
+                          icon={faIndianRupeeSign}
+                        />
+                        <p className="ml-1">{order.totalPrice}</p>
                       </div>
                     </div>
                   </div>
-                );
-              })}
-          </div>
-        </>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      ) : (
+        <div className="text-4xl w-full text-center mt-32">
+          Currently no item is available
+        </div>
       )}
     </div>
   );

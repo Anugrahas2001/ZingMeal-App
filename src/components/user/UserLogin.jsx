@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../axios/axios";
 import { toast, Bounce } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../slices/userSlice.js";
+import { addUser, removeUser } from "../../slices/userSlice.js";
 import { createCart } from "../../slices/cartSlice.js";
 import { LoadingContext } from "../common/LoaderContext.jsx";
-import { Link } from "react-router-dom";
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -160,13 +159,6 @@ const UserLogin = () => {
           console.log(cartId, "cart id");
 
           dispatch(createCart({ id: cartId }));
-          // dispatch(
-          //   addUser({
-          //     id: userId,
-          //     accessToken: response.data.accessToken,
-          //     refreshToken: response.data.refreshToken,
-          //   })
-          // );
           addUserData(userId, accessToken, refreshToken);
         }
 
@@ -198,7 +190,13 @@ const UserLogin = () => {
       setLoading(false);
     }
   };
-    
+
+  const testHandler = () => {
+    console.log("dattaaaa");
+    dispatch(removeUser());
+    console.log("removed");
+    navigate("/user");
+  };
 
   const changePage = () => {
     setTitle((prevState) => (prevState === "Sign Up" ? "Sign In" : "Sign Up"));
@@ -284,7 +282,13 @@ const UserLogin = () => {
         </div>
       </div>
       <div>
-        Wanna <span className="text-red-500 text-bold text-lg"><Link to="/user">Try this?</Link></span>
+        Wanna{" "}
+        <span
+          className="text-red-500 text-bold text-lg cursor-pointer"
+          onClick={testHandler}
+        >
+          Try this?
+        </span>
       </div>
     </div>
   );

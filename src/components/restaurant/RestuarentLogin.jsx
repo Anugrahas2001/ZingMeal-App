@@ -155,6 +155,7 @@ const RestuarentLogin = () => {
           );
           navigate("/restaurant");
         } else {
+          console.log("invalid");
           notifyInvalid();
         }
       }

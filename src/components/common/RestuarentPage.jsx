@@ -10,6 +10,8 @@ import Cookies from "js-cookie";
 import { LoadingContext } from "./LoaderContext";
 import Loader from "./Loader";
 import { CounterContext } from "./CountContext";
+import moment from "moment/moment";
+import ReadMore from "./ReadMore";
 
 const RestuarentPage = () => {
   const [hotel, setHotel] = useState({});
@@ -19,7 +21,6 @@ const RestuarentPage = () => {
   const userId = useSelector((store) => store.user.id);
   const cartId = useSelector((store) => store.cart.id);
   const restaurantId = useSelector((store) => store.restaurant.id);
-  // const cartItems = useSelector((store) => store.cartItem);
   const { setCartItemCount } = useContext(CounterContext);
   const { loading, setLoading } = useContext(LoadingContext);
   const dispatch = useDispatch();
@@ -105,53 +106,45 @@ const RestuarentPage = () => {
     });
   };
 
-  function formatTimeWithMeridian(date) {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const formattedMinutes = minutes.toString().padStart(2, "0");
-    const period = hours >= 12 ? "PM" : "AM";
-    const formattedHours = (hours % 12 || 12).toString().padStart(2, "0");
-    return `${formattedHours}:${formattedMinutes} ${period}`;
-  }
-
   const addToCartFunction = async (foodId) => {
     const accessToken = Cookies.get("accessToken");
     const config = {
       headers: { Authorization: `Bearer ${accessToken}` },
     };
 
-    if (userId) {
-      try {
-        setLoading(true);
-        const cartItem = await axios.post(
-          `/user/addToCart/${userId}/${cartId}/${foodId}`,
-          {},
-          config
-        );
-        const id = cartItem.data.Data.id;
-        console.log(id, "cart idd after add to cart");
-
-        await axios.patch(
-          `/restaurant/totalPrice/${restaurantId}/${cartId}`,
-          {},
-          config
-        );
-
-        const countData = await axios.get("/restaurant/getCount", config);
-        const newCount = countData.data.Count;
-
-        setCartItemCount(newCount);
-        dispatch(cartItemCounter(newCount));
-        dispatch(addToCart(id));
-        notify();
-      } catch (error) {
-        console.error("Error in addToCartFunction:", error);
-        setLoading(false);
-      } finally {
-        setLoading(false);
-      }
+    if (!userId) {
+      navigate("/");
+      return;
     }
-    navigate("/");
+    try {
+      setLoading(true);
+      const cartItem = await axios.post(
+        `/user/addToCart/${userId}/${cartId}/${foodId}`,
+        {},
+        config
+      );
+      const id = cartItem.data.Data.id;
+      console.log(id, "cart idd after add to cart");
+
+      await axios.patch(
+        `/restaurant/totalPrice/${restaurantId}/${cartId}`,
+        {},
+        config
+      );
+
+      const countData = await axios.get("/restaurant/getCount", config);
+      const newCount = countData.data.Count;
+
+      setCartItemCount(newCount);
+      dispatch(cartItemCounter(newCount));
+      dispatch(addToCart(id));
+      notify();
+    } catch (error) {
+      console.error("Error in addToCartFunction:", error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -184,8 +177,8 @@ const RestuarentPage = () => {
             <div className="w-52 justify-between text-lg flex">
               <div className="text-orange-400">{hotel.restaurantStatus}</div>
               <div className="text-lg">
-                {formatTimeWithMeridian(new Date(hotel.openingTime))}-
-                {formatTimeWithMeridian(new Date(hotel.closingTime))}
+                {moment(hotel.openingTime).format("hh:mm A")}-
+                {moment(hotel.closingTime).format("hh:mm A")}
               </div>
             </div>
 
@@ -271,7 +264,9 @@ const RestuarentPage = () => {
                             </>
                           )}
                         </div>
-                        <div className="text-sm">{dish.description}</div>
+                        <div className="text-sm">
+                          <ReadMore text={dish.foodDescription} foodId={dish.id} />
+                        </div>
                       </div>
                     </div>
                     <div>
