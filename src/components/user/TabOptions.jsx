@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "../../axios/axios";
+import axios from "../../axios/axios.js";
 import { Link } from "react-router-dom";
 import Loader from "../common/Loader";
 import { LoadingContext } from "../common/LoaderContext";

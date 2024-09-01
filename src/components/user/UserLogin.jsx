@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../axios/axios";
+import axios from "../../axios/axios.js";
 import { toast, Bounce } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../../slices/userSlice.js";
