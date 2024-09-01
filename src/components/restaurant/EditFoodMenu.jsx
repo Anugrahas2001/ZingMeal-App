@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast, Bounce } from "react-toastify";
-import axios from "../../axios/axios.js";
 import { useParams } from "react-router-dom";
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
+import axios from "../../axios/axios"
 
 const EditFoodMenu = () => {
   const { id } = useParams();
@@ -20,6 +20,7 @@ const EditFoodMenu = () => {
     foodType: "",
     imageFile: null,
   });
+  console.log("helooo");
 
   useEffect(() => {
     setLoading(true);
