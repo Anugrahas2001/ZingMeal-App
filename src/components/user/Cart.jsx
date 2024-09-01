@@ -5,6 +5,7 @@ import {
   faStar,
   faIndianRupeeSign,
   faXmark,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   addToCart,
@@ -130,8 +131,6 @@ const Cart = () => {
       } catch (error) {
         console.error("Error fetching count data:", error);
       }
-
-      // onUpdateCount(newCount);
     } catch (error) {
       console.log(error);
     }
@@ -249,8 +248,6 @@ const Cart = () => {
     }
   };
 
-
-  
   const data = foodItems.map((item) => {
     return (
       <div className="border h-48 w-full md:max-w-5xl" key={item.id}>
@@ -288,32 +285,40 @@ const Cart = () => {
                       />
                       <span>{item.food.actualPrice}</span>
                     </div>
+                    <span className="text-red-600 ml-2">
+                      {item.food.discount}% off
+                    </span>
                   </>
                 )}
               </div>
 
-              <div className="flex justify-center mt-2 mr-8">
+              <div className="flex justify-center mt-2 px-2">
                 <button
-                  className="w-14 ml-2 bg-slate-200 text-lg font-semibold rounded-full"
+                  className="w-10 h-10 bg-slate-200 text-lg font-semibold rounded-full flex items-center justify-center"
                   onClick={() => updateCartItemHandler({ id: item.id }, -1)}
                 >
                   -
                 </button>
-                <button className="w-14 ml-2 bg-slate-300 text-lg font-semibold rounded-sm">
+                <button className="w-10 h-10 bg-slate-300 text-lg font-semibold rounded-full flex items-center justify-center ml-2">
                   {item.quantity}
                 </button>
                 <button
-                  className="w-14 ml-2 bg-slate-200 text-lg font-semibold rounded-full"
+                  className="w-10 h-10 bg-slate-200 text-lg font-semibold rounded-full flex items-center justify-center ml-2"
                   onClick={() => updateCartItemHandler({ id: item.id }, 1)}
                 >
                   +
                 </button>
-                <button
-                  className="w-20 h-8 ml-2 bg-orange-500 text-white text-lg font-semibold rounded-sm"
+                {/* <button
+                  className="w-24 h-12 bg-orange-500 text-white text-lg font-semibold rounded-full flex items-center justify-center"
                   onClick={() => updateCartItemHandler({ id: item.id }, 0)}
                 >
                   Remove
-                </button>
+                </button> */}
+                <FontAwesomeIcon
+                  className="mt-2 ml-2 text-2xl cursor-pointer"
+                  onClick={() => updateCartItemHandler({ id: item.id }, 0)}
+                  icon={faTrash}
+                />
               </div>
             </div>
           </div>
@@ -327,9 +332,9 @@ const Cart = () => {
       <Search cartItemCount={cartItemCount} />
       <div className="w-full flex justify-center" key={data.id}>
         <div className="flex flex-wrap md:flex-nowrap w-3/4">
-          <div className="flex flex-wrap m-4">{userId && data}</div>
+          <div className="flex flex-wrap m-4 w-full">{userId && data}</div>
           {cartItemCount > 0 ? (
-            <div className="h-auto shadow-lg mt-8 md:mt-0 md:ml-3 m-4 w-2/3">
+            <div className="h-4/5 shadow-lg mt-8 md:mt-0 md:ml-3 m-4 w-2/3">
               <div className="m-5">
                 <div className="text-lg h-10 m-5 mt-2 flex justify-center items-center font-semibold shadow-lg">
                   <p className="text-lg text-gray-500 h-5">Price Details</p>
@@ -359,7 +364,7 @@ const Cart = () => {
                       totalAmountWithoutDiscount + item.cart.deliveryCharge;
 
                     return (
-                      <div className="text-lg m-4 flex justify-between">
+                      <div className="text-lg ml-4 mr-4 flex justify-between">
                         <div className="flex">
                           <p className="text-md">
                             {item.food.foodName}{" "}
