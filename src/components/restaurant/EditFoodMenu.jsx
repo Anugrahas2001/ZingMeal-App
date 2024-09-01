@@ -9,6 +9,7 @@ import axios from "../../axios/axios"
 const EditFoodMenu = () => {
   const { id } = useParams();
   const restaurantId = useSelector((store) => store.restaurant.id);
+  console.log(restaurantId,"idddd")
   const { loading, setLoading } = useContext(LoadingContext);
   const [foodMenu, setFoodMenu] = useState({
     foodName: "",
