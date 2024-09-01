@@ -1,15 +1,14 @@
-import React, { createContext, useState } from 'react'
-export const CounterContext=createContext();
+import React, { createContext, useState } from "react";
+export const CounterContext = createContext();
 
-const CountContext = ({children}) => {
-    const [cartItemCount, setCartItemCount] = useState(0);
+const CountContext = ({ children }) => {
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   return (
-    <CounterContext.Provider value={{cartItemCount,setCartItemCount}}>
-        {children}
+    <CounterContext.Provider value={{ cartItemCount, setCartItemCount }}>
+      {children}
     </CounterContext.Provider>
-  )
-}
+  );
+};
 
-export default CountContext
-
+export default CountContext;

@@ -5,6 +5,7 @@ import axios from "../../axios/axios";
 import { useDispatch } from "react-redux";
 import { addRestaurant } from "../../slices/restaurantSlice";
 import { LoadingContext } from "../common/LoaderContext";
+import Footer from "../common/Footer";
 
 const RestuarentLogin = () => {
   const navigate = useNavigate();
@@ -112,7 +113,6 @@ const RestuarentLogin = () => {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log("Response from Signup API:", response);
 
         dispatch(
           addRestaurant({
@@ -142,7 +142,6 @@ const RestuarentLogin = () => {
           restaurantName: credentials.restaurantName,
           restaurantPassword: credentials.password,
         });
-        console.log(response, "responsee");
 
         if (response.data && response.data.accessToken) {
           console.log(addRestaurant());
@@ -155,7 +154,6 @@ const RestuarentLogin = () => {
           );
           navigate("/restaurant");
         } else {
-          console.log("invalid");
           notifyInvalid();
         }
       }
@@ -207,7 +205,6 @@ const RestuarentLogin = () => {
 
   return (
     <div className="flex justify-center items-center mt-20">
-      {/* {loading && <Loader />} */}
       <div className="flex flex-col w-96  h-auto justify-center items-center border border-gray-400 p-5">
         <div className="text-gray-500 font-semibold text-3xl mb-5">
           <p>{title}</p>
@@ -393,7 +390,7 @@ const RestuarentLogin = () => {
           </div>
         </div>
       </div>
-      {/* <ToastContainer /> */}
+      <Footer />
     </div>
   );
 };

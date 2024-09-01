@@ -7,6 +7,7 @@ import axios from "../../axios/axios";
 import Cookies from "js-cookie";
 import { LoadingContext } from "./LoaderContext";
 import Loader from "./Loader";
+import Footer from "./Footer";
 
 const Order = (props) => {
   const dispatch = useDispatch();
@@ -25,25 +26,22 @@ const Order = (props) => {
     },
   };
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        setLoading(true);
-        const response = isUserPage
-          ? await axios.get(`/restaurant/filterPending`)
-          : await axios.get(
-              `/restaurant/allOrdersInRestaurant/${restaurantId}`
-            );
+  const fetchOrders = async () => {
+    try {
+      setLoading(true);
+      const response = isUserPage
+        ? await axios.get(`/restaurant/filterPending`)
+        : await axios.get(`/restaurant/allOrdersInRestaurant/${restaurantId}`);
 
-        setOrders(
-          isUserPage ? response.data.sortedOrders : response.data.orders
-        );
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to fetch orders:", error);
-        setLoading(false);
-      }
-    };
+      setOrders(isUserPage ? response.data.sortedOrders : response.data.orders);
+      setLoading(false);
+    } catch (error) {
+      console.error("Failed to fetch orders:", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchOrders();
   }, [isUserPage, dispatch, restaurantId, setLoading]);
 
@@ -64,10 +62,11 @@ const Order = (props) => {
   const cancelOrderHandler = async (orderId) => {
     try {
       await axios.delete(`/user/cancelOrder/${orderId}`, config);
+      setOrders(orders.filter((order) => order.id != orderId));
       notify();
     } catch (error) {
-      console.error("Failed to cancel order:", error);
-      const errorMessage = error.response?.data?.message;
+      console.error("Failed to cancel order:", error.response.data);
+      const errorMessage = error.response.data.message;
       if (
         errorMessage ===
         "Order can only be cancelled within 30 minutes of being placed"
@@ -76,11 +75,11 @@ const Order = (props) => {
           "Order can only be cancelled within 30 minutes of being placed"
         );
       } else if (
-        errorMessage ===
-        `Can't cancel this order.Food order already ${orders.orderStatus}`
+        errorMessage.startsWith("Can't cancel this order. Food order already")
       ) {
+        const currentStatus = errorMessage.match(/Food order already (\w+)/)[1];
         showErrorToast(
-          `Can't cancel this order.Food order already ${orders.orderStatus}`
+          `Can't cancel this order. Food order already ${currentStatus}`
         );
       } else {
         showErrorToast("Failed to cancel order.");
@@ -278,6 +277,7 @@ const Order = (props) => {
           Currently no item is available
         </div>
       )}
+      <Footer />
     </div>
   );
 };

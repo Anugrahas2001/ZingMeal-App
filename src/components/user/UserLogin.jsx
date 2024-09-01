@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../../slices/userSlice.js";
 import { createCart } from "../../slices/cartSlice.js";
 import { LoadingContext } from "../common/LoaderContext.jsx";
+import Footer from "../common/Footer.jsx";
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -74,7 +75,6 @@ const UserLogin = () => {
   };
 
   const submitHandler = async (e) => {
-    console.log("inside the handler");
     e.preventDefault();
     setLoading(true);
 
@@ -93,7 +93,6 @@ const UserLogin = () => {
     }
 
     try {
-      console.log("inside try");
       let response;
       if (title === "Sign Up") {
         try {
@@ -102,20 +101,11 @@ const UserLogin = () => {
             password,
             confirmPassword,
           });
-          console.log(response, "after sign up");
           const userId = response.data.user.id;
           const accessToken = response.data.accessToken;
           const refreshToken = response.data.refreshToken;
-          // dispatch(
-          //   addUser({
-          //     id: userId,
-          //     accessToken: accessToken,
-          //     refreshToken: refreshToken,
-          //   })
-          // );
+
           addUserData(userId, accessToken, refreshToken);
-          console.log("User stored into the localstorage");
-          console.log(userId, "user iddd");
 
           axios
             .post(`/user/createCart/${userId}`)
@@ -154,9 +144,7 @@ const UserLogin = () => {
             `/user/getcart/${userId}`,
             config
           );
-          console.log(createCartResponse, "cart response");
           const cartId = createCartResponse.data.Data.id;
-          console.log(cartId, "cart id");
 
           dispatch(createCart({ id: cartId }));
           addUserData(userId, accessToken, refreshToken);
@@ -192,9 +180,7 @@ const UserLogin = () => {
   };
 
   const testHandler = () => {
-    console.log("dattaaaa");
     dispatch(removeUser());
-    console.log("removed");
     navigate("/user");
   };
 
@@ -290,6 +276,7 @@ const UserLogin = () => {
           Try this?
         </span>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -10,7 +10,6 @@ const cartSlicer = createSlice({
       const { id } = action.payload;
       state.id = id;
       localStorage.setItem("cart", JSON.stringify({ id }));
-
     },
     clearCart: (state) => {
       localStorage.setItem("cart", JSON.stringify({}));

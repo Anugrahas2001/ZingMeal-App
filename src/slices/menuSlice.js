@@ -17,7 +17,6 @@ const menuSlicer = createSlice({
         price: action.payload.price,
         description: action.payload.description,
         ratings: 1,
-        // image: action.payload.imageFile
       });
 
       localStorage.setItem("menuItem", JSON.stringify(state));

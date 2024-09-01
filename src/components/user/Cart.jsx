@@ -19,6 +19,7 @@ import Search from "../user/Search";
 import axios from "../../axios/axios";
 import Cookies from "js-cookie";
 import { CounterContext } from "../common/CountContext";
+import Footer from "../common/Footer";
 
 const Cart = () => {
   const cartId = useSelector((store) => store.cart.id);
@@ -124,7 +125,6 @@ const Cart = () => {
       try {
         const countData = await axios.get("/restaurant/getCount", config);
         const newCount = countData.data.Count;
-        console.log(newCount, "count from carttt");
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
         dispatch(addToCart(id));
@@ -147,7 +147,6 @@ const Cart = () => {
   };
 
   const handleRazorpayHandler = async (amount, currency, orderId) => {
-    console.log("inside handler");
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -229,7 +228,7 @@ const Cart = () => {
           { razorpayOrderId: orderId, paymentMethod: "Cash On Delivery" },
           config
         );
-        console.log(res, "result");
+
         setOrderItems(res.data);
         const id = res.data.Data.id;
         dispatch(addOrder(id));
@@ -308,12 +307,7 @@ const Cart = () => {
                 >
                   +
                 </button>
-                {/* <button
-                  className="w-24 h-12 bg-orange-500 text-white text-lg font-semibold rounded-full flex items-center justify-center"
-                  onClick={() => updateCartItemHandler({ id: item.id }, 0)}
-                >
-                  Remove
-                </button> */}
+
                 <FontAwesomeIcon
                   className="mt-2 ml-2 text-2xl cursor-pointer"
                   onClick={() => updateCartItemHandler({ id: item.id }, 0)}
@@ -494,12 +488,13 @@ const Cart = () => {
               </div>
             </div>
           ) : (
-            <div className="text-4xl w-full text-center mt-32">
+            <div className="text-4xl w-full flex justify-center mt-32">
               Please add items to the cart
             </div>
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

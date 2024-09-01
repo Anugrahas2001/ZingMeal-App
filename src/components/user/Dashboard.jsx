@@ -12,7 +12,7 @@ const Hotels = () => {
 
   const [hotelData, setHotel] = useState([]);
   const { loading, setLoading } = useContext(LoadingContext);
-  
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -30,7 +30,10 @@ const Hotels = () => {
   const hotelDetails = hotelData.map((hotel) => {
     const random = Math.floor(Math.random() * (max - min + 1) + min);
     return (
-      <div key={hotel.id} className="flex flex-col w-full sm:w-1/2 md:w-1/3 lg:w-1/4 rounded-md shadow-lg m-10">
+      <div
+        key={hotel.id}
+        className="flex flex-col w-full sm:w-1/2 md:w-1/3 lg:w-1/4 rounded-md shadow-lg m-10"
+      >
         <Link to={`/restuarent/${hotel.id}`}>
           <div className="relative h-56 rounded-md overflow-hidden">
             <img
@@ -50,15 +53,14 @@ const Hotels = () => {
           </div>
           <div className="mb-2 text-gray-600 flex justify-between">
             <p>
-              {hotel.restaurantStatus === "Open" 
-                ? "Currently Available" 
+              {hotel.restaurantStatus === "Open"
+                ? "Currently Available"
                 : "Currently Not Available"}
             </p>
             <div className="text-gray-600">
-            <p>{random} min</p>
+              <p>{random} min</p>
+            </div>
           </div>
-          </div>
-          
         </div>
       </div>
     );
@@ -66,7 +68,7 @@ const Hotels = () => {
 
   return (
     <div className="w-full px-4 md:px-8 lg:px-16">
-     <p className="text-3xl mt-2 w-full">Explore the food life!</p>
+      <p className="text-3xl mt-2 w-full">Explore the food life!</p>
       {loading ? (
         <Loader />
       ) : (

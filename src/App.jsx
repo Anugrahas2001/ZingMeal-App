@@ -39,7 +39,7 @@ function App() {
               <Route path="/restaurantOrder" element={<RestaurantOrder />} />
             </Routes>
           </Router>
-          <ToastContainer/>
+          <ToastContainer />
         </CountContext>
       </LoaderContext>
     </Provider>

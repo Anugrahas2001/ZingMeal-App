@@ -3,9 +3,7 @@ import React, { useState } from "react";
 const ReadMore = ({ text, foodId }) => {
   const [isReadMore, setReadMore] = useState({});
   const isFoodReadMore = isReadMore[foodId] || false;
-  console.log(text, "descripgdhjd,", foodId, "foooddd");
   const toggleReadMore = (foodId) => {
-    console.log("hello");
     setReadMore((prevStates) => ({
       ...prevStates,
       [foodId]: !prevStates[foodId],

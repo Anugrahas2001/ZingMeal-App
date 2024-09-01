@@ -84,12 +84,10 @@ const EditRestaurantMenu = () => {
         },
       })
       .then((response) => {
-        console.log(response.data, "dataaa");
         setLoading(false);
         notify();
       })
       .catch((error) => {
-        console.log(error);
         setLoading(false);
         notifyFail();
       });
@@ -209,7 +207,6 @@ const EditRestaurantMenu = () => {
               </select>
             </div>
 
-            
             <div className="flex flex-col mt-4">
               <label
                 htmlFor="restaurantImg"
@@ -218,18 +215,23 @@ const EditRestaurantMenu = () => {
                 Restuarent Image
               </label>
               <div className="flex">
-              {<img className="w-20 h-14 object-cover p-1 rounded-lg" src={restaurant.restaurantImg}/>}
-              <input
-                type="file"
-                id="restaurantImg"
-                className="mt-3"
-                onChange={(e) => {
-                  setRestaurant({
-                    ...restaurant,
-                    restaurantImg: e.target.files[0],
-                  });
-                }}
-              />
+                {
+                  <img
+                    className="w-20 h-14 object-cover p-1 rounded-lg"
+                    src={restaurant.restaurantImg}
+                  />
+                }
+                <input
+                  type="file"
+                  id="restaurantImg"
+                  className="mt-3"
+                  onChange={(e) => {
+                    setRestaurant({
+                      ...restaurant,
+                      restaurantImg: e.target.files[0],
+                    });
+                  }}
+                />
               </div>
             </div>
 
@@ -244,7 +246,6 @@ const EditRestaurantMenu = () => {
           </form>
         </>
       )}
-      {/* <ToastContainer /> */}
     </div>
   );
 };

@@ -8,8 +8,8 @@ const orderSlice = createSlice({
   reducers: {
     addOrder: (state, action) => {
       state.push({
-id:action.payload
-      })
+        id: action.payload,
+      });
 
       localStorage.setItem("orderItems", JSON.stringify(state));
     },

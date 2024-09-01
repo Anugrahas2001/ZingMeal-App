@@ -34,7 +34,6 @@ const Search = () => {
 
       try {
         const countData = await axios.get("/restaurant/getCount", config);
-        console.log(countData, "dataaa");
         const newCount = countData.data.Count;
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
@@ -50,7 +49,6 @@ const Search = () => {
     if (dishname) {
       try {
         axios.get(`/user/search/${dishname}`).then((response) => {
-          console.log(response.data.Data, "yeaggg");
           setSuggestions(response.data.Data);
         });
       } catch (error) {

@@ -15,12 +15,12 @@ import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
 import moment from "moment/moment";
 import ReadMore from "../common/ReadMore";
+import Footer from "../common/Footer";
 
 const RestuarentPage = () => {
   const restaurantId = useSelector((store) => store.restaurant.id);
   const [hotel, setHotel] = useState({});
   const [foods, setFoods] = useState([]);
-  // const [isReadMore, setReadMore] = useState({});
   const { loading, setLoading } = useContext(LoadingContext);
 
   useEffect(() => {
@@ -40,7 +40,6 @@ const RestuarentPage = () => {
       .catch(console.error);
     setLoading(false);
   }, [restaurantId]);
-  console.log(hotel, "hotel");
 
   const notify = () => {
     toast.success("Restaurant deleted successfully!", {
@@ -117,17 +116,7 @@ const RestuarentPage = () => {
       });
   };
 
-  // const toggleReadMore = (foodId) => {
-  //   console.log("hello");
-  //   setReadMore((prevStates) => ({
-  //     ...prevStates,
-  //     [foodId]: !prevStates[foodId],
-  //   }));
-  // };
-
   const menuData = foods.map((food) => {
-    // const isFoodReadMore = isReadMore[food.id] || false;
-
     return (
       <div className="p-4 w-full">
         <div className="flex justify-between items-center">
@@ -175,19 +164,6 @@ const RestuarentPage = () => {
                   )}
                 </div>
               </div>
-              {/* {food.foodDescription.length > 150
-                ? isFoodReadMore
-                  ? food.foodDescription
-                  : `${food.foodDescription.slice(0, 150)}...`
-                : food.foodDescription}
-              {food.foodDescription.length > 150 && (
-                <span
-                  onClick={() => toggleReadMore(food.id)}
-                  className="text-blue-500 cursor-pointer"
-                >
-                  {isFoodReadMore ? " show less" : " read more"}
-                </span>
-              )} */}
 
               <ReadMore text={food.foodDescription} foodId={food.id} />
               <div className="flex mt-1">
@@ -228,10 +204,7 @@ const RestuarentPage = () => {
               />
               <div className="relative bottom-10 left-3/4">
                 <Link to="/editRestaurant">
-                  <div
-                    className="bg-white flex pl-2 p-1 rounded-sm cursor-pointer w-32"
-                    // onClick={restuarentEditHandler}
-                  >
+                  <div className="bg-white flex pl-2 p-1 rounded-sm cursor-pointer w-32">
                     <FontAwesomeIcon className="mt-1" icon={faPenToSquare} />
                     <button className="ml-1">Edit Info</button>
                   </div>
@@ -247,15 +220,19 @@ const RestuarentPage = () => {
                 <FontAwesomeIcon className="text-sm ml-1" icon={faStar} />
               </div>
             </div>
-            {/* <div className="text-lg text-gray-400">Non-Veg</div> */}
             <div className="text-lg text-gray-400">
               {hotel.restaurantAddress}
             </div>
             <div className="flex text-lg mt-2 ">
               <div className="text-orange-400">{hotel.restaurantStatus}</div>
               <div className="text-lg ml-5 w-52">
-                {moment(hotel.openingTime).format("hh:mm A")}-
-                {moment(hotel.closingTime).format("hh:mm A")}
+                {moment(hotel.openingTime, "YYYY-MM-DD HH:mm:ss").format(
+                  "hh:mm A"
+                )}
+                -
+                {moment(hotel.closingTime, "YYYY-MM-DD HH:mm:ss").format(
+                  "hh:mm A"
+                )}
               </div>
             </div>
 
@@ -268,47 +245,10 @@ const RestuarentPage = () => {
               </Link>
             </div>
             <div className="mt-4">{menuData}</div>
-
-            {/* <div className="p-4 w-full mt-4">
-              {foods.map((food) => {
-                <div className="flex justify-between items-center">
-                  <div className="flex">
-                    <img
-                      className="w-48 h-36 rounded-lg"
-                      src={food.imageFile}
-                      alt={food.foodName}
-                    />
-                    <div className="flex flex-col ml-3">
-                      <div className="flex">
-                        <div className="text-lg">{food.foodName}</div>
-                        <div className="w-10  h-4 bg-black flex text-white items-center justify-center mt-1 ml-4 text-sm">
-                          <p>4.7</p>
-                          <FontAwesomeIcon
-                            className="text-sm ml-1"
-                            icon={faStar}
-                          />
-                        </div>
-                      </div>
-                      <div className="text-lg">Biriyani</div>
-                      <div className="text-sm">
-                        <FontAwesomeIcon icon={faIndianRupeeSign} />
-                        250 per one
-                      </div>
-                      <div className="text-sm">
-                        It is favorite food of mallus
-                      </div>
-                      <div className="flex mt-1">
-                        <FontAwesomeIcon icon={faPenToSquare} />
-                        <FontAwesomeIcon className="ml-2" icon={faTrash} />
-                      </div>
-                    </div>
-                  </div>
-                </div>;
-              })}
-            </div> */}
           </div>
         </>
       )}
+      <Footer />
     </div>
   );
 };

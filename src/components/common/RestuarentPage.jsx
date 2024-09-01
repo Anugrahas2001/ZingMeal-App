@@ -12,6 +12,7 @@ import Loader from "./Loader";
 import { CounterContext } from "./CountContext";
 import moment from "moment/moment";
 import ReadMore from "./ReadMore";
+import Footer from "./Footer";
 
 const RestuarentPage = () => {
   const [hotel, setHotel] = useState({});
@@ -64,7 +65,6 @@ const RestuarentPage = () => {
 
       try {
         const countData = await axios.get("/restaurant/getCount", config);
-        console.log(countData, "dataaa");
         const newCount = countData.data.Count;
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
@@ -76,21 +76,21 @@ const RestuarentPage = () => {
     fetchInitialCartItemCount();
   }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    console.log(id, type, "dattaa");
+  const setFoodTypeHandler = () => {
     axios
       .get(`/restaurant/foodByType/${id}/${type}`)
       .then((response) => {
-        console.log(response.data.Data, "response");
         setFoods(response.data.Data);
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
       });
-  }, [type]);
+  };
+
+  const foodTypeHandler = (e) => {
+    setType(e.target.value);
+    setFoodTypeHandler();
+  };
 
   const notify = () => {
     toast.success("Food successfully added to cart", {
@@ -124,14 +124,12 @@ const RestuarentPage = () => {
         config
       );
       const id = cartItem.data.Data.id;
-      console.log(id, "cart idd after add to cart");
 
       await axios.patch(
         `/restaurant/totalPrice/${restaurantId}/${cartId}`,
         {},
         config
       );
-
       const countData = await axios.get("/restaurant/getCount", config);
       const newCount = countData.data.Count;
 
@@ -177,8 +175,13 @@ const RestuarentPage = () => {
             <div className="w-52 justify-between text-lg flex">
               <div className="text-orange-400">{hotel.restaurantStatus}</div>
               <div className="text-lg">
-                {moment(hotel.openingTime).format("hh:mm A")}-
-                {moment(hotel.closingTime).format("hh:mm A")}
+                {moment(hotel.openingTime, "YYYY-MM-DD HH:mm:ss").format(
+                  "hh:mm A"
+                )}
+                -
+                {moment(hotel.closingTime, "YYYY-MM-DD HH:mm:ss").format(
+                  "hh:mm A"
+                )}
               </div>
             </div>
 
@@ -192,9 +195,7 @@ const RestuarentPage = () => {
                 value="Veg"
                 className="mr-1"
                 checked={type === "Veg"}
-                onChange={(e) => {
-                  setType(e.target.value);
-                }}
+                onChange={foodTypeHandler}
               />
               <label htmlFor="veg" className="mr-3">
                 Veg
@@ -206,9 +207,7 @@ const RestuarentPage = () => {
                 value="Non-Veg"
                 className="mr-1"
                 checked={type === "Non-Veg"}
-                onChange={(e) => {
-                  setType(e.target.value);
-                }}
+                onChange={foodTypeHandler}
               />
               <label htmlFor="nonveg" className="mr-3" name="type">
                 Non-Veg
@@ -265,7 +264,10 @@ const RestuarentPage = () => {
                           )}
                         </div>
                         <div className="text-sm">
-                          <ReadMore text={dish.foodDescription} foodId={dish.id} />
+                          <ReadMore
+                            text={dish.foodDescription}
+                            foodId={dish.id}
+                          />
                         </div>
                       </div>
                     </div>
@@ -284,7 +286,7 @@ const RestuarentPage = () => {
           </div>
         </>
       )}
-      {/* <ToastContainer /> */}
+      <Footer />
     </div>
   );
 };

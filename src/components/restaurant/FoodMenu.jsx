@@ -9,8 +9,7 @@ import Loader from "../common/Loader";
 const FoodMenu = () => {
   const dispatch = useDispatch();
   const restaurantId = useSelector((store) => store.restaurant.id);
-  const {loading, setLoading } = useContext(LoadingContext);
-  console.log(loading,"dattaaaa loading")
+  const { loading, setLoading } = useContext(LoadingContext);
   const [foodMenu, setFoodMenu] = useState({
     foodName: "",
     foodCategory: "",
@@ -59,7 +58,6 @@ const FoodMenu = () => {
         },
       }
     );
-    console.log(response, "responsfgdhhd");
     setLoading(false);
     notify();
     dispatch(addMenu(foodMenu));
@@ -256,7 +254,6 @@ const FoodMenu = () => {
           </form>
         </>
       )}
-      {/* <ToastContainer /> */}
     </div>
   );
 };

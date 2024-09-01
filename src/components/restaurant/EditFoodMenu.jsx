@@ -7,9 +7,7 @@ import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
 
 const EditFoodMenu = () => {
-
   const { id } = useParams();
-  console.log(id, "for editing");
   const restaurantId = useSelector((store) => store.restaurant.id);
   const { loading, setLoading } = useContext(LoadingContext);
   const [foodMenu, setFoodMenu] = useState({
@@ -28,7 +26,6 @@ const EditFoodMenu = () => {
     axios
       .get(`/restaurant/food/${id}`)
       .then((response) => {
-        console.log(response, "posnaama");
         const data = response.data.food;
         setFoodMenu({
           foodName: data.foodName,
@@ -85,7 +82,6 @@ const EditFoodMenu = () => {
         },
       }
     );
-    console.log(response, "responsfgdhhd");
     setLoading(false);
     notify();
 
@@ -281,11 +277,8 @@ const EditFoodMenu = () => {
           </form>
         </>
       )}
-      {/* <ToastContainer /> */}
     </div>
   );
 };
 
 export default EditFoodMenu;
-
-// Time conversion to asia time zone and fetch time, log out and Notification, data inserting and loader class
