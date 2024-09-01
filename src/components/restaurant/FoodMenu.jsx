@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMenu } from "../../slices/menuSlice";
 import { toast, Bounce } from "react-toastify";
-import axios from "../../axios/axios";
+import axios from "../../axios/axios.js"
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
 
