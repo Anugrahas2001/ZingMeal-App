@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast, Bounce } from "react-toastify";
-import axios from "../../axios/axios.js";
+import axios from "../../axios/axios";
 import { useParams } from "react-router-dom";
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
