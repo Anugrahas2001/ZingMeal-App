@@ -16,8 +16,7 @@ import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
 import { addOrder } from "../../slices/orderSlice";
 import Search from "../user/Search";
-import axios from "../../axios/axios";
-// import axios from '@axios/axios';
+import axios from "../../axios/axios"
 import Cookies from "js-cookie";
 import { CounterContext } from "../common/CountContext";
 import Footer from "../common/Footer";
