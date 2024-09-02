@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, Bounce } from "react-toastify";
-import axios from "../../axios/axios";
+// import axios from "../../axios/axios";
+import axios from '@axios/axios';
 import { useDispatch } from "react-redux";
 import { addRestaurant } from "../../slices/restaurantSlice";
 import { LoadingContext } from "../common/LoaderContext";

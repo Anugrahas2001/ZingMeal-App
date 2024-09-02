@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import axios from "../../axios/axios";
+// import axios from "../../axios/axios";
+import axios from '@axios/axios';
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
 

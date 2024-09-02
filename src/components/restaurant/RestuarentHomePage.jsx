@@ -9,7 +9,8 @@ import {
 import { useSelector } from "react-redux";
 import { toast, Bounce } from "react-toastify";
 import { Link } from "react-router-dom";
-import axios from "../../axios/axios";
+// import axios from "../../axios/axios";
+import axios from '@axios/axios';
 import Header from "../common/Header";
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
