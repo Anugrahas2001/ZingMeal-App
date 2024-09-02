@@ -1,11 +1,10 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, Bounce } from "react-toastify";
-import axios from "../../axios/axios.js";
+import axios from "../../axios/axios";
 import { useDispatch } from "react-redux";
 import { addRestaurant } from "../../slices/restaurantSlice";
 import { LoadingContext } from "../common/LoaderContext";
-import Footer from "../common/Footer";
 
 const RestuarentLogin = () => {
   const navigate = useNavigate();
@@ -142,6 +141,7 @@ const RestuarentLogin = () => {
           restaurantName: credentials.restaurantName,
           restaurantPassword: credentials.password,
         });
+        console.log(response, "loged in");
 
         if (response.data && response.data.accessToken) {
           console.log(addRestaurant());
@@ -390,7 +390,6 @@ const RestuarentLogin = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

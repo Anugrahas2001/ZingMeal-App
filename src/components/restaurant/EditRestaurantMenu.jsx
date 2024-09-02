@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "../../axios/axios.js"
+import axios from "../../axios/axios";
 import { toast, Bounce } from "react-toastify";
 import Loader from "../common/Loader";
 import { LoadingContext } from "../common/LoaderContext";

@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Header from "../common/Header";
 import { Link } from "react-router-dom";
-import axios from "../../axios/axios.js";
+import axios from "../../axios/axios";
 import { CounterContext } from "../common/CountContext";
 import { cartItemCounter } from "../../slices/cartItemSlice";
 import Cookies from "js-cookie";

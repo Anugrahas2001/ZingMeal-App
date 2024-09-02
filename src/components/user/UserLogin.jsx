@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../axios/axios.js";
+import axios from "../../axios/axios";
 import { toast, Bounce } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../../slices/userSlice.js";
 import { createCart } from "../../slices/cartSlice.js";
 import { LoadingContext } from "../common/LoaderContext.jsx";
-import Footer from "../common/Footer.jsx";
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -276,7 +275,6 @@ const UserLogin = () => {
           Try this?
         </span>
       </div>
-      <Footer />
     </div>
   );
 };
