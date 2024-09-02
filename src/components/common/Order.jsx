@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "../../axios/axios";
 import Cookies from "js-cookie";
 import { LoadingContext } from "./LoaderContext";
+import { Preparing,Packed,Dispatched,Delivered,Cancelled } from "../../constants/constants";
 import Loader from "./Loader";
 import Footer from "./Footer";
+
 
 const Order = (props) => {
   const dispatch = useDispatch();
@@ -194,10 +196,10 @@ const Order = (props) => {
                         }
                       >
                         <option value=""></option>
-                        <option value="Preparing">Preparing</option>
-                        <option value="Packed">Packed</option>
-                        <option value="Dispatched">Dispatched</option>
-                        <option value="Delivered">Delivered</option>
+                        <option value={Preparing}>Preparing</option>
+                        <option value={Packed}>Packed</option>
+                        <option value={Dispatched}>Dispatched</option>
+                        <option value={Delivered}>Delivered</option>
                       </select>
                     </div>
                   )}

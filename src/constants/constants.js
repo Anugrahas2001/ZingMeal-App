@@ -1,0 +1,6 @@
+export const baseUrl="https://zingmeal.onrender.com"
+export const Preparing="Preparing"
+export const Packed="Packed"
+export const Dispatched="Dispatched"
+export const Delivered="Delivered"
+export const Cancelled="Cancelled"
