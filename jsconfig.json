@@ -1,10 +1,10 @@
-{
-    "compilerOptions": {
-      "baseUrl": "src",
-      "paths": {
-        "@axios/*": ["axios/*"],
-      }
-    },
-    "include": ["src"]
-  }
+// {
+//     "compilerOptions": {
+//       "baseUrl": "src",
+//       "paths": {
+//         "@axios/*": ["axios/*"],
+//       }
+//     },
+//     "include": ["src"]
+//   }
   

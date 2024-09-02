@@ -4,8 +4,8 @@ import { toast, Bounce } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
-// import axios from "../../axios/axios";
-import axios from '@axios/axios';
+import axios from "../../axios/axios";
+// import axios from '@axios/axios';
 
 const EditFoodMenu = () => {
   const { id } = useParams();
