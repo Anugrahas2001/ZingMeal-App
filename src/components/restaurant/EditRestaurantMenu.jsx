@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../../axios/axios";
-// import axios from '@axios/axios';
 import { toast, Bounce } from "react-toastify";
 import Loader from "../common/Loader";
 import { LoadingContext } from "../common/LoaderContext";
@@ -16,10 +15,12 @@ const EditRestaurantMenu = () => {
     openingTime: "",
     closingTime: "",
     restaurantStatus: "",
+    imagePreview: "",
   });
 
   useEffect(() => {
     setLoading(true);
+    console.log(restaurantId, "idddd");
     axios
       .get(`/restaurant/getRestaurant/${restaurantId}`)
       .then((response) => {
@@ -27,8 +28,13 @@ const EditRestaurantMenu = () => {
         setRestaurant({
           restaurantName: data.restaurantName,
           restaurantImg: data.restaurantImg,
-          openingTime: moment(data.openingTime).format("hh:mm A"),
-          closingTime: moment(data.closingTime).format("hh:mm A"),
+          imagePreview: data.restaurantImg || "",
+          openingTime: moment(data.openingTime, "YYYY-MM-DD HH:mm:ss").format(
+            "hh:mm A"
+          ),
+          closingTime: moment(data.closingTime, "YYYY-MM-DD HH:mm:ss").format(
+            "hh:mm A"
+          ),
           restaurantStatus: data.restaurantStatus,
         });
         setLoading(false);
@@ -65,6 +71,18 @@ const EditRestaurantMenu = () => {
       theme: "light",
       transition: Bounce,
     });
+  };
+
+  const handleSubmitImage = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setRestaurant({
+        ...restaurant,
+        restaurantImg: e.target.files[0],
+        imagePreview: imageUrl,
+      });
+    }
   };
 
   const handleSubmitMenu = (e) => {
@@ -216,22 +234,17 @@ const EditRestaurantMenu = () => {
                 Restuarent Image
               </label>
               <div className="flex">
-                {
+                {restaurant.imagePreview && (
                   <img
                     className="w-20 h-14 object-cover p-1 rounded-lg"
-                    src={restaurant.restaurantImg}
+                    src={restaurant.imagePreview}
                   />
-                }
+                )}
                 <input
                   type="file"
                   id="restaurantImg"
                   className="mt-3"
-                  onChange={(e) => {
-                    setRestaurant({
-                      ...restaurant,
-                      restaurantImg: e.target.files[0],
-                    });
-                  }}
+                  onChange={handleSubmitImage}
                 />
               </div>
             </div>

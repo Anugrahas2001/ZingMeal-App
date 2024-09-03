@@ -130,6 +130,7 @@ const UserLogin = () => {
           email,
           password,
         });
+        console.log(email,password,"signined");
 
         if (response.data && response.data.accessToken) {
           const userId = response.data.Data.id;

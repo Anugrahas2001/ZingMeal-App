@@ -145,7 +145,6 @@ const RestuarentLogin = () => {
         console.log(response, "loged in");
 
         if (response.data && response.data.accessToken) {
-          console.log(addRestaurant());
           dispatch(
             addRestaurant({
               id: response.data.Data.id,

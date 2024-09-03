@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import { toast, Bounce } from "react-toastify";
 import { Link } from "react-router-dom";
 import axios from "../../axios/axios";
-// import axios from '@axios/axios';
 import Header from "../common/Header";
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
@@ -119,7 +118,7 @@ const RestuarentPage = () => {
 
   const menuData = foods.map((food) => {
     return (
-      <div className="p-4 w-full">
+      <div className="p-4 w-full" key={food.id}>
         <div className="flex justify-between items-center">
           <div className="flex">
             <img

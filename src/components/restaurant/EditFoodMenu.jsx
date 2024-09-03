@@ -4,13 +4,12 @@ import { toast, Bounce } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { LoadingContext } from "../common/LoaderContext";
 import Loader from "../common/Loader";
-import axios from "../../axios/axios"
-
+import axios from "../../axios/axios";
 
 const EditFoodMenu = () => {
   const { id } = useParams();
   const restaurantId = useSelector((store) => store.restaurant.id);
-  console.log(restaurantId,"idddd")
+  console.log(restaurantId, "idddd");
   const { loading, setLoading } = useContext(LoadingContext);
   const [foodMenu, setFoodMenu] = useState({
     foodName: "",
@@ -21,6 +20,7 @@ const EditFoodMenu = () => {
     preparingTime: "",
     foodType: "",
     imageFile: null,
+    imagePreview: "",
   });
   console.log("helooo");
 
@@ -29,6 +29,7 @@ const EditFoodMenu = () => {
     axios
       .get(`/restaurant/food/${id}`)
       .then((response) => {
+        console.log(response, "response of get");
         const data = response.data.food;
         setFoodMenu({
           foodName: data.foodName,
@@ -38,7 +39,8 @@ const EditFoodMenu = () => {
           discount: data.discount,
           preparingTime: data.preparingTime,
           foodType: data.foodType,
-          imageFile: null,
+          imageFile: data.imageFile,
+          imagePreview: data.imageFile || "",
         });
         setLoading(false);
       })
@@ -60,6 +62,15 @@ const EditFoodMenu = () => {
       theme: "light",
       transition: Bounce,
     });
+  };
+
+  const handleSubmitImage = (e) => {
+    const file = e.target.files[0];
+    console.log(file, "image file");
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setFoodMenu({ ...foodMenu, imageFile: file, imagePreview: imageUrl });
+    }
   };
 
   const handleSubmitMenu = async (e) => {
@@ -259,14 +270,20 @@ const EditFoodMenu = () => {
               >
                 Upload File
               </label>
-              <input
-                className="w-full p-2 border border-gray-600 rounded-sm outline-none"
-                type="file"
-                id="imageFile"
-                onChange={(e) =>
-                  setFoodMenu({ ...foodMenu, imageFile: e.target.files[0] })
-                }
-              />
+              <div className="flex border-gray-600">
+                {foodMenu.imagePreview && (
+                  <img
+                    className="w-20 h-14 object-cover p-1 rounded-lg"
+                    src={foodMenu.imagePreview}
+                  />
+                )}
+                <input
+                  className="mt-3"
+                  type="file"
+                  id="imageFile"
+                  onChange={handleSubmitImage}
+                />
+              </div>
             </div>
 
             <div className="flex justify-center items-center mt-4">
