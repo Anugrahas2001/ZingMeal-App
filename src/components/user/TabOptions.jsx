@@ -44,7 +44,7 @@ const TabOptions = () => {
   const foodItemsToDisplay = uniqueFoodItems.slice(0, 6).map((food) => {
     return (
       <div
-        className=" w-full flex justify-center items-center flex-col pl-1 mt-4 xs:ml-2"
+        className=" w-full flex justify-center items-center flex-col pl-1 mt-4 xs:ml-1"
         key={food.id}
       >
         <img
@@ -61,7 +61,7 @@ const TabOptions = () => {
   });
 
   return (
-    <div className="overflow-x-hidden ml-16 mr-16 mt-5 lg:ml-12 lg:mr-12 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:m6-6">
+    <div className="overflow-x-hidden ml-16 mr-16 mt-5 lg:ml-12 lg:mr-12 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:mr-6">
       <p className="text-3xl mt-2 lg:text-3xl md:text-2xl sm:text-xl xs:text-lg">Eat what makes you happy</p>
       {loading ? (
         <Loader />
@@ -70,29 +70,29 @@ const TabOptions = () => {
           <div className="flex">{foodItemsToDisplay}</div>
           <div className="w-full flex justify-center">
             {foodCategories && show && (
-              <div className="flex justify-center rounded-md shadow p-3 flex-wrap mt-4">
+              <div className="w-full flex justify-center rounded-md shadow p-3 flex-wrap mt-4 lg:mt-4 md:mt-2 sm:mt-1 xs:mt-1 sm:p-0 sm:flex sm:flex-wrap xs:flex xs:flex-wrap">
                 {foodCategories.map((food) => (
                   <Link to={`/restuarent/${food.restaurant.id}`} key={food.id}>
-                    <div className="flex rounded-md h-64 p-3 shadow mb-4 m-7">
-                      <div className="flex flex-col w-72">
+                    <div className="flex rounded-md h-64 p-3 shadow mb-4 m-7 lg:p-3 md:p-2 sm:p-2 sm:h-44 sm:m-2 xs:m-1 xs:h-44 xs:p-1">
+                      <div className="flex flex-col w-72 lg:w-72 md:w-56 sm:w-36 xs:w-24">
                         {loading ? (
                           <Loader />
                         ) : (
                           <>
                             {" "}
                             <img
-                              className="h-40 rounded-md"
+                              className="h-40 rounded-md lg:h-40 md:h-36 sm:h-24 xs:h-20"
                               src={food.imageFile}
                               alt={food.foodName}
                             />
                           </>
                         )}
                         <div className="flex justify-between">
-                          <p>{food.foodName}</p>
-                          <p>{food.preparingTime} min</p>
+                          <p className="text-base lg:text-base md:text-sm sm:text-xs xs:text-xs">{food.foodName}</p>
+                          <p className="text-base lg:text-base md:text-sm sm:text-xs xs:text-xs">{food.preparingTime} min</p>
                         </div>
-                        <p>{food.foodType}</p>
-                        <p>Available : {food.createdBy}</p>
+                        <p className="text-base lg:text-base md:text-sm sm:text-xs xs:text-xs">{food.foodType}</p>
+                        <p className="text-base lg:text-base md:text-sm sm:text-xs xs:text-xs">Available : {food.createdBy}</p>
                       </div>
                     </div>
                   </Link>

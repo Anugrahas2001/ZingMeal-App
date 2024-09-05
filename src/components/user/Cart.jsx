@@ -336,11 +336,12 @@ const Cart = () => {
     <div className="w-full overflow-x-hidden">
       <Search cartItemCount={cartItemCount} />
       <div className="w-full flex justify-center" key={data.id}>
-        <div className="flex flex-wrap md:flex-nowrap w-4/5">
+        <div className="flex flex-wrap xl:flex-nowrap w-4/5">
           <div className="flex flex-wrap m-4 w-full lg:m-4 md:m-2">
             {userId && data}
           </div>
-          {cartItemCount > 0 ? (
+          {userId&
+          cartItemCount > 0 ? (
             <div className="h-4/5 shadow-lg mt-8 md:mt-0 md:ml-3 m-4 w-2/3 lg:h-4/5 md:h-auto md:w-2/3 sm:w-full sm:h-auto xs:w-full xs:h-auto">
               <div className="m-5">
                 <div className="text-lg h-8 m-5 mt-2 flex justify-center items-center font-semibold shadow-lg">
@@ -518,10 +519,10 @@ const Cart = () => {
                   </p>
                 </div>
               </div>
-              {/* <Footer /> */}
+              <Footer />
             </div>
           ) : (
-            <div className="text-4xl w-full flex justify-center items-center mt-32">
+            <div className="text-3xl lg:text-3xl md:text-2xl sm:text-2xl xs:text-lg w-full flex justify-center items-center mt-32">
               Please add items to the cart
             </div>
           )}

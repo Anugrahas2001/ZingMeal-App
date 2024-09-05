@@ -88,6 +88,7 @@ const RestuarentPage = () => {
   };
 
   const foodTypeHandler = (e) => {
+    console.log(e.target.value, "veg or non-veg");
     setType(e.target.value);
     setFoodTypeHandler();
   };
@@ -151,7 +152,10 @@ const RestuarentPage = () => {
         <Loader />
       ) : (
         <>
-          <div key={hotel.id} className="ml-36 mr-36 lg:ml-32 lg:mr-32 md:ml-14 md:mr-14 xs:ml-8 xs:mr-8">
+          <div
+            key={hotel.id}
+            className="ml-36 mr-36 lg:ml-32 lg:mr-32 md:ml-14 md:mr-14 xs:ml-8 xs:mr-8"
+          >
             <div className="max-w-full mt-8 rounded-md xs:w-full xs:rounded-sm xs:mt-5">
               <img
                 className="w-full object-cover h-96 rounded-md lg:h-80 md:h-44 sm:h-32 xs:h-28"
@@ -162,10 +166,15 @@ const RestuarentPage = () => {
 
             <div className="flex w-full justify-between h-8 items-center rounded-lg">
               <div className="flex">
-                <div className="text-2xl lg:text-2xl md:text-xl sm:text-lg xs:text-lg">{hotel.restaurantName}</div>
+                <div className="text-2xl lg:text-2xl md:text-xl sm:text-lg xs:text-lg">
+                  {hotel.restaurantName}
+                </div>
                 <div className="w-10 mt-2 h-4 bg-black flex text-white items-center justify-center ml-4 text-sm lg:w-10 lg:h-5 md:w-7 md:h-4 md xs:w-8 xs:h-3 xs:px-5">
                   <p className="xs:text-sm xs:ml-1">3.3</p>
-                  <FontAwesomeIcon className="text-sm ml-1 xs:text-sm xs:mr-1" icon={faStar} />
+                  <FontAwesomeIcon
+                    className="text-sm ml-1 xs:text-sm xs:mr-1"
+                    icon={faStar}
+                  />
                 </div>
               </div>
             </div>
@@ -186,7 +195,9 @@ const RestuarentPage = () => {
             </div>
 
             <div className="flex w-full justify-between mt-4 lg:w-full md:w-96 sm:w-80 xs:w-72">
-              <p className="text-3xl lg:text-3xl md:text-2xl sm:text-xl xs:text-sm">Menu Items</p>
+              <p className="text-3xl lg:text-3xl md:text-2xl sm:text-xl xs:text-sm">
+                Menu Items
+              </p>
             </div>
             <div className="mt-3">
               <input
@@ -197,7 +208,10 @@ const RestuarentPage = () => {
                 checked={type === "Veg"}
                 onChange={foodTypeHandler}
               />
-              <label htmlFor="veg" className="mr-3 lg:text-lg md:text-lg sm:text-sm xs:text-xs">
+              <label
+                htmlFor="veg"
+                className="mr-3 lg:text-lg md:text-lg sm:text-sm xs:text-xs"
+              >
                 Veg
               </label>
               <input
@@ -209,7 +223,11 @@ const RestuarentPage = () => {
                 checked={type === "Non-Veg"}
                 onChange={foodTypeHandler}
               />
-              <label htmlFor="nonveg" className="mr-3 lg:text-lg md:text-lg sm:text-sm xs:text-xs" name="type">
+              <label
+                htmlFor="nonveg"
+                className="mr-3 lg:text-lg md:text-lg sm:text-sm xs:text-xs"
+                name="type"
+              >
                 Non-Veg
               </label>
             </div>
@@ -225,17 +243,25 @@ const RestuarentPage = () => {
                       />
                       <div className="flex flex-col ml-3">
                         <div className="flex">
-                          <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-sm">{dish.foodName}</div>
+                          <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-sm">
+                            {dish.foodName}
+                          </div>
                           <div className="w-10 h-4 bg-black flex text-white items-center justify-center mt-1 ml-4 text-sm lg:w-10 md:w-10 sm:w-6 xs:w-7 xs:px-4 xs:ml-2">
-                            <p className="text-sm lg:text-sm md:text-sm sm:text-sm xs:text-xs">4.3</p>
+                            <p className="text-sm lg:text-sm md:text-sm sm:text-sm xs:text-xs">
+                              4.3
+                            </p>
                             <FontAwesomeIcon
                               className="text-sm ml-1 lg:text-sm md:text-sm sm:text-sm xs:text-xs"
                               icon={faStar}
                             />
                           </div>
                         </div>
-                        <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-xs">{dish.foodType}</div>
-                        <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-xs">{dish.foodCategory}</div>
+                        <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-xs">
+                          {dish.foodType}
+                        </div>
+                        <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-xs">
+                          {dish.foodCategory}
+                        </div>
                         <div className="text-sm flex lg:text-sm md:text:sm xs:text-xs">
                           <FontAwesomeIcon
                             className="test-sm mt-1 lg:text-sm md:text:sm xs:text-xs"
@@ -247,15 +273,15 @@ const RestuarentPage = () => {
                             <>
                               <span>{dish.discountPrice}</span>
                               {/* <div> */}
-                                <div className="ml-5 flex xs:ml-3">
-                                  <FontAwesomeIcon
-                                    className="test-sm mt-1"
-                                    icon={faIndianRupeeSign}
-                                  />
-                                  <span className="line-through text-green-600">
-                                    {dish.actualPrice}
-                                  </span>
-                                </div>
+                              <div className="ml-5 flex xs:ml-3">
+                                <FontAwesomeIcon
+                                  className="test-sm mt-1"
+                                  icon={faIndianRupeeSign}
+                                />
+                                <span className="line-through text-green-600">
+                                  {dish.actualPrice}
+                                </span>
+                              </div>
                               {/* </div> */}
                               <span className="text-red-600 ml-2lg:text-sm md:text-sm xs:text-xs xs:w-12 xs:ml-1 flex">
                                 {dish.discount}% off
@@ -264,7 +290,8 @@ const RestuarentPage = () => {
                           )}
                         </div>
                         <div className="text-base lg:text-base xs:w-full xs:flex-row xs:text-xs">
-                          <ReadMore className="w-full"
+                          <ReadMore
+                            className="w-full"
                             text={dish.foodDescription}
                             foodId={dish.id}
                           />

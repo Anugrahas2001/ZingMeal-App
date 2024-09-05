@@ -17,7 +17,6 @@ const Footer = () => {
           <li>Zomato</li>
           <li>Swiggy</li>
           <li>Blinkit</li>
-          {/* <li>Feeding India</li> */}
         </ul>
       </div>
 
@@ -35,7 +34,6 @@ const Footer = () => {
           <li>Privacy</li>
           <li>Security</li>
           <li>Terms</li>
-          {/* <li>Sitemap</li> */}
         </ul>
       </div>
     </div>
