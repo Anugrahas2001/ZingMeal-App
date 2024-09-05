@@ -7,7 +7,6 @@ import {
 import Header from "../common/Header";
 import { Link } from "react-router-dom";
 import axios from "../../axios/axios";
-// import axios from '@axios/axios';
 import { CounterContext } from "../common/CountContext";
 import { cartItemCounter } from "../../slices/cartItemSlice";
 import Cookies from "js-cookie";
@@ -89,7 +88,7 @@ const Search = () => {
   return (
     <div>
       <Header cartLink={cartLink} orderLink="/userOrder">
-        <div className="relative w-1/3 ">
+        <div className="relative w-1/3 lg:w-1/4">
           <div className="flexrounded-md text-gray-500 h-10  m-2 shadow rounded-md flex">
             <FontAwesomeIcon className="mt-3 ml-2" icon={faMagnifyingGlass} />
             <input

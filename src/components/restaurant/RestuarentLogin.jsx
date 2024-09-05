@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, Bounce } from "react-toastify";
 import axios from "../../axios/axios";
-// import axios from '@axios/axios';
 import { useDispatch } from "react-redux";
 import { addRestaurant } from "../../slices/restaurantSlice";
 import { LoadingContext } from "../common/LoaderContext";
@@ -192,9 +191,9 @@ const RestuarentLogin = () => {
       return prevState === "Sign In" ? "Sign Up" : "Sign In";
     });
     setDescription((prevState) => {
-      return prevState === "New to ZingMeal"
+      return prevState === "New to ZingMeal?"
         ? "Already have an account"
-        : "New to ZingMeal";
+        : "New to ZingMeal?";
     });
     setChangeSection((prevState) => {
       return prevState === "Create an account"
@@ -205,19 +204,19 @@ const RestuarentLogin = () => {
 
   return (
     <div className="flex justify-center items-center mt-20">
-      <div className="flex flex-col w-96  h-auto justify-center items-center border border-gray-400 p-5">
+      <div className="flex flex-col w-full lg:w-2/5 md:w-2/5 sm:w-2/3 xs:w-4/5 h-auto justify-center items-center border border-gray-300 p-5 md:p-1">
         <div className="text-gray-500 font-semibold text-3xl mb-5">
-          <p>{title}</p>
+          <p className="text-2xl">{title}</p>
         </div>
 
-        <div className="flex justify-center items-center flex-col">
-          <div>
-            <label htmlFor="restaurantName">Restaurant Name</label>
-            <div className="w-80 h-12 flex items-center p-1 rounded-sm border border-gray-300 mb-4">
+        <div className="flex justify-center items-center flex-col w-full lg:w-4/5 md:w-80 md:h-3/5 xs:w-full">
+          <div className="flex flex-col w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56 xs:mb-2">
+            <label htmlFor="restaurantName" className="text-base lg:text-base md:text-sm xs:text-sm">Restaurant Name</label>
+            <div className="h-12 lg:h-12 md:h-10 sm:h-8 xs:h-8 flex justify-center items-center rounded-sm mt-2 border border-gray-300 p-1 md:text-sm">
               <input
                 type="text"
                 id="restaurantName"
-                className="outline-none p-1 w-2/3 ml-2"
+                className="outline-none p-1 lg:w-72 md:w-64 sm:64 xs:w-56 xs:text-sm"
                 placeholder="Enter Restaurant name"
                 value={credentials.restaurantName}
                 onChange={(e) => {
@@ -230,32 +229,34 @@ const RestuarentLogin = () => {
             </div>
           </div>
 
-          <div className="w-80 h-14 flex flex-col mb-4">
-            <label htmlFor="password" className="mb-1">
-              Enter Password
+          <div className="flex flex-col mb-4 w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56">
+            <label htmlFor="password" className="mt-1 lg:text-base md:text-sm xs:text-sm">
+            Password
             </label>
-            <input
+           <div className="h-12 lg:h-12 md:h-10 sm:h-8 xs:h-8 flex justify-center items-center rounded-sm mt-1 border border-gray-300 p-1 md:text-sm sm:text-sm xs:text-sm">
+           <input
               type="password"
               id="password"
               value={credentials.password}
               onChange={(e) => {
                 setCredentials({ ...credentials, password: e.target.value });
               }}
-              className="outline-none p-1 border h- border-gray-300 rounded-sm"
+              className="outline-none p-1 w-72 lg:text-base lg:w-72 md:w-64 sm:64 xs:w-64 xs:text-sm"
               placeholder="Enter Password"
             />
+           </div>
           </div>
 
           {title === "Sign Up" && (
             <div className="flex justify-center items-center flex-col">
-              <div>
-                <label htmlFor="restaurantAddress">Restaurant Address</label>
-                <div className="w-80 h-12 flex items-center p-1 rounded-sm border border-gray-300 mb-4">
+              <div className="w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56">
+                <label htmlFor="restaurantAddress" className="text-base lg:text-base md:text-sm sm:text-sm xs:text-sm">Restaurant Address</label>
+                <div className="h-12 lg:h-12 md:h-10 sm:h-8 xs:h-8 flex items-center p-1 rounded-sm border border-gray-300 mb-4 md:mb-1">
                   <input
                     type="text"
                     id="restaurantAddress"
-                    className="outline-none p-1 w-2/3 ml-2"
-                    placeholder="Enter Restaurant name"
+                    className="outline-none p-1 ml-2 w-72 lg:w-72 md:w-64 md:ml-0 sm:ml-0 sm:text-sm xs:text-sm"
+                    placeholder="Enter Restaurant address"
                     value={credentials.restaurantAddress}
                     onChange={(e) => {
                       setCredentials({
@@ -266,9 +267,9 @@ const RestuarentLogin = () => {
                   />
                 </div>
 
-                <div className="w-80 h-12 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1">
+                <div className="w-80 h-12 lg:h-12 md:h-10 sm:h-10 xs:h-10 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1 lg:w-80 md:w-64 sm:w-60 xs:w-56">
                   <div className="flex items-center">
-                    <label htmlFor="openingTime" className="mr-2">
+                    <label htmlFor="openingTime" className="mr-2 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm">
                       Opening Time:
                     </label>
                     <input
@@ -291,7 +292,7 @@ const RestuarentLogin = () => {
                           dayNight1: e.target.value,
                         });
                       }}
-                      className="outline-none"
+                      className="outline-none text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
                     >
                       <option value="AM">AM</option>
                       <option value="PM">PM</option>
@@ -299,9 +300,9 @@ const RestuarentLogin = () => {
                   </div>
                 </div>
 
-                <div className="w-80 h-12 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1">
+                <div className="w-80 h-12 lg:h-12 md:h-10 sm:h-10 xs:h-10 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1lg:w-80 md:w-64 sm:w-60 xs:w-56">
                   <div className="flex items-center">
-                    <label htmlFor="closingTime" className="mr-2">
+                    <label htmlFor="closingTime" className="mr-2 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm">
                       Closing Time:
                     </label>
                     <input
@@ -324,7 +325,7 @@ const RestuarentLogin = () => {
                           dayNight2: e.target.value,
                         });
                       }}
-                      className="outline-none"
+                      className="outline-none text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
                     >
                       <option value="AM">AM</option>
                       <option value="PM">PM</option>
@@ -332,9 +333,9 @@ const RestuarentLogin = () => {
                   </div>
                 </div>
 
-                <div className="w-80 h-12 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1">
+                <div className="w-80 h-12 lg:h-12 md:h-10 sm:h-10 xs:h-10 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1 lg:w-80 md:w-64 sm:w-60 xs:w-56">
                   <div className="flex items-center">
-                    <label htmlFor="restaurantStatus" className="mr-2">
+                    <label htmlFor="restaurantStatus" className="mr-2 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm">
                       Resturant Status:
                     </label>
 
@@ -347,7 +348,7 @@ const RestuarentLogin = () => {
                           restaurantStatus: e.target.value,
                         });
                       }}
-                      className="outline-none ml-7"
+                      className="outline-none ml-7 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
                     >
                       <option value="Closed">Closed</option>
                       <option value="Open">Open</option>
@@ -356,13 +357,14 @@ const RestuarentLogin = () => {
                 </div>
 
                 <div className="w-80 h-auto flex flex-col mb-4">
-                  <label htmlFor="restaurantImg" className="mb-2">
+                  <label htmlFor="restaurantImg" className="mb-2 md:mb-0 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm">
                     Upload Restaurant Image
                   </label>
+                  <div className="w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56 border border-gray-300 p-1 md:h-12 md:p-2">
                   <input
                     type="file"
                     id="restaurantImg"
-                    className="outline-none"
+                    className="outline-none text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
                     onChange={(e) => {
                       setCredentials({
                         ...credentials,
@@ -370,12 +372,13 @@ const RestuarentLogin = () => {
                       });
                     }}
                   />
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
-          <div className="w-80 flex justify-center items-center">
+          <div className="w-80 h-12 lg:h-12 sm:h-10 xs:h-10 flex justify-between items-center rounded-sm border border-blue-700 bg-blue-700 mt-4 lg:w-80 md:w-64 md:h-10 md:mt-2 sm:w-60 xs:w-56 xs:mt-0">
             <button
               onClick={submitHandler}
               className="bg-blue-700 w-80 h-10 text-center text-white rounded-sm"
@@ -384,7 +387,7 @@ const RestuarentLogin = () => {
             </button>
           </div>
 
-          <div className="flex mt-2 cursor-pointer" onClick={changePage}>
+          <div className="flex mt-2 cursor-pointer text-base lg:text-base md:text-sm sm:text-sm xs:text-xs" onClick={changePage}>
             <p>{description}</p>
             <p className="ml-1 text-red-500">{changeSection}</p>
           </div>

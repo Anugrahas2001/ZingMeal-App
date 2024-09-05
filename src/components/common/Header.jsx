@@ -68,24 +68,29 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
   };
 
   return (
-    <div className="flex items-center justify-between h-[60px] m-4 ml-16 mr-16">
+    <div className="w-full overflow-x-hidden">
+    <div className="flex items-center justify-between h-[60px] m-4 ml-16 mr-16 lg:m-4 lg:ml-12 lg:mr-12 md:m-3 md:ml-10 md:mr-10 sm:m-2 sm:ml-8 sm:mr-8 xs:ml-1">
       <Link to="/">
-        <div className="w-36">
-          <h1 className="text-4xl font-bold text-black italic">ZingMeal</h1>
+        <div className="w-36 lg:w-28 md:w-24 sm:w-20">
+          <h1 className="lg:text-3xl md:text-2xl sm:text-xl xs:text-lg font-bold text-black italic">ZingMeal</h1>
         </div>
       </Link>
       {children}
       <div className="flex">
-        <div className="flex mt-2 right-28">
+        <div className="flex mt-2 lg:mt-1 md:mt-1 sm:mt-0 xs:mr-2">
           {cartLink}
           <Link to={orderLink}>
-            <p className="font-bold">Orders</p>
+            <p className="font-bold lg:text-lg md:text-base sm:text-sm xs:text-sm">Orders</p>
           </Link>
-          <p className="font-bold ml-5 cursor-pointer" onClick={LogOutHandler}>
+          <p
+            className="font-bold ml-5 lg:ml-4 md:ml-3 sm:ml-2 cursor-pointer lg:text-lg md:text-base sm:text-sm xs:text-sm xs:mr-1"
+            onClick={LogOutHandler}
+          >
             LogOut
           </p>
         </div>
       </div>
+    </div>
     </div>
   );
 };

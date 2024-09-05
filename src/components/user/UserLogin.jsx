@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../axios/axios";
-// import axios from '@axios/axios';
 import { toast, Bounce } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../../slices/userSlice.js";
@@ -130,7 +129,7 @@ const UserLogin = () => {
           email,
           password,
         });
-        console.log(email,password,"signined");
+        console.log(email, password, "sign in options");
 
         if (response.data && response.data.accessToken) {
           const userId = response.data.Data.id;
@@ -200,82 +199,91 @@ const UserLogin = () => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-24 flex-col">
-      <div className="flex flex-col w-96 h-96 justify-center items-center border border-gray-400">
-        <div className="text-gray-500 font-semibold text-3xl">
-          <p>{title}</p>
-        </div>
-        <form
-          onSubmit={submitHandler}
-          className="w-full flex flex-col items-center"
-        >
-          <div className="w-80 h-12 flex justify-center items-center p-1 rounded-sm border border-gray-300 mt-5">
-            <input
-              type="email"
-              required
-              placeholder="Enter Email"
-              className="outline-none p-1 w-80"
-              value={credentials.email}
-              onChange={(e) =>
-                setCredentials({ ...credentials, email: e.target.value })
-              }
-            />
+    <div className="w-full overflow-x-hidden">
+      <div className="flex justify-center items-center mt-24 flex-col w-full xs:w-full h-full">
+        <div className="flex flex-col border p-3 w-full lg:w-1/3 md:w-1/3 xs:w-4/5 xs:p-2">
+          <div className="font-semibold text-3xl">
+            <p className="flex justify-center text-xl">{title}</p>
           </div>
-          <div className="w-80 h-12 mt-5 flex justify-center items-center p-1 rounded-sm border border-gray-300">
-            <input
-              type="password"
-              required
-              placeholder="Enter Password"
-              className="outline-none p-1 w-80"
-              value={credentials.password}
-              onChange={(e) =>
-                setCredentials({ ...credentials, password: e.target.value })
-              }
-            />
-          </div>
-          {title === "Sign Up" && (
-            <div className="w-80 h-12 mt-5 flex justify-center items-center p-1 rounded-sm border border-gray-300">
-              <input
-                type="password"
-                required
-                placeholder="Enter Confirm Password"
-                className="outline-none p-1 w-80"
-                value={credentials.confirmPassword}
-                onChange={(e) =>
-                  setCredentials({
-                    ...credentials,
-                    confirmPassword: e.target.value,
-                  })
-                }
-              />
+          <form
+            onSubmit={submitHandler}
+            className="w-full flex flex-col items-center justify-center "
+          >
+            <div className="w-full lg:w-3/4 sm:h-3/5 xs:w-full">
+              <div className="h-12 flex justify-center items-center rounded-sm mt-5 border border-gray-300 p-1 xs:h-9 xs:64">
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter Email"
+                  className="outline-none p-1 w-72 lg:w-72 sm:64 xs:w-64 xs:text-sm"
+                  value={credentials.email}
+                  s
+                  onChange={(e) =>
+                    setCredentials({ ...credentials, email: e.target.value })
+                  }
+                />
+              </div>
+              <div className="h-12 flex justify-center items-center rounded-sm mt-5 border border-gray-300 p-1 xs:h-9">
+                <input
+                  type="password"
+                  required
+                  placeholder="Enter Password"
+                  className="outline-none p-1 w-72 lg:w-72 xs:w-64 xs:text-sm"
+                  value={credentials.password}
+                  onChange={(e) =>
+                    setCredentials({ ...credentials, password: e.target.value })
+                  }
+                />
+              </div>
+              {title === "Sign Up" && (
+                <div className="h-12 flex justify-center items-center rounded-sm mt-5 border border-gray-400 p-1 xs:h-9">
+                  <input
+                    type="password"
+                    required
+                    placeholder="Enter Confirm Password"
+                    className="outline-none p-1 w-72 lg:w-72 xs:w-64 xs:text-sm"
+                    value={credentials.confirmPassword}
+                    onChange={(e) =>
+                      setCredentials({
+                        ...credentials,
+                        confirmPassword: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              )}
+              <div className="h-12 flex justify-center items-center rounded-sm mt-5 border border-gray-400 p-1 xs:h-9 bg-blue-700">
+                <button
+                  type="submit"
+                  className="bg-blue-700 h-10 text-center text-white cursor-pointer outline-none p-1 w-72 lg:w-72 xs:w-64 xs:h-8"
+                  disabled={loading}
+                >
+                  Submit
+                </button>
+              </div>
             </div>
-          )}
-          <div className="w-80 flex justify-center items-center mt-5 rounded-sm cursor-pointer">
-            <button
-              type="submit"
-              className="bg-blue-700 w-80 h-10 text-center text-white cursor-pointer"
-              disabled={loading}
+          </form>
+          <div className="flex justify-center">
+            <div
+              className="flex justify-center w-80 lg:justify-center lg:items-center md:justify-center mt-5 cursor-pointer xs:text-sm xs:w-60 xs:justify-start xs:mr-1"
+              onClick={changePage}
             >
-              Submit
-            </button>
+              <p className="text-lg mt-1 xs:text-sm">{description}</p>
+              <p className="text-lg text-red-500 ml-2 mt-1 xs:text-sm xs:ml-1">
+                {changeText}
+              </p>
+            </div>
           </div>
-        </form>
-        <div
-          className="flex justify-center w-80 mt-5 cursor-pointer"
-          onClick={changePage}
-        >
-          <p className="text-md">{description}</p>
-          <p className="text-lg text-red-500 ml-2">{changeText}</p>
         </div>
-      </div>
-      <div>
-        Wanna{" "}
-        <span
-          className="text-red-500 text-bold text-lg cursor-pointer"
-          onClick={testHandler}
-        >
-          Try this?
-        </span>
+        <div className="text-lg mt-1 xs:text-sm">
+          Try as a{" "}
+          <span
+            className="text-red-500 text-bold text-lg mt-1 xs:text-sm cursor-pointer xs:text-bold"
+            onClick={testHandler}
+          >
+            Demo User
+          </span>
+        </div>
       </div>
     </div>
   );

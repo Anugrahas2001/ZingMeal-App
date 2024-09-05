@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
 import { addOrder } from "../../slices/orderSlice";
 import Search from "../user/Search";
-import axios from "../../axios/axios"
+import axios from "../../axios/axios";
 import Cookies from "js-cookie";
 import { CounterContext } from "../common/CountContext";
 import Footer from "../common/Footer";
@@ -249,37 +249,48 @@ const Cart = () => {
 
   const data = foodItems.map((item) => {
     return (
-      <div className="border h-48 w-full md:max-w-5xl" key={item.id}>
-        <div className="flex mt-3 items-center">
-          <div className="flex items-center mb-1">
+      <div
+        className="border h-48 w-full lg:max-w-3xl lg:h-48 md:max-w-2xl md:h-40 md:mt-0 sm:max-w-xl sm:h-36 xs:max-w-xl xs:h-32"
+        key={item.id}
+      >
+        <div className="flex mt-3 items-center ml-7 lg:ml-7 md:ml-0 sm:ml-0 xs:ml-0">
+          <div className="flex flex-row items-center mb-1 xs:w-52">
             <img
-              className="w-full object-cover mb-2 h-36 rounded-lg p-3"
+              className="w-full object-cover mb-2 h-36 rounded-lg p-3 lg:w-full lg:h-36 md:w-96 md:h-32 sm:w-72 sm:h-24 sm:rounded-md xs:w-64 xs:h-20 xs:rounded-md"
               src={item.food.imageFile}
               alt={item.food.foodName}
             />
-            <div className="flex flex-col ml-4">
+            <div className="flex flex-col ml-4 lg:ml-4 md:ml-0 sm:ml-0 xs:ml-0">
               <div className="flex">
-                <p className="text-lg w-80">{item.food.foodName}</p>
+                <p className="text-lg lg:text-lg md:text-sm xs:text-xs">
+                  {item.food.foodName}
+                </p>
               </div>
-              <p>{item.food.foodType}</p>
+              <p className="text-lg lg:text-lg md:text-sm xs:text-xs">
+                {item.food.foodType}
+              </p>
               <div className="flex items-center">
-                <FontAwesomeIcon className="w-3 mt-1" icon={faStar} />
-                <p className="ml-1">1</p>
+                <p className="ml-1 text-lg lg:text-lg md:text-sm xs:text-xs">
+                  1
+                </p>
+                <FontAwesomeIcon className="w-3 mt-1 xs:w-2" icon={faStar} />
               </div>
 
-              <div className="text-sm flex items-center">
+              <div className="text-sm flex items-center lg:text-sm md:text-sm sm:text-xs xs:text-xs">
                 <FontAwesomeIcon
-                  className="text-sm mt-1"
+                  className="text-sm mt-1 lg:mt-1 md:mt-0 lg:text-sm md:text-sm sm:text-xs xs:text-xs"
                   icon={faIndianRupeeSign}
                 />
                 {!item.food.discount ? (
                   item.food.actualPrice
                 ) : (
                   <>
-                    <span className="mr-2">{item.food.discountPrice}</span>
+                    <span className="mr-2 xs:mr-1">
+                      {item.food.discountPrice}
+                    </span>
                     <div className="line-through text-green-600">
                       <FontAwesomeIcon
-                        className="text-sm mt-1"
+                        className="text-sm mt-1 lg:mt-1 md:mt-0 lg:text-sm md:text-sm sm:text-xs xs:text-xs"
                         icon={faIndianRupeeSign}
                       />
                       <span>{item.food.actualPrice}</span>
@@ -291,25 +302,25 @@ const Cart = () => {
                 )}
               </div>
 
-              <div className="flex justify-center mt-2 px-2">
+              <div className="flex justify-center mt-2 px-2 lg:justify-start md:justify-start sm:justify-start xs:justify-start">
                 <button
-                  className="w-10 h-10 bg-slate-200 text-lg font-semibold rounded-full flex items-center justify-center"
+                  className="w-10 h-10 bg-slate-200 text-lg font-semibold rounded-full flex items-center justify-center lg:w-10 lg:h-10 md:w-8 md:h-8 sm:w-7 sm:h-7 xs:w-6 xs:h-6 xs:ml-1"
                   onClick={() => updateCartItemHandler({ id: item.id }, -1)}
                 >
                   -
                 </button>
-                <button className="w-10 h-10 bg-slate-300 text-lg font-semibold rounded-full flex items-center justify-center ml-2">
+                <button className="w-10 h-10 bg-slate-300 text-lg font-semibold rounded-full flex items-center justify-center ml-2 lg:w-10 lg:h-10 md:w-8 md:h-8 sm:w-7 sm:h-7 xs:w-6 xs:h-6 lg:text-lg md:text-lg sm:text-sm xs:text-sm xs:ml-1">
                   {item.quantity}
                 </button>
                 <button
-                  className="w-10 h-10 bg-slate-200 text-lg font-semibold rounded-full flex items-center justify-center ml-2"
+                  className="w-10 h-10 bg-slate-200 text-lg font-semibold rounded-full flex items-center justify-center ml-2 lg:w-10 lg:h-10 md:w-8 md:h-8 sm:w-7 sm:h-7 xs:w-6 xs:h-6 xs:ml-1"
                   onClick={() => updateCartItemHandler({ id: item.id }, 1)}
                 >
                   +
                 </button>
 
                 <FontAwesomeIcon
-                  className="mt-2 ml-2 text-2xl cursor-pointer"
+                  className="mt-2 ml-2 text-2xl cursor-pointer lg:w-10 lg:h-7 lg:mt-2 md:w-6 md:h-6 md:mt-1 sm:w-7 sm:h-5 sm:mt-1 xs:w-5 xs:h-4 xs:mt-1 xs:ml-1"
                   onClick={() => updateCartItemHandler({ id: item.id }, 0)}
                   icon={faTrash}
                 />
@@ -325,12 +336,14 @@ const Cart = () => {
     <div className="w-full overflow-x-hidden">
       <Search cartItemCount={cartItemCount} />
       <div className="w-full flex justify-center" key={data.id}>
-        <div className="flex flex-wrap md:flex-nowrap w-3/4">
-          <div className="flex flex-wrap m-4 w-full">{userId && data}</div>
+        <div className="flex flex-wrap md:flex-nowrap w-4/5">
+          <div className="flex flex-wrap m-4 w-full lg:m-4 md:m-2">
+            {userId && data}
+          </div>
           {cartItemCount > 0 ? (
-            <div className="h-4/5 shadow-lg mt-8 md:mt-0 md:ml-3 m-4 w-2/3">
+            <div className="h-4/5 shadow-lg mt-8 md:mt-0 md:ml-3 m-4 w-2/3 lg:h-4/5 md:h-auto md:w-2/3 sm:w-full sm:h-auto xs:w-full xs:h-auto">
               <div className="m-5">
-                <div className="text-lg h-10 m-5 mt-2 flex justify-center items-center font-semibold shadow-lg">
+                <div className="text-lg h-8 m-5 mt-2 flex justify-center items-center font-semibold shadow-lg">
                   <p className="text-lg text-gray-500 h-5">Price Details</p>
                 </div>
 
@@ -355,23 +368,28 @@ const Cart = () => {
                         : item.cart.deliveryCharge;
 
                     payableAmount =
-                      totalAmountWithoutDiscount + item.cart.deliveryCharge;
+                      totalAmountWithoutDiscount-totalDiscountPrice + item.cart.deliveryCharge;
 
                     return (
                       <div className="text-lg ml-4 mr-4 flex justify-between">
                         <div className="flex">
-                          <p className="text-md">
+                          <p className="text-lg lg:text-lg md:text-sm xs:text-xs">
                             {item.food.foodName}{" "}
-                            <FontAwesomeIcon icon={faXmark} />
+                            <FontAwesomeIcon
+                              icon={faXmark}
+                              className="text-lg lg:text-lg md:text-sm xs:text-xs lg:mt-2 md:mt-1"
+                            />
                           </p>
-                          <p>{item.quantity}</p>
+                          <p className="text-lg lg:text-lg md:text-sm xs:text-xs">
+                            {item.quantity}
+                          </p>
                         </div>
-                        <div className="flex">
+                        <div className="flex text-lg lg:text-lg md:text-sm sm:text-xs xs:text-xs">
                           <FontAwesomeIcon
-                            className="text-sm mt-2"
+                            className="text-sm mt-3 lg:mt-3 md:mt-2 sm:mt-1 sm:text-xs xs:text-xs xs:mt-1"
                             icon={faIndianRupeeSign}
                           />
-                          <p className="mb-2 text-md">
+                          <p className="mb-2 text-lg lg:text-lg md:text-sm md:mt-1 xs:text-xs">
                             {Math.round(foodPrice * item.quantity)}
                           </p>
                         </div>
@@ -379,23 +397,27 @@ const Cart = () => {
                     );
                   })}
 
-                <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2">
-                  <p>Price ({data.length} items)</p>
-                  <div className="flex">
+                <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2 sm:mt-0 sm:mb-0 xs:mt-0 xs:mb-0">
+                  <p className="text-lg lg:text-lg md:text-sm xs:text-xs">
+                    Price ({data.length} items)
+                  </p>
+                  <div className="flex text-lg lg:text-lg md:text-sm sm:text-xs xs:text-xs sm:mt-0 sm:mb-0 xs:mt-0 xs:mb-0">
                     <FontAwesomeIcon
-                      className="text-sm mt-2"
+                      className="text-sm mt-2 lg:mt-2 md:mt-1 sm:text-xs sm:mt-1 xs:text-xs xs:mt-1"
                       icon={faIndianRupeeSign}
                     />
                     {totalAmountWithoutDiscount}
                   </div>
                 </div>
 
-                <div className="text-lg h-5 m-5 mt-2 flex justify-between">
-                  <p>Discount</p>
-                  <div className="flex">
+                <div className="text-lg h-5 m-5 mt-2 flex justify-between sm:mt-1 sm:mb-0 xs:mt-0 xs:mb-0">
+                  <p className="text-lg lg:text-lg md:text-sm xs:text-xs">
+                    Discount
+                  </p>
+                  <div className="flex text-lg lg:text-lg md:text-sm sm:text-xs xs:text-xs">
                     <p className="text-green-600">-</p>
                     <FontAwesomeIcon
-                      className="text-sm mt-2 text-green-600"
+                      className="text-sm mt-2 lg:mt-2 md:mt-1 sm:text-xs sm:mt-1 text-green-600 xs:text-xs xs:mt-1"
                       icon={faIndianRupeeSign}
                     />
                     <p className="text-green-600">
@@ -404,11 +426,13 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <div className="text-lg h-5 m-5 mt-2 flex justify-between">
-                  <p>Delivery Charges</p>
-                  <div className="flex">
+                <div className="text-lg h-5 m-5 mt-2 flex justify-between sm:mt-0 sm:mb-0 xs:mt-0 xs:mb-0">
+                  <p className="text-lg lg:text-lg md:text-sm xs:text-xs">
+                    Delivery Charges
+                  </p>
+                  <div className="flex text-lg lg:text-lg md:text-sm xs:text-xs">
                     <FontAwesomeIcon
-                      className="text-sm mt-2"
+                      className="text-sm mt-2 lg:mt-2 md:mt-1 sm:text-xs xs:text-xs xs:mt-1"
                       icon={faIndianRupeeSign}
                     />
                     {deliveryCharges}
@@ -416,55 +440,63 @@ const Cart = () => {
                 </div>
 
                 <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2">
-                  <p>Total Amount</p>
-                  <div className="flex">
+                  <p className="text-lg lg:text-lg md:text-sm xs:text-xs">
+                    Total Amount
+                  </p>
+                  <div className="flex text-lg lg:text-lg md:text-sm xs:text-xs">
                     <FontAwesomeIcon
-                      className="text-sm mt-2"
+                      className="text-sm mt-2 lg:mt-2 md:mt-1 sm:text-xs xs:text-xs xs:mt-1"
                       icon={faIndianRupeeSign}
                     />
                     {payableAmount}
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center md:flex-row">
-                  <div className="flex justify-center items-center">
+                <div className="flex justify-between items-center md:flex-row xs:justify-center">
+                  <div className="flex justify-center items-center xs:ml-4">
                     <input
                       type="checkbox"
                       name="option"
                       value="Cash On Delivery"
-                      className="text-sm ml-6"
+                      className="mr-1 xs:w-3 xs:mr-0 px-1 sm:mr-0 xs:mt-0"
                       checked={option === "Cash On Delivery"}
                       onChange={(e) => {
                         setOption(e.target.value);
                       }}
                     />
-                    <label htmlFor="pay" className="text-sm text-red-500">
+                    <label
+                      htmlFor="pay"
+                      className="text-sm text-red-500 lg:text-sm md:text-xs xs:text-xs lg:ml-2 md:ml-1"
+                    >
                       Cash On Delivery
                     </label>
                   </div>
-                  <div className="flex justify-center items-center mt-4 md:mt-0">
+                  <div className="flex justify-center items-center mt-4 md:mt-0 sm:mt-0 xs:mt-0">
                     <input
                       type="checkbox"
                       name="option"
                       value="Online Payment"
-                      className="text-sm ml-6"
+                      className="mr-1 xs:w-3 xs:mr-0 px-1"
                       checked={option === "Online Payment"}
                       onChange={(e) => {
                         setOption(e.target.value);
                       }}
                     />
-                    <label htmlFor="pay" className="text-sm text-red-500">
+                    <label
+                      htmlFor="pay"
+                      className="text-sm text-red-500 lg:text-sm md:text-xs xs:text-xs"
+                    >
                       Online Payment
                     </label>
                   </div>
                 </div>
 
-                <div className="flex flex-col justify-center items-center mt-4">
+                <div className="flex flex-col justify-center items-center">
                   <button
                     onClick={() =>
                       createRazorpayOrder(payableAmount, "INR", "recept_id")
                     }
-                    className="h-10 ml-4 mt-3 bg-blue-600 w-full text-white text-lg font-semibold rounded-sm"
+                    className="h-10 ml-4 mt-3 bg-blue-600 w-full text-white text-lg font-semibold rounded-sm lg:h-10 md:h-8 lg:text-lg md:text-sm sm:text-xs sm:h-7 xs:text-xs"
                   >
                     {btnState}
                   </button>
@@ -481,12 +513,12 @@ const Cart = () => {
                 </div>
 
                 <div className="text-lg flex justify-between items-center mt-4">
-                  <p className="text-sm text-green-800 font-bold ml-2">
+                  <p className="text-sm text-green-800 font-bold ml-2 lg:text-sm md:text-xs xs:text-xs">
                     You will save ₹{totalDiscountPrice} on this order
                   </p>
                 </div>
               </div>
-              <Footer />
+              {/* <Footer /> */}
             </div>
           ) : (
             <div className="text-4xl w-full flex justify-center items-center mt-32">

@@ -10,7 +10,7 @@ const ReadMore = ({ text, foodId }) => {
     }));
   };
   return (
-    <div>
+    <div className="w-full lg:w-full md:w-96 sm:w-56 xs:w-40">
       {text.length > 100
         ? isFoodReadMore
           ? text

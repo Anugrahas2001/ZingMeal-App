@@ -44,25 +44,25 @@ const TabOptions = () => {
   const foodItemsToDisplay = uniqueFoodItems.slice(0, 6).map((food) => {
     return (
       <div
-        className=" w-full flex justify-center items-center flex-col pl-1 mt-4"
+        className=" w-full flex justify-center items-center flex-col pl-1 mt-4 xs:ml-2"
         key={food.id}
       >
         <img
-          className="object-cover rounded-full w-44 h-44 cursor-pointer"
+          className="object-cover rounded-full w-44 h-44 cursor-pointer lg:w-44 lg:h-44 lg:rounded-full md:w-30 md:h-24 md:rounded-full sm:w-28 sm:h-12 xs:w-8 xs:h-8"
           src={food.imageFile}
           alt={food.foodCategory}
           onClick={() => {
             categoryHandler(food.foodCategory);
           }}
         />
-        <p className="food-name">{food.foodCategory}</p>
+        <p className="food-name xs:text-sm">{food.foodCategory}</p>
       </div>
     );
   });
 
   return (
-    <div className="overflow-x-hidden ml-16 mr-16 mt-5">
-      <p className="text-3xl mt-2">Eat what makes you happy</p>
+    <div className="overflow-x-hidden ml-16 mr-16 mt-5 lg:ml-12 lg:mr-12 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:m6-6">
+      <p className="text-3xl mt-2 lg:text-3xl md:text-2xl sm:text-xl xs:text-lg">Eat what makes you happy</p>
       {loading ? (
         <Loader />
       ) : (
