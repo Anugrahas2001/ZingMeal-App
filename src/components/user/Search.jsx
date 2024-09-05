@@ -111,16 +111,16 @@ const Search = () => {
                   >
                     <div className="flex">
                       <img
-                        className="w-10 rounded object-cover h-10 mr-3"
+                        className="w-10 rounded object-cover h-10 mr-3 sm:w-7"
                         src={suggestion.restaurantImg}
                         alt=""
                       />
                       <div className="flex flex-col">
-                        <span className="font-semibold">
+                        <span className="font-semibold text-base lg:text-base sm:text-sm xs:text-sm">
                           {suggestion.restaurantName}
                         </span>
                         <span
-                          className={`${
+                          className={`text-base lg:text-base sm:text-sm xs:text-sm ${
                             suggestion.restaurantStatus === "Open"
                               ? "text-green-500"
                               : "text-red-500"

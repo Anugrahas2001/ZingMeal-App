@@ -62,7 +62,7 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
   };
 
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full">
       <div className="flex items-center justify-between h-[60px] m-4 ml-16 mr-16 lg:m-4 lg:ml-12 lg:mr-12 md:m-3 md:ml-10 md:mr-10 md:mt-1 sm:m-2 xs:m-1">
         <Link to="/">
           <div className="w-36 lg:w-28 md:w-24 sm:w-20 xs:w-16">
@@ -73,7 +73,6 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
         </Link>
         {children}
 
-        {/* Display for larger screens (md and above) */}
         <div className="hidden md:flex">
           <div className="flex items-center">
             {cartLink}
@@ -91,27 +90,25 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
           </div>
         </div>
 
-        {/* Menu button for xs and sm screens */}
         <div className="flex md:hidden items-center">
           {cartLink}
           <FontAwesomeIcon
             icon={faBars}
             onClick={() => setShow(!show)}
-            className="cursor-pointer text-black text-xl mt-1"
+            className="cursor-pointer text-black text-xl mt-1 mr-3"
           />
         </div>
       </div>
 
-      {/* Dropdown for xs and sm screens */}
       {show && (
-        <div className="block md:hidden text-center bg-gray-100">
+        <div className="block md:hidden text-center bg-gray-100 w-16 absolute right-0">
           <Link to={orderLink}>
-            <p className="font-bold text-lg sm:text-base xs:text-base cursor-pointer py-2">
+            <p className="font-bold text-lg sm:text-base xs:text-xs cursor-pointer py-1">
               Orders
             </p>
           </Link>
           <p
-            className="font-bold cursor-pointer text-lg sm:text-base xs:text-base py-2"
+            className="font-bold cursor-pointer text-lg sm:text-base xs:text-xs py-1"
             onClick={LogOutHandler}
           >
             LogOut

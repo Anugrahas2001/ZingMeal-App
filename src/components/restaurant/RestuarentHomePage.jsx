@@ -196,7 +196,7 @@ const RestuarentPage = () => {
   });
 
   return (
-    <div className="w-full overflow-x-hidden bg-red-400">
+    <div className="w-full overflow-x-hidden">
       <Header isRestaurantPage={true} orderLink="/restaurantOrder" />
       {loading ? (
         <Loader />

@@ -84,7 +84,7 @@ const RestuarentLogin = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
 
     if (!credentials.restaurantName || !credentials.password) {
       setLoading(false);
