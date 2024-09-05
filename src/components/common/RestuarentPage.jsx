@@ -263,7 +263,7 @@ const RestuarentPage = () => {
                             </>
                           )}
                         </div>
-                        <div className="text-sm xs:w-full xs:flex-row xs:text-xs">
+                        <div className="text-base lg:text-base xs:w-full xs:flex-row xs:text-xs">
                           <ReadMore className="w-full"
                             text={dish.foodDescription}
                             foodId={dish.id}
