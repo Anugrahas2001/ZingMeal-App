@@ -340,7 +340,7 @@ const Cart = () => {
           <div className="flex flex-wrap m-4 w-full lg:m-4 md:m-2">
             {userId && data}
           </div>
-          {userId&
+          {userId&&
           cartItemCount > 0 ? (
             <div className="h-4/5 shadow-lg mt-8 md:mt-0 md:ml-3 m-4 w-2/3 lg:h-4/5 md:h-auto md:w-2/3 sm:w-full sm:h-auto xs:w-full xs:h-auto">
               <div className="m-5">
@@ -519,7 +519,7 @@ const Cart = () => {
                   </p>
                 </div>
               </div>
-              <Footer />
+            
             </div>
           ) : (
             <div className="text-3xl lg:text-3xl md:text-2xl sm:text-2xl xs:text-lg w-full flex justify-center items-center mt-32">
@@ -528,6 +528,7 @@ const Cart = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

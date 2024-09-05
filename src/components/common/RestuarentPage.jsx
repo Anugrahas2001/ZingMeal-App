@@ -76,22 +76,20 @@ const RestuarentPage = () => {
     fetchInitialCartItemCount();
   }, []);
 
-  const setFoodTypeHandler = () => {
+  const foodTypeHandler = (e) => {
+    const selectedType = e.target.value;
+    setType(selectedType);
+
     axios
-      .get(`/restaurant/foodByType/${id}/${type}`)
+      .get(`/restaurant/foodByType/${id}/${selectedType}`)
       .then((response) => {
         setFoods(response.data.Data);
       })
       .catch((error) => {
         console.log(error);
       });
-  };
+};
 
-  const foodTypeHandler = (e) => {
-    console.log(e.target.value, "veg or non-veg");
-    setType(e.target.value);
-    setFoodTypeHandler();
-  };
 
   const notify = () => {
     toast.success("Food successfully added to cart", {

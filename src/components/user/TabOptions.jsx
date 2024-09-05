@@ -70,11 +70,11 @@ const TabOptions = () => {
           <div className="flex">{foodItemsToDisplay}</div>
           <div className="w-full flex justify-center">
             {foodCategories && show && (
-              <div className="w-full flex justify-center rounded-md shadow p-3 flex-wrap mt-4 lg:mt-4 md:mt-2 sm:mt-1 xs:mt-1 sm:p-0 sm:flex sm:flex-wrap xs:flex xs:flex-wrap">
+              <div className="w-full flex justify-around rounded-md shadow p-3 flex-wrap mt-4 lg:mt-4 md:mt-2 sm:mt-1 xs:mt-1 sm:p-2 sm:flex sm:flex-wrap xs:p-0 xs:flex xs:flex-wrap">
                 {foodCategories.map((food) => (
                   <Link to={`/restuarent/${food.restaurant.id}`} key={food.id}>
-                    <div className="flex rounded-md h-64 p-3 shadow mb-4 m-7 lg:p-3 md:p-2 sm:p-2 sm:h-44 sm:m-2 xs:m-1 xs:h-44 xs:p-1">
-                      <div className="flex flex-col w-72 lg:w-72 md:w-56 sm:w-36 xs:w-24">
+                    <div className="flex rounded-md h-64 p-3 shadow mb-4 m-7 lg:p-3 lg:h-64 md:p-2 md:h-56 sm:p-2 sm:h-44 sm:m-2 xs:m-1 xs:h-44 xs:p-1">
+                      <div className="flex flex-col w-72 lg:w-72 md:w-56 sm:w-32 xs:w-24">
                         {loading ? (
                           <Loader />
                         ) : (

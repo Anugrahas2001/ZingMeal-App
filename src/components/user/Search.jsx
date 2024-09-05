@@ -71,12 +71,12 @@ const Search = () => {
 
   const cartLink = (
     <Link to="/cart">
-      <div className="flex">
+      <div className="flex ml-0 sm:ml-2 sm:mt-4 xs:mt-4">
         <FontAwesomeIcon
-          className="margin-left w-9 mt-1"
+          className="w-9 mt-1"
           icon={faShoppingCart}
         />
-        <div className="flex relative bottom-3 right-4">
+        <div className="flex relative bottom-3 right-4 lg:right-4 md:right-3 sm:right-3">
           <p className="text-sm w-6 h-6 pl-2 rounded-full bg-red-500 text-white top-5 mb-4 flex items-center">
             {userId ? cartItemCount : 0}
           </p>
@@ -88,11 +88,11 @@ const Search = () => {
   return (
     <div>
       <Header cartLink={cartLink} orderLink="/userOrder">
-        <div className="relative w-1/3 lg:w-1/4">
-          <div className="flexrounded-md text-gray-500 h-10  m-2 shadow rounded-md flex">
-            <FontAwesomeIcon className="mt-3 ml-2" icon={faMagnifyingGlass} />
+        <div className="relative w-full lg:w-2/5 md:w-2/5 md:h-7 sm:w-3/4 xs:w-3/4 xs:m-1">
+          <div className="flex rounded-md text-gray-500 h-10 m-2 shadow item sm:m-1 items-center justify-center sm:ml-1">
+            <FontAwesomeIcon className="mt-2 ml-2 text-base md:text-sm md:ml-1 sm:text-xs xs:text-xs xs:mt-1" icon={faMagnifyingGlass} />
             <input
-              className="w-full  text-gray-500 h-10 p-2 border-none outline-none"
+              className="w-full text-gray-500 h-10 p-2 border-none outline-none text-base md:text-sm md:h-7 sm:h-3 sm:text-xs xs:text-xs xs:p-1"
               type="text"
               placeholder="Search for restaurant, cuisine or a dish"
               ref={inputRef}

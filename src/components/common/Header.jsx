@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { removeUser } from "../../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, Bounce } from "react-toastify";
 import { removeRestaurant } from "../../slices/restaurantSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import axios from "../../axios/axios";
 import Cookies from "js-cookie";
 
@@ -11,6 +13,7 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
   const dispatch = useDispatch();
   const userId = useSelector((store) => store.user.id);
   const restaurantId = useSelector((store) => store.restaurant.id);
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
   const logOutFail = () => {
@@ -28,7 +31,6 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
   };
 
   const LogOutHandler = () => {
-    console.log("log out action");
     const accessToken = Cookies.get("accessToken");
     const config = {
       headers: {
@@ -40,57 +42,82 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
       axios
         .delete(`/user/logout/${userId}`, config)
         .then((response) => {
-          console.log(response);
           dispatch(removeUser());
         })
         .catch((error) => {
-          console.log(error);
           logOutFail();
         });
       navigate("/");
-    } else {
-      if (isRestaurantPage && restaurantId) {
-        console.log(isRestaurantPage, restaurantId, "detailsss");
-        axios
-          .delete(`/restaurant/logOut/${restaurantId}`)
-          .then((response) => {
-            console.log(response);
-            dispatch(removeRestaurant());
-          })
-          .catch((error) => {
-            console.log(error);
-            logOutFail();
-          });
-
-        navigate("/");
-      }
+    } else if (isRestaurantPage && restaurantId) {
+      axios
+        .delete(`/restaurant/logOut/${restaurantId}`)
+        .then((response) => {
+          dispatch(removeRestaurant());
+        })
+        .catch((error) => {
+          logOutFail();
+        });
+      navigate("/");
     }
   };
 
   return (
     <div className="w-full overflow-x-hidden">
-    <div className="flex items-center justify-between h-[60px] m-4 ml-16 mr-16 lg:m-4 lg:ml-12 lg:mr-12 md:m-3 md:ml-10 md:mr-10 sm:m-2 sm:ml-8 sm:mr-8 xs:ml-1">
-      <Link to="/">
-        <div className="w-36 lg:w-28 md:w-24 sm:w-20">
-          <h1 className="lg:text-3xl md:text-2xl sm:text-xl xs:text-lg font-bold text-black italic">ZingMeal</h1>
+      <div className="flex items-center justify-between h-[60px] m-4 ml-16 mr-16 lg:m-4 lg:ml-12 lg:mr-12 md:m-3 md:ml-10 md:mr-10 md:mt-1 sm:m-2 xs:m-1">
+        <Link to="/">
+          <div className="w-36 lg:w-28 md:w-24 sm:w-20 xs:w-16">
+            <h1 className="text-3xl lg:text-3xl md:text-xl sm:text-lg xs:text-base font-bold text-black italic">
+              ZingMeal
+            </h1>
+          </div>
+        </Link>
+        {children}
+
+        {/* Display for larger screens (md and above) */}
+        <div className="hidden md:flex">
+          <div className="flex items-center">
+            {cartLink}
+            <Link to={orderLink} className="ml-4">
+              <p className="font-bold text-lg lg:text-lg md:text-base">
+                Orders
+              </p>
+            </Link>
+            <p
+              className="font-bold ml-5 lg:ml-4 md:ml-3 cursor-pointer text-lg lg:text-lg md:text-base"
+              onClick={LogOutHandler}
+            >
+              LogOut
+            </p>
+          </div>
         </div>
-      </Link>
-      {children}
-      <div className="flex">
-        <div className="flex mt-2 lg:mt-1 md:mt-1 sm:mt-0 xs:mr-2">
+
+        {/* Menu button for xs and sm screens */}
+        <div className="flex md:hidden items-center">
           {cartLink}
+          <FontAwesomeIcon
+            icon={faBars}
+            onClick={() => setShow(!show)}
+            className="cursor-pointer text-black text-xl mt-1"
+          />
+        </div>
+      </div>
+
+      {/* Dropdown for xs and sm screens */}
+      {show && (
+        <div className="block md:hidden text-center bg-gray-100">
           <Link to={orderLink}>
-            <p className="font-bold lg:text-lg md:text-base sm:text-sm xs:text-sm">Orders</p>
+            <p className="font-bold text-lg sm:text-base xs:text-base cursor-pointer py-2">
+              Orders
+            </p>
           </Link>
           <p
-            className="font-bold ml-5 lg:ml-4 md:ml-3 sm:ml-2 cursor-pointer lg:text-lg md:text-base sm:text-sm xs:text-sm xs:mr-1"
+            className="font-bold cursor-pointer text-lg sm:text-base xs:text-base py-2"
             onClick={LogOutHandler}
           >
             LogOut
           </p>
         </div>
-      </div>
-    </div>
+      )}
     </div>
   );
 };
