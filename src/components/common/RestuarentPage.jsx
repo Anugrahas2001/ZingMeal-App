@@ -152,7 +152,7 @@ const RestuarentPage = () => {
         <>
           <div
             key={hotel.id}
-            className="ml-36 mr-36 lg:ml-32 lg:mr-32 md:ml-14 md:mr-14 xs:ml-8 xs:mr-8"
+            className="ml-16 mr-16 mt-5 lg:ml-12 lg:mr-12 md:ml-10 md:mr-10 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3"
           >
             <div className="max-w-full mt-8 rounded-md xs:w-full xs:rounded-sm xs:mt-5">
               <img
@@ -164,10 +164,10 @@ const RestuarentPage = () => {
 
             <div className="flex w-full justify-between h-8 items-center rounded-lg">
               <div className="flex">
-                <div className="text-2xl lg:text-2xl md:text-xl sm:text-lg xs:text-lg">
+                <div className="text-2xl lg:text-2xl md:text-xl sm:text-lg xs:text-lg font-semibold">
                   {hotel.restaurantName}
                 </div>
-                <div className="w-10 mt-2 h-4 bg-black flex text-white items-center justify-center ml-4 text-sm lg:w-10 lg:h-5 md:w-7 md:h-4 md xs:w-8 xs:h-3 xs:px-5">
+                <div className="w-10 mt-2 h-4 bg-black flex text-white items-center justify-center ml-4 text-sm lg:w-10 lg:h-5 md:w-7 md:h-4 md xs:w-8 xs:h-3 xs:px-6 p-3 xs:p-2">
                   <p className="xs:text-sm xs:ml-1">3.3</p>
                   <FontAwesomeIcon
                     className="text-sm ml-1 xs:text-sm xs:mr-1"
@@ -179,9 +179,9 @@ const RestuarentPage = () => {
             <div className="text-lg text-gray-400 lg:text-lg md:text-lg sm:text-sm xs:text-sm">
               {hotel.restaurantAddress}
             </div>
-            <div className="w-52 justify-between text-lg flex lg:text-lg md:text-sm xs:text-sm lg:w-52 md:w-40 xs:w-36">
-              <div className="text-orange-400">{hotel.restaurantStatus}</div>
-              <div className="text-lg lg:text-lg md:text-sm xs:text-xs">
+            <div className="w-56 justify-between text-lg flex lg:text-lg md:text-sm xs:text-sm lg:w-56 md:w-44 sm:w-44 xs:w-44">
+              <div className="text-orange-400 p-1">{hotel.restaurantStatus}</div>
+              <div className="text-lg lg:text-lg md:text-sm xs:text-sm p-1">
                 {moment(hotel.openingTime, "YYYY-MM-DD HH:mm:ss").format(
                   "hh:mm A"
                 )}
@@ -208,7 +208,7 @@ const RestuarentPage = () => {
               />
               <label
                 htmlFor="veg"
-                className="mr-3 lg:text-lg md:text-lg sm:text-sm xs:text-xs"
+                className="mr-3 lg:text-lg md:text-lg sm:text-sm xs:text-xs ml-1"
               >
                 Veg
               </label>
@@ -217,13 +217,13 @@ const RestuarentPage = () => {
                 id="nonveg"
                 name="type"
                 value="Non-Veg"
-                className="mr-1 xs:w-4 xs:mr-0"
+                className="mr-1 xs:w-4 xs:mr-0 mt-1"
                 checked={type === "Non-Veg"}
                 onChange={foodTypeHandler}
               />
               <label
                 htmlFor="nonveg"
-                className="mr-3 lg:text-lg md:text-lg sm:text-sm xs:text-xs"
+                className="mr-3 lg:text-lg md:text-lg sm:text-sm xs:text-xs ml-1"
                 name="type"
               >
                 Non-Veg
@@ -241,23 +241,23 @@ const RestuarentPage = () => {
                       />
                       <div className="flex flex-col ml-3">
                         <div className="flex">
-                          <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-sm">
+                          <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-sm font-semibold">
                             {dish.foodName}
                           </div>
-                          <div className="w-10 h-4 bg-black flex text-white items-center justify-center mt-1 ml-4 text-sm lg:w-10 md:w-10 sm:w-6 xs:w-7 xs:px-4 xs:ml-2">
+                          <div className="w-8 ml-3 mt-2 h-4 bg-black flex text-white items-center justify-center  text-sm lg:w-10 lg:h-5 md:w-7 md:h-4 md xs:w-8 xs:h-3 xs:px-3 p-3 xs:p-2">
                             <p className="text-sm lg:text-sm md:text-sm sm:text-sm xs:text-xs">
                               4.3
                             </p>
                             <FontAwesomeIcon
-                              className="text-sm ml-1 lg:text-sm md:text-sm sm:text-sm xs:text-xs"
+                              className="text-sm text-green lg:text-sm md:text-sm sm:text-sm xs:text-xs"
                               icon={faStar}
                             />
                           </div>
                         </div>
-                        <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-xs">
+                        <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-xs font-semibold">
                           {dish.foodType}
                         </div>
-                        <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-xs">
+                        <div className="text-lg lg:text-lg md:text-lg sm:text-sm xs:text-xs font-semibold">
                           {dish.foodCategory}
                         </div>
                         <div className="text-sm flex lg:text-sm md:text:sm xs:text-xs">
@@ -298,7 +298,7 @@ const RestuarentPage = () => {
                     </div>
                     <div className="flex flex-end">
                       <button
-                        className="bg-green-600 font-semibold h-8 w-24 rounded-md cursor-pointer ml-4 lg:w-24 lg:h-8 md:w-20 md:h-6 sm:w-14 sm:h-6 xs:w-10 xs:h-5 xs:text-sm xs:ml-3"
+                        className="bg-green-600 font-semibold h-8 w-24 rounded-md cursor-pointer ml-4 lg:w-24 lg:h-8 md:w-20 md:h-6 sm:w-16 sm:h-7 xs:w-16 xs:h-7 xs:text-sm xs:ml-3"
                         onClick={() => addToCartFunction(dish.id)}
                       >
                         Add

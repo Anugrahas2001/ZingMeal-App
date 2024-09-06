@@ -65,9 +65,10 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
     <div className="w-full">
       <div className="flex items-center justify-between h-[60px] m-4 ml-16 mr-16 lg:m-4 lg:ml-12 lg:mr-12 md:m-3 md:ml-10 md:mr-10 md:mt-1 sm:m-2 xs:m-1">
         <Link to="/">
-          <div className="w-36 lg:w-28 md:w-24 sm:w-20 xs:w-16">
+          <div className="w-36 lg:w-28 md:w-24 sm:w-16 xs:w-7">
             <h1 className="text-3xl lg:text-3xl md:text-xl sm:text-lg xs:text-base font-bold text-black italic">
-              ZingMeal
+              <span className="hidden md:inline lg:inline">ZingMeal</span>
+              <span className="inline md:hidden lg:hidden">ZM</span>
             </h1>
           </div>
         </Link>
