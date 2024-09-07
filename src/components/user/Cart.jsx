@@ -71,8 +71,11 @@ const Cart = () => {
   useEffect(() => {
     const fetchInitialCartItemCount = async () => {
       try {
-        const countData = await axios.get("/restaurant/getCount", config);
-        const newCount = countData.data.Count || 0;
+        const countData = await axios.get(
+          `/restaurant/getCount/${userId}`,
+          config
+        );
+        const newCount = countData.data.count || 0;
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
       } catch (error) {
@@ -123,8 +126,11 @@ const Cart = () => {
       updateTotalPrice();
 
       try {
-        const countData = await axios.get("/restaurant/getCount", config);
-        const newCount = countData.data.Count || 0;
+        const countData = await axios.get(
+          `/restaurant/getCount/${userId}`,
+          config
+        );
+        const newCount = countData.data.count || 0;
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
         dispatch(addToCart(id));
@@ -287,7 +293,6 @@ const Cart = () => {
               ) : (
                 <>
                   <span>{item.food.discountPrice}</span>
-                  {/* <div> */}
                   <div className="ml-5 flex xs:ml-3">
                     <FontAwesomeIcon
                       className="test-xs xs:text-xs mt-1 text-green-600"
@@ -297,7 +302,6 @@ const Cart = () => {
                       {item.food.actualPrice}
                     </span>
                   </div>
-                  {/* </div> */}
                   <span className="text-red-600 ml-2lg:text-sm md:text-sm xs:text-sm xs:w-12 xs:ml-1 flex">
                     {item.food.discount}% off
                   </span>
@@ -529,7 +533,7 @@ const Cart = () => {
           )}
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

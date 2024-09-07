@@ -33,8 +33,11 @@ const Search = () => {
       };
 
       try {
-        const countData = await axios.get("/restaurant/getCount", config);
-        const newCount = countData.data.Count;
+        const countData = await axios.get(
+          `/restaurant/getCount/${userId}`,
+          config
+        );
+        const newCount = countData.data.count;
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
       } catch (error) {
@@ -72,13 +75,10 @@ const Search = () => {
   const cartLink = (
     <Link to="/cart">
       <div className="flex ml-0 sm:ml-2 sm:mt-4 xs:mt-4">
-        <FontAwesomeIcon
-          className="w-9 mt-1"
-          icon={faShoppingCart}
-        />
+        <FontAwesomeIcon className="w-9 mt-1" icon={faShoppingCart} />
         <div className="flex relative bottom-3 right-4 lg:right-4 md:right-3 sm:right-3">
           <p className="text-sm w-6 h-6 pl-2 rounded-full bg-red-500 text-white top-5 mb-4 flex items-center">
-            {userId ? cartItemCount : 0}
+            {cartItemCount}
           </p>
         </div>
       </div>
@@ -90,7 +90,10 @@ const Search = () => {
       <Header cartLink={cartLink} orderLink="/userOrder">
         <div className="relative w-full lg:w-1/2 md:w-2/5 md:h-7 sm:w-3/4 xs:w-2/3 xs:m-0">
           <div className="flex rounded-md text-gray-500 h-10 m-2 shadow item sm:m-1 items-center justify-start sm:ml-1 xs:m-1 xs:h-7">
-            <FontAwesomeIcon className="mt-2 ml-3 text-base lg:ml-3 md:text-sm md:ml-1 sm:text-sm xs:text-xs xs:mt-1 xs:ml-1 lg:m-0" icon={faMagnifyingGlass} />
+            <FontAwesomeIcon
+              className="mt-2 ml-3 text-base lg:ml-3 md:text-sm md:ml-1 sm:text-sm xs:text-xs xs:mt-1 xs:ml-1 lg:m-0"
+              icon={faMagnifyingGlass}
+            />
             <input
               className="w-full text-gray-500 h-10 p-2 border-none outline-none lg:m-2 lg:w-4/5 text-base md:text-sm md:h-7 sm:h-6 sm:w-60 sm:text-xs xs:text-xs xs:h-6 xs:w-44 xs:p-1"
               type="text"
@@ -142,4 +145,3 @@ const Search = () => {
 };
 
 export default Search;
-

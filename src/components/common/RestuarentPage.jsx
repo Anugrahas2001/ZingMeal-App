@@ -64,8 +64,8 @@ const RestuarentPage = () => {
       };
 
       try {
-        const countData = await axios.get("/restaurant/getCount", config);
-        const newCount = countData.data.Count || 0;
+        const countData = await axios.get(`/restaurant/getCount/${userId}`, config);
+        const newCount = countData.data.count || 0;
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
       } catch (error) {
@@ -130,8 +130,8 @@ const RestuarentPage = () => {
         {},
         config
       );
-      const countData = await axios.get("/restaurant/getCount", config);
-      const newCount = countData.data.Count || 0;
+      const countData = await axios.get(`/restaurant/getCount/${userId}`, config);
+      const newCount = countData.data.count || 0;
 
       setCartItemCount(newCount);
       dispatch(cartItemCounter(newCount));
