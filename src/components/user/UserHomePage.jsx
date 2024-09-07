@@ -6,7 +6,7 @@ import Search from "./Search";
 
 const UseHomePage = () => {
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden min-h-screen">
       <Search />
       <TabOptions />
       <Hotels />

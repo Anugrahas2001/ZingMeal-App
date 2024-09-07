@@ -65,7 +65,7 @@ const RestuarentPage = () => {
 
       try {
         const countData = await axios.get("/restaurant/getCount", config);
-        const newCount = countData.data.Count;
+        const newCount = countData.data.Count || 0;
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
       } catch (error) {
@@ -88,8 +88,7 @@ const RestuarentPage = () => {
       .catch((error) => {
         console.log(error);
       });
-};
-
+  };
 
   const notify = () => {
     toast.success("Food successfully added to cart", {
@@ -102,6 +101,8 @@ const RestuarentPage = () => {
       progress: undefined,
       theme: "light",
       transition: Bounce,
+      className:
+        "w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
     });
   };
 
@@ -130,7 +131,7 @@ const RestuarentPage = () => {
         config
       );
       const countData = await axios.get("/restaurant/getCount", config);
-      const newCount = countData.data.Count;
+      const newCount = countData.data.Count || 0;
 
       setCartItemCount(newCount);
       dispatch(cartItemCounter(newCount));
@@ -145,7 +146,7 @@ const RestuarentPage = () => {
   };
 
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden min-h-screen">
       {loading ? (
         <Loader />
       ) : (
@@ -179,8 +180,10 @@ const RestuarentPage = () => {
             <div className="text-lg text-gray-400 lg:text-lg md:text-lg sm:text-sm xs:text-sm">
               {hotel.restaurantAddress}
             </div>
-            <div className="w-56 justify-between text-lg flex lg:text-lg md:text-sm xs:text-sm lg:w-56 md:w-44 sm:w-44 xs:w-44">
-              <div className="text-orange-400 p-1">{hotel.restaurantStatus}</div>
+            <div className="w-56 justify-between text-lg flex lg:text-lg md:text-sm xs:text-sm lg:w-56 md:w-44 sm:w-48 xs:w-48">
+              <div className="text-orange-400 p-1">
+                {hotel.restaurantStatus}
+              </div>
               <div className="text-lg lg:text-lg md:text-sm xs:text-sm p-1">
                 {moment(hotel.openingTime, "YYYY-MM-DD HH:mm:ss").format(
                   "hh:mm A"

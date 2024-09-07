@@ -67,12 +67,12 @@ const Hotels = () => {
   });
 
   return (
-    <div className="overflow-x-hidden ml-16 mr-16 mt-5 lg:ml-14 lg:mr-14 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:mr-5">
+    <div className="overflow-x-hidden min-h-screen mb-10 ml-16 mr-16 mt-5 lg:ml-14 lg:mr-14 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:mr-5">
       <p className="text-3xl mt-2 lg:text-3xl md:text-2xl sm:text-xl xs:text-lg">Explore the food life!</p>
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex flex-wrap justify-center mt-5 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:mr-6">
+        <div className="flex flex-wrap justify-center mt-5 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:mr-6 p-1">
           {hotelDetails}
         </div>
       )}

@@ -10,7 +10,7 @@ const UserRestuarent = () => {
   };
 
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden min-h-screen">
       <Search cartItemCount={cartItemCount} />
       <RestuarentPage onUpdateCount={handleUpdateCount} />
     </div>

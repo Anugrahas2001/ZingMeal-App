@@ -1,43 +1,63 @@
-import React from "react";
+import React from 'react';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <div className="w-full grid grid-cols-4 gap-4 mt-12 lg:mt-12 md:mt-8 bg-slate-100 text-base lg:text-base md:text-sm sm:text-sm h-40 xs:text-xs fixed bottom-0">
-      <div className="ml-20 mr-20 lg:ml-20 lg:mr-20 md:ml-10 md:mr-10 sm:ml-7 sm:mr-7 xs:ml-4 xs:mr-4">
-        <h3 className="font-medium xs:text-xs">ABOUT</h3>
-        <ul className="grid gap-4 mt-4 md:mt-2">
-          <li className="mt-2">Contact Us</li>
-          <li className="mt-2">About Us</li> 
-        </ul>
-      </div>
+    <footer className="bg-gray-800 text-white pt-7 pb-5 mt-10 text-base sm:text-sm xs:text-xs">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-wrap justify-between items-start space-y-8 lg:space-y-0 md:space-y-0">
+          
+          <div className="w-full lg:w-1/4 md:w-1/2 sm:w-full px-4">
+            <h4 className="text-xl font-semibold mb-4 xs:mb-1">About Us</h4>
+            <p className="text-gray-400">
+              We bring you the best food from the top restaurants. Freshly prepared, delivered right to your door.
+            </p>
+          </div>
 
-      <div className="footer-content">
-        <h3 className="font-medium">GROUP COMPANIES</h3>
-        <ul className="grid gap-2 mt-3">
-          <li>Zomato</li>
-          <li>Swiggy</li>
-          <li>Blinkit</li>
-        </ul>
-      </div>
+          <div className="w-full lg:w-1/4 md:w-1/2 sm:w-full px-4">
+            <h4 className="text-xl font-semibold mb-4 xs:mb-2">Quick Links</h4>
+            <ul className="text-gray-400 space-y-2">
+              <li><a href="" className="hover:underline">Restaurants</a></li>
+              <li><a href="" className="hover:underline">About Us</a></li>
+              <li><a href="" className="hover:underline">Contact Us</a></li>
+              <li><a href="" className="hover:underline">Terms of Service</a></li>
+              <li><a href="" className="hover:underline">Privacy Policy</a></li>
+            </ul>
+          </div>
 
-      <div className="footer-content">
-        <h3 className="font-medium">FOR RESTAURANTS</h3>
-        <ul className="grid gap-4 mt-4">
-          <li>Partner With Us</li>
-          <li>Apps For You</li>
-        </ul>
-      </div>
+          <div className="w-full lg:w-1/4 md:w-1/2 sm:w-full px-4">
+            <h4 className="text-xl font-semibold mb-4 xs:mb-2">Contact Us</h4>
+            <p className="text-gray-400">Email: support@foodsite.com</p>
+            <p className="text-gray-400">Phone: +123 456 789</p>
+          </div>
+        </div>
 
-      <div className="footer-content">
-        <h3 className="font-medium">LEARN MORE</h3>
-        <ul className="grid gap-4 mt-4">
-          <li>Privacy</li>
-          <li>Security</li>
-          <li>Terms</li>
-        </ul>
+        <div className="border-t border-gray-600 pt-6 mt-6">
+          <div className="flex flex-wrap justify-between items-center">
+            <div className="flex space-x-6 mb-4 lg:mb-0 md:mb-0 sm:mb-0">
+              <a href="https://facebook.com" className="text-gray-400 hover:text-white">
+                <FaFacebookF />
+              </a>
+              <a href="https://twitter.com" className="text-gray-400 hover:text-white">
+                <FaTwitter />
+              </a>
+              <a href="https://instagram.com" className="text-gray-400 hover:text-white">
+                <FaInstagram />
+              </a>
+              <a href="https://linkedin.com" className="text-gray-400 hover:text-white">
+                <FaLinkedinIn />
+              </a>
+            </div>
+
+            <p className="text-gray-400 text-center lg:text-left md:text-left w-full lg:w-auto md:w-auto">
+              &copy; 2024 FoodSite. All rights reserved.
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
 export default Footer;
+

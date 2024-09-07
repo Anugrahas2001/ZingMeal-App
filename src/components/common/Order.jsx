@@ -99,7 +99,9 @@ const Order = (props) => {
       draggable: true,
       progress: undefined,
       theme: "light",
+      className:"w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
       transition: Bounce,
+      
     });
   };
 
@@ -113,6 +115,7 @@ const Order = (props) => {
       draggable: true,
       progress: undefined,
       theme: "light",
+      className:"w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
       transition: Bounce,
     });
   };
@@ -160,7 +163,7 @@ const Order = (props) => {
   };
 
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden min-h-screen">
       {children}
       {loading ? (
         <Loader />
