@@ -311,7 +311,7 @@ const UserLogin = () => {
                 Demo User
               </span>
             </div>
-            <div className="border p-3">
+            <div className="border p-3 mt-2">
             <div>
               Username:
               <span className="text-sm font-semibold text-red-600">

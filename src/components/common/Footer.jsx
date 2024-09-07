@@ -1,12 +1,4 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedinIn,
-} from "@fortawesome/free-solid-svg-icons";
-
 
 const Footer = () => {
   return (
@@ -61,33 +53,6 @@ const Footer = () => {
 
         <div className="border-t border-gray-600 pt-6 mt-6">
           <div className="flex flex-wrap justify-between items-center">
-            <div className="flex space-x-6 mb-4 lg:mb-0 md:mb-0 sm:mb-0">
-              <a
-                href="https://facebook.com"
-                className="text-gray-400 hover:text-white"
-              >
-                <FaFacebookF />
-              </a>
-              <a
-                href="https://twitter.com"
-                className="text-gray-400 hover:text-white"
-              >
-                <FaTwitter />
-              </a>
-              <a
-                href="https://instagram.com"
-                className="text-gray-400 hover:text-white"
-              >
-                <FaInstagram />
-              </a>
-              <a
-                href="https://linkedin.com"
-                className="text-gray-400 hover:text-white"
-              >
-                <FaLinkedinIn />
-              </a>
-            </div>
-
             <p className="text-gray-400 text-center lg:text-left md:text-left w-full lg:w-auto md:w-auto">
               &copy; 2024 FoodSite. All rights reserved.
             </p>

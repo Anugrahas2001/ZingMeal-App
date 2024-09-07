@@ -102,14 +102,14 @@ const Header = ({ children, cartLink, orderLink, isRestaurantPage }) => {
       </div>
 
       {show && (
-        <div className="block md:hidden text-center bg-gray-100 w-16 absolute right-0">
+        <div className="flex md:hidden text-center w-36 absolute right-3 top-14">
           <Link to={orderLink}>
-            <p className="font-bold text-lg sm:text-base xs:text-xs cursor-pointer py-1">
+            <p className="font-bold text-lg sm:text-base xs:text-sm cursor-pointer rounded-md p-3 bg-gray-100">
               Orders
             </p>
           </Link>
           <p
-            className="font-bold cursor-pointer text-lg sm:text-base xs:text-xs py-1"
+            className="font-bold cursor-pointer text-lg sm:text-base xs:text-sm rounded-md p-2 ml-3 bg-gray-100"
             onClick={LogOutHandler}
           >
             LogOut
