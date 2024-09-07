@@ -88,8 +88,8 @@ const Search = () => {
   return (
     <div>
       <Header cartLink={cartLink} orderLink="/userOrder">
-        <div className="relative w-full lg:w-1/2 md:w-2/5 sm:w-3/4 xs:w-2/3 xs:m-0 h-16 lg:h-16 md:h-10 sm:h-7 xs:h-5">
-          <div className="flex rounded-md text-gray-500 h-10 m-2 shadow item sm:m-1 items-center justify-start sm:ml-1 xs:m-1 xs:h-7 mt-10">
+        <div className="relative w-full lg:w-1/2 md:w-2/5 sm:w-3/4 xs:w-2/3 xs:m-0">
+          <div className="flex rounded-md text-gray-500  md:h-10 m-2 shadow item sm:m-1 items-center justify-start sm:ml-1 xs:m-1 mt-10">
             <FontAwesomeIcon
               className="mt-2 ml-3 text-base lg:ml-3 md:text-sm md:ml-1 sm:text-sm xs:text-xs xs:mt-1 xs:ml-1 lg:m-0"
               icon={faMagnifyingGlass}

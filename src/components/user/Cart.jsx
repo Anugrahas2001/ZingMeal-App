@@ -343,7 +343,7 @@ const Cart = () => {
     <div className="w-full overflow-x-hidden min-h-screen">
       <Search cartItemCount={cartItemCount} />
       <div
-        className="ml-16 mr-16 mt-5 lg:ml-12 lg:mr-12 md:ml-10 md:mr-10 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3"
+        className="ml-20 mr-20 mt-5 lg:ml-20 lg:mr-20 md:ml-12 md:mr-12 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3"
         key={data.id}
       >
         <div className="flex md:flex-row sm:flex-col xs:flex-col justify-between sm:justify-start">

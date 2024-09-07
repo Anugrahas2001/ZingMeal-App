@@ -168,7 +168,7 @@ const Order = (props) => {
       {loading ? (
         <Loader />
       ) : userId || restaurantId ? (
-        <div className="ml-32 mr-36 h-auto lg:ml-32 lg:mr-36 md:ml-24 md:mr-24 sm:ml-16 sm:mr-16 xs:ml-8 xs:mr-8">
+        <div className="ml-20 mr-20 h-auto lg:ml-20 lg:mr-20 md:ml-24 md:mr-24 sm:ml-16 sm:mr-16 xs:ml-8 xs:mr-8">
           <div className="w-full mt-2">
             {orders.map((order) => (
               <div

@@ -18,6 +18,7 @@ const RestuarentPage = () => {
   const [hotel, setHotel] = useState({});
   const [foods, setFoods] = useState([]);
   const [type, setType] = useState("");
+  const [show, setShow] = useState(false);
   const { id } = useParams();
   const userId = useSelector((store) => store.user.id);
   const cartId = useSelector((store) => store.cart.id);
@@ -43,8 +44,7 @@ const RestuarentPage = () => {
       });
   }, [id]);
 
-  useEffect(() => {
-    setLoading(true);
+  const allTypeFoods = () => {
     axios
       .get(`/restaurant/getAllFoodsInRestaurant/${id}`)
       .then((response) => {
@@ -53,8 +53,13 @@ const RestuarentPage = () => {
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    allTypeFoods();
+    setLoading(false);
   }, [id]);
 
   useEffect(() => {
@@ -64,7 +69,10 @@ const RestuarentPage = () => {
       };
 
       try {
-        const countData = await axios.get(`/restaurant/getCount/${userId}`, config);
+        const countData = await axios.get(
+          `/restaurant/getCount/${userId}`,
+          config
+        );
         const newCount = countData.data.count || 0;
         setCartItemCount(newCount);
         dispatch(cartItemCounter(newCount));
@@ -76,19 +84,29 @@ const RestuarentPage = () => {
     fetchInitialCartItemCount();
   }, []);
 
-  const foodTypeHandler = (e) => {
-    const selectedType = e.target.value;
-    setType(selectedType);
-
-    axios
-      .get(`/restaurant/foodByType/${id}/${selectedType}`)
-      .then((response) => {
-        setFoods(response.data.Data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const foodTypeHandler = (selectedType) => {
+    setShow((prevShow) => {
+      const newShow = !prevShow;
+  
+      if (newShow && type === selectedType) {
+        setType("");
+        allTypeFoods();
+      } else {
+        setType(selectedType);
+        axios
+          .get(`/restaurant/foodByType/${id}/${selectedType}`)
+          .then((response) => {
+            setFoods(response.data.Data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+  
+      return newShow;
+    });
   };
+  
 
   const notify = () => {
     toast.success("Food successfully added to cart", {
@@ -130,7 +148,10 @@ const RestuarentPage = () => {
         {},
         config
       );
-      const countData = await axios.get(`/restaurant/getCount/${userId}`, config);
+      const countData = await axios.get(
+        `/restaurant/getCount/${userId}`,
+        config
+      );
       const newCount = countData.data.count || 0;
 
       setCartItemCount(newCount);
@@ -153,7 +174,7 @@ const RestuarentPage = () => {
         <>
           <div
             key={hotel.id}
-            className="ml-16 mr-16 mt-5 lg:ml-12 lg:mr-12 md:ml-10 md:mr-10 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3"
+            className="ml-20 mr-20 mt-5 lg:ml-20 lg:mr-20 md:ml-10 md:mr-10 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3"
           >
             <div className="max-w-full mt-8 rounded-md xs:w-full xs:rounded-sm xs:mt-5">
               <img
@@ -202,12 +223,13 @@ const RestuarentPage = () => {
             </div>
             <div className="mt-3">
               <input
-                type="checkbox"
+                type="radio"
                 id="veg"
                 value="Veg"
+                name="foodType"
                 className="mr-1 xs:w-4 xs:mr-0"
                 checked={type === "Veg"}
-                onChange={foodTypeHandler}
+                onClick={() => foodTypeHandler("Veg")}
               />
               <label
                 htmlFor="veg"
@@ -216,18 +238,17 @@ const RestuarentPage = () => {
                 Veg
               </label>
               <input
-                type="checkbox"
+                type="radio"
                 id="nonveg"
-                name="type"
                 value="Non-Veg"
+                name="foodType"
                 className="mr-1 xs:w-4 xs:mr-0 mt-1"
                 checked={type === "Non-Veg"}
-                onChange={foodTypeHandler}
+                onClick={() => foodTypeHandler("Non-Veg")}
               />
               <label
                 htmlFor="nonveg"
                 className="mr-3 lg:text-lg md:text-lg sm:text-sm xs:text-xs ml-1"
-                name="type"
               >
                 Non-Veg
               </label>
