@@ -48,7 +48,6 @@ function App() {
                 <Route path="/editFood/:id" element={<EditFoodMenu />} />
                 <Route path="/user" element={<UseHomePage />} />
                 <Route path="/restuarent/:id" element={<UserRestuarent />} />
-                <Route path="/food/:id" element={<FoodRecepies />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/userOrder" element={<UserOrder />} />
                 <Route path="/restaurantOrder" element={<RestaurantOrder />} />

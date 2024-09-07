@@ -300,8 +300,7 @@ const UserLogin = () => {
               </div>
             </div>
           </div>
-          <div className="text-lg mt-2 xs:text-sm flex justify-center items-center flex-col">
-            
+          <div className="text-lg mt-2 xs:text-sm flex justify-center items-center flex-col w-full">
             <div className="text-sm">
               Try as a{" "}
               <span
@@ -311,7 +310,7 @@ const UserLogin = () => {
                 Demo User
               </span>
             </div>
-            <div className="border p-3 mt-2">
+            <div className="border p-3 mt-2 w-1/3 flex items-center justify-center flex-col lg:w-1/3 md:w-2/5 sm:w-4/5 xs:w-4/5">
             <div>
               Username:
               <span className="text-sm font-semibold text-red-600">
