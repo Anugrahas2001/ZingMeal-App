@@ -53,6 +53,3 @@ ZingMeal also includes a trial mode, allowing potential users to explore the ful
 2. Navigate to project directory.
 3. Open .html file and Right click > Open with live server.
 
-### Weather App Snapshot
-
-![weather](https://github.com/Anugrahas2001/weather-app/assets/153485221/823e6797-e899-4d28-b4b7-4556110f391f)
