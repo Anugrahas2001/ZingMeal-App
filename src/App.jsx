@@ -6,13 +6,13 @@ import LoaderContext from "./components/common/LoaderContext";
 import CountContext from "./components/common/CountContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "./components/common/Loader";
 
 const UseHomePage = React.lazy(() => import("./components/user/UserHomePage"));
 const UserRestuarent = React.lazy(() =>
   import("./components/user/UserRestuarent")
 );
 const Cart = React.lazy(() => import("./components/user/Cart"));
-const FoodRecepies = React.lazy(() => import("./components/user/FoodRecepies"));
 const FoodMenu = React.lazy(() => import("./components/restaurant/FoodMenu"));
 const EditFoodMenu = React.lazy(() =>
   import("./components/restaurant/EditFoodMenu")
@@ -36,7 +36,7 @@ function App() {
       <LoaderContext>
         <CountContext>
           <Router>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div><Loader/></div>}>
               <Routes>
                 <Route path="/" element={<TabView />} />
                 <Route path="/restaurant" element={<RestuarentPage />} />
