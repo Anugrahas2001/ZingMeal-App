@@ -174,7 +174,7 @@ const RestuarentPage = () => {
         <>
           <div
             key={hotel.id}
-            className="ml-20 mr-20 mt-5 lg:ml-20 lg:mr-20 md:ml-10 md:mr-10 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3"
+            className="ml-36 mr-36 mt-5 lg:ml-36 lg:mr-36 md:ml-36 md:mr-10 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3"
           >
             <div className="max-w-full mt-8 rounded-md xs:w-full xs:rounded-sm xs:mt-5">
               <img
@@ -201,7 +201,7 @@ const RestuarentPage = () => {
             <div className="text-lg text-gray-400 lg:text-lg md:text-lg sm:text-sm xs:text-sm">
               {hotel.restaurantAddress}
             </div>
-            <div className="w-56 justify-between text-lg flex lg:text-lg md:text-sm xs:text-sm lg:w-56 md:w-44 sm:w-48 xs:w-48">
+            <div className="w-60 justify-between text-lg flex lg:text-lg md:text-sm xs:text-sm lg:w-56 md:w-48 sm:w-48 xs:w-48">
               <div className="text-orange-400 p-1">
                 {hotel.restaurantStatus}
               </div>

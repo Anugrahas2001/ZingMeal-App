@@ -32,7 +32,7 @@ const Order = (props) => {
     try {
       setLoading(true);
       const response = isUserPage
-        ? await axios.get(`/restaurant/filterPending`)
+        ? await axios.get(`/restaurant/filterPending/${userId}`)
         : await axios.get(`/restaurant/allOrdersInRestaurant/${restaurantId}`);
 
       setOrders(isUserPage ? response.data.sortedOrders : response.data.orders);
@@ -167,7 +167,7 @@ const Order = (props) => {
       {children}
       {loading ? (
         <Loader />
-      ) : userId || restaurantId ? (
+      ) : orders.length>0 ? (
         <div className="ml-20 mr-20 h-auto lg:ml-20 lg:mr-20 md:ml-24 md:mr-24 sm:ml-16 sm:mr-16 xs:ml-8 xs:mr-8">
           <div className="w-full mt-2">
             {orders.map((order) => (
@@ -278,7 +278,7 @@ const Order = (props) => {
           )}
         </div>
       ) : (
-        <div className="text-4xl w-full text-center mt-32">
+        <div className="text-4xl w-full text-center flex items-center justify-center min-h-screen">
           Currently no item is available
         </div>
       )}

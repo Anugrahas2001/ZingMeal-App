@@ -9,7 +9,6 @@ const RestaurantOrder = () => {
       <Order isRestaurantPage={true}>
         <Header />
       </Order>
-      <Footer />
     </div>
   );
 };
