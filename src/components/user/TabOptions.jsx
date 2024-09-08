@@ -48,7 +48,7 @@ const TabOptions = () => {
       key={food.id}
     >
       <img
-        className="object-cover rounded-full w-full h-full lg:h-4/5 lg:w-4/5 ml-6 md:w-3/4 md:h-3/4 md:ml-3 sm:w-2/3 sm:h-2/3 sm:ml-5 xs:w-3/4 xs:h-3/4 xs:ml-1"
+        className="object-cover rounded-full w-full h-full lg:h-4/5 lg:w-4/5 ml-7 lg:ml-7 md:w-3/4 md:h-3/4 md:ml-3 sm:w-2/3 sm:h-2/3 sm:ml-5 xs:w-3/4 xs:h-3/4 xs:ml-1"
         src={food.imageFile}
         alt={food.foodCategory}
         onClick={() => {
@@ -87,7 +87,7 @@ const TabOptions = () => {
           <div className="relative flex items-center">
             <button
               onClick={scrollLeft}
-              className="absolute left-0 z-10 w-8 h-8 flex items-center bg-gray-300 p-2 rounded-full sm:w-3 sm:h-3"
+              className="absolute left-0 z-10 w-8 h-8 lg:w-8 lg:h-8 flex items-center bg-gray-300 p-2 rounded-full sm:w-3 sm:h-3"
             >
               &lt;
             </button>
