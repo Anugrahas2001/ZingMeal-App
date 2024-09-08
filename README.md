@@ -1,7 +1,26 @@
 # ZingMeal
 
+
+
+
+
+![WhatsApp Image 2024-09-08 at 6 09 01 PM (3)](https://github.com/user-attachments/assets/92de8ed9-3ade-46a0-8d2a-f1ecb822e414)
+![WhatsApp Image 2024-09-08 at 6 09 01 PM (2)](https://github.com/user-attachments/assets/dc842006-2cd2-4905-9039-ba75fb0d2e71)
+![WhatsApp Image 2024-09-08 at 6 09 01 PM (1)](https://github.com/user-attachments/assets/94ce7425-2549-4082-abca-b2a504d1780d)
+![WhatsApp Image 2024-09-08 at 6 09 00 PM (1)](https://github.com/user-attachments/assets/0455a90a-a7b2-4067-a35f-cb982ab27af1)
+![WhatsApp Image 2024-09-08 at 6 09 00 PM](https://github.com/user-attachments/assets/9837388b-fe45-4514-9d23-48f13e32a97f)
+![WhatsApp Image 2024-09-08 at 6 09 01 PM](https://github.com/user-attachments/assets/cad0ea50-5e04-4905-852a-20cc7193a144)
+![WhatsApp Image 2024-09-08 at 6 09 16 PM](https://github.com/user-attachments/assets/b7ff0e98-b306-4243-ab5c-65ea75f7240a)
+
+
+
+
+
+
 Users can sign in or sign up either as a customer or as a restaurant. A trial mode is also provided, allowing users to explore all the features of the application using a trial email and password.
 ![Screenshot (264)](https://github.com/user-attachments/assets/136e02b2-7e17-4367-b41f-ff00a918077d)
+
+![WhatsApp Image 2024-09-08 at 6 11 12 PM](https://github.com/user-attachments/assets/830988a8-16a7-4926-81d8-03d6ab652398)
 Users are provided with a list of restaurants and food items, and a search option is also included.
 ![Screenshot (276)](https://github.com/user-attachments/assets/73fdc2d7-b049-4973-aebf-4cc490df5fd5)
 
