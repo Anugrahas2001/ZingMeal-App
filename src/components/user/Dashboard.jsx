@@ -32,7 +32,7 @@ const Hotels = () => {
     return (
       <div
         key={hotel.id}
-        className="flex flex-col w-full sm:w-4/5 md:w-3/4 lg:w-1/4 xs:w-full rounded-md shadow-lg lg:m-7"
+        className="flex flex-col w-full sm:w-4/5 md:w-3/4 lg:w-1/4 xs:w-full rounded-md shadow-lg lg:m-4"
       >
         <Link to={`/restuarent/${hotel.id}`}>
           <div className="relative h-56 rounded-md overflow-hidden xs:h-32 xs:w-full">
@@ -67,12 +67,12 @@ const Hotels = () => {
   });
 
   return (
-    <div className="overflow-x-hidden min-h-screen mb-10 ml-20 mr-20 mt-5 lg:ml-20 lg:mr-20 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:mr-5">
+    <div className="overflow-x-hidden min-h-screen mb-10 ml-16 mr-16 mt-5 lg:ml-16 lg:mr-16 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:mr-5">
       <p className="text-3xl mt-2 lg:text-3xl md:text-2xl sm:text-xl xs:text-lg">Explore the food life!</p>
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex flex-wrap justify-center mt-5 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:mr-6 p-1">
+        <div className="flex flex-wrap justify-center mt-5 ml-1 mr-1 lg:ml-0 lg:mr-0 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:mr-6 p-1">
           {hotelDetails}
         </div>
       )}

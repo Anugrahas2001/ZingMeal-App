@@ -44,7 +44,7 @@ const TabOptions = () => {
 
   const foodItemsToDisplay = uniqueFoodItems.map((food) => (
     <div
-      className="flex-none w-44 h-44 mx-1 overflow-hidden cursor-pointer mt-4 lg:w-44 lg:h-44 md:w-40 md:h-40 sm:w-28 sm:h-28 xs:w-24 xs:h-24"
+      className="flex-none w-44 h-44 mx-1 overflow-hidden cursor-pointer mt-4 lg:w-40 lg:h-40 md:w-40 md:h-40 sm:w-28 sm:h-28 xs:w-24 xs:h-24"
       key={food.id}
     >
       <img
@@ -76,7 +76,7 @@ const TabOptions = () => {
   };
 
   return (
-    <div className="overflow-hidden ml-20 mr-20 mt-5 lg:ml-20 lg:mr-20 md:ml-12 md:mr-12 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3">
+    <div className="overflow-hidden ml-20 mr-20 lg:ml-20 lg:mr-20 mt-5 md:ml-12 md:mr-12 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3">
       <p className="text-3xl mt-2 lg:text-3xl md:text-2xl sm:text-xl xs:text-lg">
         Eat what makes you happy
       </p>
