@@ -1,5 +1,15 @@
 # ZingMeal
 
+
+## Laptop View
+![Screenshot (264)](https://github.com/user-attachments/assets/136e02b2-7e17-4367-b41f-ff00a918077d)
+![Screenshot (268)](https://github.com/user-attachments/assets/c163b627-616f-43c4-8c68-c28affda1fd8)
+![Screenshot (269)](https://github.com/user-attachments/assets/3a9e0c6b-b07d-4799-b74e-010557116e70)
+![Screenshot (270)](https://github.com/user-attachments/assets/cc900e35-1f3f-44d1-87b0-e336c6bd8028)
+![Screenshot (275)](https://github.com/user-attachments/assets/480fd309-bee7-44c3-bc73-2c612c488282)
+![Screenshot (271)](https://github.com/user-attachments/assets/f93867ab-0808-4e6c-bbac-96823129a50f)
+![Screenshot (273)](https://github.com/user-attachments/assets/3394a518-1761-461d-8c50-3cb8a4f05e6f)
+
 ZingMeal is a real-time, full-stack food ordering platform designed to offer a seamless and dynamic user experience. Developed using cutting-edge technologies like React.js, Redux, and Context API, it allows users to easily browse a wide range of food items, explore restaurant options, and effortlessly add items to their cart. The platform integrates Razorpay for secure and efficient payment processing, ensuring that transactions can be completed without leaving the app.
 
 ZingMeal features an advanced search functionality that enhances the user experience by enabling quick and accurate searches for specific food items. In addition, users can manage their orders, including canceling them when necessary, providing flexibility and control over their purchasing decisions.
@@ -40,16 +50,9 @@ ZingMeal also includes a trial mode, allowing potential users to explore the ful
 - Git
 
 ## How to Install
-### Backend
-1. Clone git repo
-2. Import the Springboot project into STS:
-   + Click file > Import.
-   + Select Maven > Existing Maven Projects and click Next.
-   + Browse to the project directory and click Finish.
-3. Go to Application.java file and Right click > Run as >Java Application.
-   
+
 ### Frontend
-1. Clone git repo
-2. Navigate to project directory.
-3. Open .html file and Right click > Open with live server.
+1. Git Clone:https://github.com/Anugrahas2001/ZingMeal-App
+2. Navigate to the terminal.
+3. Excute npm run dev
 
