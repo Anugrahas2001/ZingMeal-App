@@ -44,39 +44,39 @@ const TabOptions = () => {
 
   const foodItemsToDisplay = uniqueFoodItems.map((food) => (
     <div
-      className="flex-none w-44 h-44 mx-1 overflow-hidden cursor-pointer mt-4 lg:w-40 lg:h-40 md:w-40 md:h-40 sm:w-28 sm:h-28 xs:w-24 xs:h-24"
+      className="flex-none w-44 h-44 mx-1 p-1 lg:p-5 md:p-1 cursor-pointer mt-4 lg:w-40 lg:h-40 md:w-40 md:h-40 sm:w-28 sm:h-28 xs:w-24 xs:h-24"
       key={food.id}
     >
       <img
-        className="object-cover rounded-full w-full h-full lg:h-4/5 lg:w-4/5 ml-7 lg:ml-7 md:w-3/4 md:h-3/4 md:ml-3 sm:w-2/3 sm:h-2/3 sm:ml-5 xs:w-3/4 xs:h-3/4 xs:ml-1"
+        className="object-cover rounded-full w-full h-full lg:h-full lg:w-full ml-1 lg:ml-2  md:w-3/4 md:h-3/4 md:ml-3 sm:w-2/3 sm:h-2/3 sm:ml-5 xs:w-3/4 xs:h-3/4 xs:ml-1"
         src={food.imageFile}
         alt={food.foodCategory}
         onClick={() => {
           categoryHandler(food.foodCategory);
         }}
-      /> 
-      <p className="text-center text-black text-lg font-semibold ml-4 sm:ml-3 xs:ml-0 sm:text-sm xs:text-sm">{food.foodCategory}</p>
-
-
+      />
+      <p className="text-center text-black text-lg font-semibold ml-4 md:ml-0 sm:ml-3 xs:ml-0 sm:text-sm xs:text-sm">
+        {food.foodCategory}
+      </p>
     </div>
   ));
 
   const scrollLeft = () => {
     scrollRef.current.scrollBy({
       left: -scrollRef.current.offsetWidth / 4,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
   const scrollRight = () => {
     scrollRef.current.scrollBy({
       left: scrollRef.current.offsetWidth / 4,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
   return (
-    <div className="overflow-hidden ml-20 mr-20 lg:ml-20 lg:mr-20 mt-5 md:ml-12 md:mr-12 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3">
+    <div className="ml-20 mr-20 lg:ml-20 lg:mr-20 mt-5 md:ml-12 md:mr-12 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3">
       <p className="text-3xl mt-2 lg:text-3xl md:text-2xl sm:text-xl xs:text-lg">
         Eat what makes you happy
       </p>
@@ -151,4 +151,3 @@ const TabOptions = () => {
 };
 
 export default TabOptions;
-
