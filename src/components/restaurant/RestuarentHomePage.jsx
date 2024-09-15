@@ -65,7 +65,8 @@ const RestuarentPage = () => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      className:"w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
+      className:
+        "w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
       transition: Bounce,
     });
   };
@@ -80,7 +81,8 @@ const RestuarentPage = () => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      className:"w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
+      className:
+        "w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
       transition: Bounce,
     });
   };
@@ -254,7 +256,9 @@ const RestuarentPage = () => {
               </p>
               <Link to="/add">
                 <div className="bg-gray-600 font-semibold text-white h-9 w-24 lg:w-24 md:w-20 sm:w-20 xs:w-20 rounded-md flex justify-center items-center xs:ml-2">
-                  <button className="p-2 md:p-1 text-base sm:text-sm sm:p-1 xs:text-xs">Add  Menu</button>
+                  <button className="p-2 md:p-1 text-base sm:text-sm sm:p-1 xs:text-xs">
+                    Add Menu
+                  </button>
                 </div>
               </Link>
             </div>

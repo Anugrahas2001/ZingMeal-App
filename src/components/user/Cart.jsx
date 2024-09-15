@@ -342,15 +342,16 @@ const Cart = () => {
   return (
     <div className="w-full overflow-x-hidden min-h-screen">
       <Search cartItemCount={cartItemCount} />
-      <div
-        className="ml-20 mr-20 mt-5 lg:ml-20 lg:mr-20 md:ml-12 md:mr-12 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3"
-        key={data.id}
-      >
-        <div className="flex md:flex-row sm:flex-col xs:flex-col justify-between sm:justify-start">
-          <div className="flex flex-wrap m-4 w-full lg:m-4 md:m-2 sm:m-0 xs:m-0">
-            {userId && data}
-          </div>
-          {userId && cartItemCount > 0 ? (
+      {userId && cartItemCount > 0 ? (
+        <div
+          className="ml-20 mr-20 mt-5 lg:ml-20 lg:mr-20 md:ml-12 md:mr-12 sm:ml-6 sm:mr-5 xs:ml-3 xs:mr-3"
+          key={data.id}
+        >
+          <div className="flex md:flex-row sm:flex-col xs:flex-col justify-between sm:justify-start">
+            <div className="flex flex-wrap m-4 w-full lg:m-4 md:m-2 sm:m-0 xs:m-0">
+              {userId && data}
+            </div>
+            {/* {userId && cartItemCount > 0 ? ( */}
             <div className="h-4/5 shadow-lg mt-8 md:mt-0 md:ml-3 m-4 lg:h-4/5 md:w-2/5 sm:w-full sm:h-auto xs:w-full sm:mt-4 xs:mt-3 xs:h-auto md:p-1 sm:p-4 sm:m-0 xs:p-3 xs:m-0">
               {/* <div className="m-5"> */}
               <div className="text-lg h-8 m-5 mt-2 flex justify-center items-center font-semibold">
@@ -524,15 +525,14 @@ const Cart = () => {
                   You will save ₹{totalDiscountPrice} on this order
                 </p>
               </div>
-              {/* </div> */}
             </div>
-          ) : (
-            <div className="text-3xl lg:text-3xl md:text-2xl sm:text-2xl xs:text-lg w-full flex justify-center items-center h-full xs:h-96">
-              Please add items to the cart
-            </div>
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="text-3xl lg:text-3xl md:text-2xl sm:text-2xl xs:text-lg w-full flex justify-center items-center h-full xs:h-96">
+          Please add items to the cart
+        </div>
+      )}
       <Footer />
     </div>
   );

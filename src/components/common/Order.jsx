@@ -6,10 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "../../axios/axios";
 import Cookies from "js-cookie";
 import { LoadingContext } from "./LoaderContext";
-import { Preparing,Packed,Dispatched,Delivered} from "../../constants/constants";
+import {
+  Preparing,
+  Packed,
+  Dispatched,
+  Delivered,
+} from "../../constants/constants";
 import Loader from "./Loader";
 import Footer from "./Footer";
-
 
 const Order = (props) => {
   const dispatch = useDispatch();
@@ -99,9 +103,9 @@ const Order = (props) => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      className:"w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
+      className:
+        "w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
       transition: Bounce,
-      
     });
   };
 
@@ -115,7 +119,8 @@ const Order = (props) => {
       draggable: true,
       progress: undefined,
       theme: "light",
-      className:"w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
+      className:
+        "w-80 lg:w-80 md:w-72 md:text-sm sm:w-64 sm:text-xs xs:w-64 xs:text-xs xs:h-3",
       transition: Bounce,
     });
   };
@@ -147,7 +152,9 @@ const Order = (props) => {
           />
           <div className="flex flex-col m-2 w-full md:w-40">
             <div className="flex justify-between">
-              <p className="text-sm md:text-base font-semibold">{item.food.foodName}</p>
+              <p className="text-sm md:text-base font-semibold">
+                {item.food.foodName}
+              </p>
               <div className="flex ml-2">
                 <FontAwesomeIcon className="mt-1 text-sm" icon={faXmark} />
                 <p>{item.quantity}</p>
@@ -167,7 +174,7 @@ const Order = (props) => {
       {children}
       {loading ? (
         <Loader />
-      ) : orders.length>0 ? (
+      ) : orders.length > 0 ? (
         <div className="ml-20 mr-20 h-auto lg:ml-20 lg:mr-20 md:ml-24 md:mr-24 sm:ml-16 sm:mr-16 xs:ml-8 xs:mr-8">
           <div className="w-full mt-2">
             {orders.map((order) => (
@@ -176,13 +183,17 @@ const Order = (props) => {
                 className="w-full h-auto m-2 flex flex-col md:flex-row justify-between shadow mb-4 p-5 "
               >
                 <div className="w-full md:w-80 ml-0 md:ml-4">
-                  <p className="font-semibold text-base lg:text-base xs:text-sm">OrderID: {order.id}</p>
+                  <p className="font-semibold text-base lg:text-base xs:text-sm">
+                    OrderID: {order.id}
+                  </p>
                   <div>{renderOrderItems(order.orderItems)}</div>
                 </div>
                 <div>
                   {isUserPage && (
                     <div className="flex justify-between md:justify-center items-center flex-col">
-                      <p className="text-base lg:text-base xs:text-sm">{order.orderStatus}</p>
+                      <p className="text-base lg:text-base xs:text-sm">
+                        {order.orderStatus}
+                      </p>
                       <p className="text-base lg:text-base xs:text-sm flex justify-center">
                         Your item has been {order.orderStatus}
                       </p>
@@ -190,7 +201,9 @@ const Order = (props) => {
                   )}
                   {isRestaurantPage && (
                     <div className="flex mt-4 md:mt-0">
-                      <p className="text-base lg:text-base xs:text-sm">{order.orderStatus}</p>
+                      <p className="text-base lg:text-base xs:text-sm">
+                        {order.orderStatus}
+                      </p>
                       <select
                         className="outline-none mt-0 w-4"
                         value={orderStatuses[order.id]}
@@ -209,13 +222,17 @@ const Order = (props) => {
                 </div>
                 <div className="h-auto flex flex-col justify-between mt-4 md:mt-0">
                   <div className="flex flex-nowrap justify-between md:justify-start">
-                    <p className="text-base lg:text-base xs:text-sm">Total Price:</p>
+                    <p className="text-base lg:text-base xs:text-sm">
+                      Total Price:
+                    </p>
                     <div className="bg-yellow-400 flex items-center p-1 rounded-md h-7 sm:h-5 xs:h-5 mt-1">
                       <FontAwesomeIcon
                         className="mt-1 text-sm sm:text-xs sm:mt-1 xs:mt-1 xs:text-sm xs:mb-1"
                         icon={faIndianRupeeSign}
                       />
-                      <p className="ml-1 text-sm xs:text-sm">{Math.round(order.totalPrice)}</p>
+                      <p className="ml-1 text-sm xs:text-sm">
+                        {Math.round(order.totalPrice)}
+                      </p>
                     </div>
                   </div>
                   {isUserPage && (
@@ -241,7 +258,9 @@ const Order = (props) => {
                   className="w-full h-auto m-2 flex flex-col md:flex-row justify-between shadow mb-4 p-5"
                 >
                   <div className="w-full md:w-80 ml-0 md:ml-4">
-                    <p className="font-semibold text-base lg:text-base xs:text-sm">Order ID: {order.id}</p>
+                    <p className="font-semibold text-base lg:text-base xs:text-sm">
+                      Order ID: {order.id}
+                    </p>
                     {order.orderItems.map((item) => (
                       <div key={item.id}>
                         <img
@@ -254,7 +273,9 @@ const Order = (props) => {
                   </div>
                   <div className="flex justify-center">
                     <div className="flex justify-between md:justify-center flex-col sm:justify-center xs:justify-center">
-                      <p className="flex justify-center mt-3 text-base lg:text-base sm:text-xs xs:text-sm">{order.orderStatus}</p>
+                      <p className="flex justify-center mt-3 text-base lg:text-base sm:text-xs xs:text-sm">
+                        {order.orderStatus}
+                      </p>
                       <p className="text-base flex justify-center lg:text-base sm:text-xs xs:text-sm w-52">
                         Your item has been {order.orderStatus}
                       </p>
@@ -262,15 +283,19 @@ const Order = (props) => {
                   </div>
                   <div className="h-auto flex flex-col">
                     <div className="flex flex-nowrap justify-center md:justify-start">
-                    <p className="text-base lg:text-base xs:text-sm">Total Price:</p>
-                    <div className="bg-yellow-400 flex items-center p-1 rounded-md h-7 sm:h-5 xs:h-5 mt-1">
-                      <FontAwesomeIcon
-                        className="mt-1 text-sm sm:text-xs sm:mt-1 xs:mt-1 xs:text-sm xs:mb-1"
-                        icon={faIndianRupeeSign}
-                      />
-                      <p className="ml-1 text-sm xs:text-sm">{order.totalPrice}</p>
+                      <p className="text-base lg:text-base xs:text-sm">
+                        Total Price:
+                      </p>
+                      <div className="bg-yellow-400 flex items-center p-1 rounded-md h-7 sm:h-5 xs:h-5 mt-1">
+                        <FontAwesomeIcon
+                          className="mt-1 text-sm sm:text-xs sm:mt-1 xs:mt-1 xs:text-sm xs:mb-1"
+                          icon={faIndianRupeeSign}
+                        />
+                        <p className="ml-1 text-sm xs:text-sm">
+                          {order.totalPrice}
+                        </p>
+                      </div>
                     </div>
-                  </div>
                   </div>
                 </div>
               ))}

@@ -226,226 +226,230 @@ const RestuarentLogin = () => {
 
   return (
     <div className="flex justify-center items-center mt-20">
-       {loading ? (
-        <Loader/>
-       ):(
-      <div className="flex flex-col w-full lg:w-2/5 md:w-2/5 sm:w-2/3 xs:w-4/5 h-auto justify-center items-center border border-gray-300 p-5 md:p-1">
-        <div className="text-gray-500 font-semibold text-3xl mb-5">
-          <p className="text-2xl">{title}</p>
-        </div>
-
-        <div className="flex justify-center items-center flex-col w-full lg:w-4/5 md:w-80 md:h-3/5 xs:w-full">
-          <div className="flex flex-col w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56 xs:mb-2">
-            <label
-              htmlFor="restaurantName"
-              className="text-base lg:text-base md:text-sm xs:text-sm"
-            >
-              Restaurant Name
-            </label>
-            <div className="h-12 lg:h-12 md:h-10 sm:h-8 xs:h-8 flex justify-center items-center rounded-sm mt-2 border border-gray-300 p-1 md:text-sm">
-              <input
-                type="text"
-                id="restaurantName"
-                className="outline-none p-1 lg:w-72 md:w-64 sm:64 xs:w-56 xs:text-sm"
-                placeholder="Enter Restaurant name"
-                value={credentials.restaurantName}
-                onChange={(e) => {
-                  setCredentials({
-                    ...credentials,
-                    restaurantName: e.target.value,
-                  });
-                }}
-              />
-            </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col w-full lg:w-2/5 md:w-2/5 sm:w-2/3 xs:w-4/5 h-auto justify-center items-center border border-gray-300 p-5 md:p-1">
+          <div className="text-gray-500 font-semibold text-3xl mb-5">
+            <p className="text-2xl">{title}</p>
           </div>
 
-          <div className="flex flex-col mb-4 w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56">
-            <label
-              htmlFor="password"
-              className="mt-1 lg:text-base md:text-sm xs:text-sm"
-            >
-              Password
-            </label>
-            <div className="h-12 lg:h-12 md:h-10 sm:h-8 xs:h-8 flex justify-center items-center rounded-sm mt-1 border border-gray-300 p-1 md:text-sm sm:text-sm xs:text-sm">
-              <input
-                type="password"
-                id="password"
-                value={credentials.password}
-                onChange={(e) => {
-                  setCredentials({ ...credentials, password: e.target.value });
-                }}
-                className="outline-none p-1 w-72 lg:text-base lg:w-72 md:w-64 sm:64 xs:w-64 xs:text-sm"
-                placeholder="Enter Password"
-              />
+          <div className="flex justify-center items-center flex-col w-full lg:w-4/5 md:w-80 md:h-3/5 xs:w-full">
+            <div className="flex flex-col w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56 xs:mb-2">
+              <label
+                htmlFor="restaurantName"
+                className="text-base lg:text-base md:text-sm xs:text-sm"
+              >
+                Restaurant Name
+              </label>
+              <div className="h-12 lg:h-12 md:h-10 sm:h-8 xs:h-8 flex justify-center items-center rounded-sm mt-2 border border-gray-300 p-1 md:text-sm">
+                <input
+                  type="text"
+                  id="restaurantName"
+                  className="outline-none p-1 lg:w-72 md:w-64 sm:64 xs:w-56 xs:text-sm"
+                  placeholder="Enter Restaurant name"
+                  value={credentials.restaurantName}
+                  onChange={(e) => {
+                    setCredentials({
+                      ...credentials,
+                      restaurantName: e.target.value,
+                    });
+                  }}
+                />
+              </div>
             </div>
-          </div>
 
-          {title === "Sign Up" && (
-            <div className="flex justify-center items-center flex-col">
-              <div className="w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56">
-                <label
-                  htmlFor="restaurantAddress"
-                  className="text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
-                >
-                  Restaurant Address
-                </label>
-                <div className="h-12 lg:h-12 md:h-10 sm:h-8 xs:h-8 flex items-center p-1 rounded-sm border border-gray-300 mb-4 md:mb-1">
-                  <input
-                    type="text"
-                    id="restaurantAddress"
-                    className="outline-none p-1 ml-2 w-72 lg:w-72 md:w-64 md:ml-0 sm:ml-0 sm:text-sm xs:text-sm"
-                    placeholder="Enter Restaurant address"
-                    value={credentials.restaurantAddress}
-                    onChange={(e) => {
-                      setCredentials({
-                        ...credentials,
-                        restaurantAddress: e.target.value,
-                      });
-                    }}
-                  />
-                </div>
+            <div className="flex flex-col mb-4 w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56">
+              <label
+                htmlFor="password"
+                className="mt-1 lg:text-base md:text-sm xs:text-sm"
+              >
+                Password
+              </label>
+              <div className="h-12 lg:h-12 md:h-10 sm:h-8 xs:h-8 flex justify-center items-center rounded-sm mt-1 border border-gray-300 p-1 md:text-sm sm:text-sm xs:text-sm">
+                <input
+                  type="password"
+                  id="password"
+                  value={credentials.password}
+                  onChange={(e) => {
+                    setCredentials({
+                      ...credentials,
+                      password: e.target.value,
+                    });
+                  }}
+                  className="outline-none p-1 w-72 lg:text-base lg:w-72 md:w-64 sm:64 xs:w-64 xs:text-sm"
+                  placeholder="Enter Password"
+                />
+              </div>
+            </div>
 
-                <div className="w-80 h-12 lg:h-12 md:h-10 sm:h-10 xs:h-10 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1 lg:w-80 md:w-64 sm:w-60 xs:w-56">
-                  <div className="flex items-center">
-                    <label
-                      htmlFor="openingTime"
-                      className="mr-2 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
-                    >
-                      Opening Time:
-                    </label>
-                    <input
-                      type="text"
-                      id="openingTime"
-                      className="outline-none p-1 w-20 shadow mr-2"
-                      value={credentials.openingTime}
-                      onChange={(e) => {
-                        setCredentials({
-                          ...credentials,
-                          openingTime: e.target.value,
-                        });
-                      }}
-                    />
-                    <select
-                      value={credentials.dayNight1}
-                      onChange={(e) => {
-                        setCredentials({
-                          ...credentials,
-                          dayNight1: e.target.value,
-                        });
-                      }}
-                      className="outline-none text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
-                    >
-                      <option value="AM">AM</option>
-                      <option value="PM">PM</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="w-80 h-12 lg:h-12 md:h-10 sm:h-10 xs:h-10 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1lg:w-80 md:w-64 sm:w-60 xs:w-56">
-                  <div className="flex items-center">
-                    <label
-                      htmlFor="closingTime"
-                      className="mr-2 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
-                    >
-                      Closing Time:
-                    </label>
-                    <input
-                      type="text"
-                      id="closingTime"
-                      value={credentials.closingTime}
-                      onChange={(e) => {
-                        setCredentials({
-                          ...credentials,
-                          closingTime: e.target.value,
-                        });
-                      }}
-                      className="outline-none p-1 w-20 shadow mr-2"
-                    />
-                    <select
-                      value={credentials.dayNight2}
-                      onChange={(e) => {
-                        setCredentials({
-                          ...credentials,
-                          dayNight2: e.target.value,
-                        });
-                      }}
-                      className="outline-none text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
-                    >
-                      <option value="AM">AM</option>
-                      <option value="PM">PM</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="w-80 h-12 lg:h-12 md:h-10 sm:h-10 xs:h-10 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1 lg:w-80 md:w-64 sm:w-60 xs:w-56">
-                  <div className="flex items-center">
-                    <label
-                      htmlFor="restaurantStatus"
-                      className="mr-2 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
-                    >
-                      Resturant Status:
-                    </label>
-
-                    <select
-                      id="restaurantStatus"
-                      value={credentials.restaurantStatus}
-                      onChange={(e) => {
-                        setCredentials({
-                          ...credentials,
-                          restaurantStatus: e.target.value,
-                        });
-                      }}
-                      className="outline-none ml-7 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
-                    >
-                      <option value="Closed">Closed</option>
-                      <option value="Open">Open</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="w-80 h-auto flex flex-col mb-4">
+            {title === "Sign Up" && (
+              <div className="flex justify-center items-center flex-col">
+                <div className="w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56">
                   <label
-                    htmlFor="restaurantImg"
-                    className="mb-2 md:mb-0 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
+                    htmlFor="restaurantAddress"
+                    className="text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
                   >
-                    Upload Restaurant Image
+                    Restaurant Address
                   </label>
-                  <div className="w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56 border border-gray-300 p-1 md:h-12 md:p-2">
+                  <div className="h-12 lg:h-12 md:h-10 sm:h-8 xs:h-8 flex items-center p-1 rounded-sm border border-gray-300 mb-4 md:mb-1">
                     <input
-                      type="file"
-                      id="restaurantImg"
-                      className="outline-none text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
+                      type="text"
+                      id="restaurantAddress"
+                      className="outline-none p-1 ml-2 w-72 lg:w-72 md:w-64 md:ml-0 sm:ml-0 sm:text-sm xs:text-sm"
+                      placeholder="Enter Restaurant address"
+                      value={credentials.restaurantAddress}
                       onChange={(e) => {
                         setCredentials({
                           ...credentials,
-                          restaurantImg: e.target.files[0],
+                          restaurantAddress: e.target.value,
                         });
                       }}
                     />
+                  </div>
+
+                  <div className="w-80 h-12 lg:h-12 md:h-10 sm:h-10 xs:h-10 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1 lg:w-80 md:w-64 sm:w-60 xs:w-56">
+                    <div className="flex items-center">
+                      <label
+                        htmlFor="openingTime"
+                        className="mr-2 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
+                      >
+                        Opening Time:
+                      </label>
+                      <input
+                        type="text"
+                        id="openingTime"
+                        className="outline-none p-1 w-20 shadow mr-2"
+                        value={credentials.openingTime}
+                        onChange={(e) => {
+                          setCredentials({
+                            ...credentials,
+                            openingTime: e.target.value,
+                          });
+                        }}
+                      />
+                      <select
+                        value={credentials.dayNight1}
+                        onChange={(e) => {
+                          setCredentials({
+                            ...credentials,
+                            dayNight1: e.target.value,
+                          });
+                        }}
+                        className="outline-none text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
+                      >
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="w-80 h-12 lg:h-12 md:h-10 sm:h-10 xs:h-10 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1lg:w-80 md:w-64 sm:w-60 xs:w-56">
+                    <div className="flex items-center">
+                      <label
+                        htmlFor="closingTime"
+                        className="mr-2 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
+                      >
+                        Closing Time:
+                      </label>
+                      <input
+                        type="text"
+                        id="closingTime"
+                        value={credentials.closingTime}
+                        onChange={(e) => {
+                          setCredentials({
+                            ...credentials,
+                            closingTime: e.target.value,
+                          });
+                        }}
+                        className="outline-none p-1 w-20 shadow mr-2"
+                      />
+                      <select
+                        value={credentials.dayNight2}
+                        onChange={(e) => {
+                          setCredentials({
+                            ...credentials,
+                            dayNight2: e.target.value,
+                          });
+                        }}
+                        className="outline-none text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
+                      >
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="w-80 h-12 lg:h-12 md:h-10 sm:h-10 xs:h-10 mt-5 flex justify-between items-center rounded-sm border border-gray-300 mb-4 p-1 lg:w-80 md:w-64 sm:w-60 xs:w-56">
+                    <div className="flex items-center">
+                      <label
+                        htmlFor="restaurantStatus"
+                        className="mr-2 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
+                      >
+                        Resturant Status:
+                      </label>
+
+                      <select
+                        id="restaurantStatus"
+                        value={credentials.restaurantStatus}
+                        onChange={(e) => {
+                          setCredentials({
+                            ...credentials,
+                            restaurantStatus: e.target.value,
+                          });
+                        }}
+                        className="outline-none ml-7 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
+                      >
+                        <option value="Closed">Closed</option>
+                        <option value="Open">Open</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="w-80 h-auto flex flex-col mb-4">
+                    <label
+                      htmlFor="restaurantImg"
+                      className="mb-2 md:mb-0 text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
+                    >
+                      Upload Restaurant Image
+                    </label>
+                    <div className="w-80 lg:w-80 md:w-64 sm:w-60 xs:w-56 border border-gray-300 p-1 md:h-12 md:p-2">
+                      <input
+                        type="file"
+                        id="restaurantImg"
+                        className="outline-none text-base lg:text-base md:text-sm sm:text-sm xs:text-sm"
+                        onChange={(e) => {
+                          setCredentials({
+                            ...credentials,
+                            restaurantImg: e.target.files[0],
+                          });
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
+            )}
+
+            <div className="w-80 h-12 lg:h-12 sm:h-10 xs:h-10 flex justify-between items-center rounded-sm border border-blue-700 bg-blue-700 mt-4 lg:w-80 md:w-64 md:h-10 md:mt-2 sm:w-60 xs:w-56 xs:mt-0">
+              <button
+                onClick={submitHandler}
+                className="bg-blue-700 w-80 h-10 text-center text-white rounded-sm"
+              >
+                Submit
+              </button>
             </div>
-          )}
 
-          <div className="w-80 h-12 lg:h-12 sm:h-10 xs:h-10 flex justify-between items-center rounded-sm border border-blue-700 bg-blue-700 mt-4 lg:w-80 md:w-64 md:h-10 md:mt-2 sm:w-60 xs:w-56 xs:mt-0">
-            <button
-              onClick={submitHandler}
-              className="bg-blue-700 w-80 h-10 text-center text-white rounded-sm"
+            <div
+              className="flex mt-2 cursor-pointer text-base lg:text-base md:text-sm sm:text-sm xs:text-xs"
+              onClick={changePage}
             >
-              Submit
-            </button>
-          </div>
-
-          <div
-            className="flex mt-2 cursor-pointer text-base lg:text-base md:text-sm sm:text-sm xs:text-xs"
-            onClick={changePage}
-          >
-            <p>{description}</p>
-            <p className="ml-1 text-red-500">{changeSection}</p>
+              <p>{description}</p>
+              <p className="ml-1 text-red-500">{changeSection}</p>
+            </div>
           </div>
         </div>
-      </div>)}
+      )}
     </div>
   );
 };

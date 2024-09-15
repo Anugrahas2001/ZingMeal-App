@@ -45,7 +45,9 @@ const Hotels = () => {
         </Link>
         <div className="p-4">
           <div className="flex justify-between items-center mb-2">
-            <div className="text-lg font-semibold lg:text-lg md:text-lg xs:text-sm">{hotel.restaurantName}</div>
+            <div className="text-lg font-semibold lg:text-lg md:text-lg xs:text-sm">
+              {hotel.restaurantName}
+            </div>
             <div className="flex items-center bg-green-500 text-white px-2 py-1 rounded xs:px-1 xs:py-0">
               <FontAwesomeIcon icon={faStar} className="text-sm" />
               <p className="ml-1">1</p>
@@ -68,7 +70,9 @@ const Hotels = () => {
 
   return (
     <div className="overflow-x-hidden min-h-screen mb-10 ml-16 mr-16 mt-5 lg:ml-16 lg:mr-16 md:ml-10 md:mr-10 sm:ml-8 sm:mr-8 xs:ml-6 xs:mr-5">
-      <p className="text-3xl mt-2 lg:text-3xl md:text-2xl sm:text-xl xs:text-lg">Explore the food life!</p>
+      <p className="text-3xl mt-2 lg:text-3xl md:text-2xl sm:text-xl xs:text-lg">
+        Explore the food life!
+      </p>
       {loading ? (
         <Loader />
       ) : (

@@ -87,7 +87,7 @@ const RestuarentPage = () => {
   const foodTypeHandler = (selectedType) => {
     setShow((prevShow) => {
       const newShow = !prevShow;
-  
+
       if (newShow && type === selectedType) {
         setType("");
         allTypeFoods();
@@ -102,11 +102,10 @@ const RestuarentPage = () => {
             console.log(error);
           });
       }
-  
+
       return newShow;
     });
   };
-  
 
   const notify = () => {
     toast.success("Food successfully added to cart", {
