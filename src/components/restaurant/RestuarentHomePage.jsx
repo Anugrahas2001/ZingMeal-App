@@ -17,7 +17,7 @@ import moment from "moment/moment";
 import ReadMore from "../common/ReadMore";
 import Footer from "../common/Footer";
 
-const RestuarentPage = () => {
+const RestuarentHomePage = () => {
   const restaurantId = useSelector((store) => store.restaurant.id);
   const [hotel, setHotel] = useState({});
   const [foods, setFoods] = useState([]);
@@ -271,4 +271,4 @@ const RestuarentPage = () => {
   );
 };
 
-export default RestuarentPage;
+export default RestuarentHomePage;

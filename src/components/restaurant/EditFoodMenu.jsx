@@ -9,7 +9,6 @@ import axios from "../../axios/axios";
 const EditFoodMenu = () => {
   const { id } = useParams();
   const restaurantId = useSelector((store) => store.restaurant.id);
-  console.log(restaurantId, "idddd");
   const { loading, setLoading } = useContext(LoadingContext);
   const [foodMenu, setFoodMenu] = useState({
     foodName: "",
@@ -22,14 +21,12 @@ const EditFoodMenu = () => {
     imageFile: null,
     imagePreview: "",
   });
-  console.log("helooo");
 
   useEffect(() => {
     setLoading(true);
     axios
       .get(`/restaurant/food/${id}`)
       .then((response) => {
-        console.log(response, "response of get");
         const data = response.data.food;
         setFoodMenu({
           foodName: data.foodName,

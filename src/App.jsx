@@ -16,6 +16,7 @@ import UserRestuarent from "./components/user/UserRestuarent";
 import Cart from "./components/user/Cart";
 import RestaurantOrder from "./components/restaurant/RestaurantOrder";
 import UserOrder from "./components/user/UserOrder";
+import RestuarentHomePage from "./components/restaurant/RestuarentHomePage";
 
 // import Loader from "./components/common/Loader";
 // const UseHomePage = React.lazy(() => import("./components/user/UserHomePage"));
@@ -55,6 +56,7 @@ function App() {
               <Route path="/editFood/:id" element={<EditFoodMenu />} />
               <Route path="/user" element={<UserHomePage />} />
               <Route path="/restuarent/:id" element={<UserRestuarent />} />
+              <Route path="/restuarentHome" element={<RestuarentHomePage/>} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/userOrder" element={<UserOrder />} />
               <Route path="/restaurantOrder" element={<RestaurantOrder />} />

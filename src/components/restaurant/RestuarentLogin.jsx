@@ -173,7 +173,7 @@ const RestuarentLogin = () => {
             })
           );
           setLoading(false);
-          navigate("/restaurant");
+          navigate("/restuarentHome");
         } else {
           notifyInvalid();
         }
