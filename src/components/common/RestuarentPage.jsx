@@ -203,11 +203,11 @@ const RestuarentPage = () => {
             <div className="text-lg text-gray-400 lg:text-lg md:text-lg sm:text-sm xs:text-sm">
               {hotel.restaurantAddress}
             </div>
-            <div className="w-60 justify-between text-lg flex lg:text-lg md:text-sm xs:text-sm lg:w-56 md:w-48 sm:w-48 xs:w-48">
+            <div className="w-full justify-between text-lg flex lg:text-lg md:text-sm xs:text-sm lg:w-56 md:w-48 sm:w-48 xs:w-48">
               <div className="text-orange-400 p-1">
                 {hotel.restaurantStatus}
               </div>
-              <div className="text-lg lg:text-lg md:text-sm xs:text-sm p-1">
+              <div className="text-lg lg:text-lg md:text-sm xs:text-sm p-1 w-full">
                 {moment(hotel.openingTime, "YYYY-MM-DD HH:mm:ss").format(
                   "hh:mm A"
                 )}

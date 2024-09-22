@@ -529,7 +529,7 @@ const Cart = () => {
           </div>
         </div>
       ) : (
-        <div className="text-3xl lg:text-3xl md:text-2xl sm:text-2xl xs:text-lg w-full flex justify-center items-center h-full xs:h-96">
+        <div className="text-3xl lg:text-3xl md:text-2xl sm:text-xl xs:text-lg w-full flex justify-center items-center h-full xs:h-96">
           Please add items to the cart
         </div>
       )}
