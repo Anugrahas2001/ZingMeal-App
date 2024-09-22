@@ -124,9 +124,12 @@ const RestuarentPage = () => {
   };
 
   const addToCartFunction = async (foodId) => {
+    console.log(foodId, "food idsss");
+    console.log(userId, "user idsss");
+    console.log(restaurantId, "restaurant idsss");
     const accessToken = Cookies.get("accessToken");
     const config = {
-      headers: { Authorization: `Bearer ${accessToken}` },
+      headers: { Authorization: `Bearer ${accessToken}`},
     };
 
     if (!userId) {
@@ -227,7 +230,7 @@ const RestuarentPage = () => {
                 value="Veg"
                 name="foodType"
                 className="mr-1 xs:w-4 xs:mr-0"
-                checked={type === "Veg"}
+                // checked={type === "Veg"}
                 onClick={() => foodTypeHandler("Veg")}
               />
               <label
@@ -242,7 +245,7 @@ const RestuarentPage = () => {
                 value="Non-Veg"
                 name="foodType"
                 className="mr-1 xs:w-4 xs:mr-0 mt-1"
-                checked={type === "Non-Veg"}
+                // checked={type === "Non-Veg"}
                 onClick={() => foodTypeHandler("Non-Veg")}
               />
               <label
