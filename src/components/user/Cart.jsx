@@ -410,11 +410,11 @@ const Cart = () => {
                   );
                 })}
 
-              <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2 sm:mt-0 sm:mb-0 xs:mt-0 xs:mb-0 py-2">
-                <p className="text-lg lg:text-lg md:text-sm xs:text-sm">
+              <div className="text-lg ml-4 mr-4 border-dashed border-gray-300 border-t-2 flex justify-between">
+                <p className="text-lg lg:text-lg md:text-sm xs:text-sm mt-2">
                   Price ({data.length} items)
                 </p>
-                <div className="flex text-lg lg:text-lg md:text-sm sm:text-xs xs:text-sm sm:mt-0 sm:mb-0 xs:mt-0 xs:mb-0">
+                <div className="flex text-lg lg:text-lg md:text-sm sm:text-xs xs:text-sm sm:mt-0 sm:mb-0 xs:mt-0 xs:mb-0 mt-2">
                   <FontAwesomeIcon
                     className="text-sm mt-2 lg:mt-2 md:mt-1 sm:text-xs sm:mt-1 xs:text-xs xs:mt-1"
                     icon={faIndianRupeeSign}
@@ -422,7 +422,7 @@ const Cart = () => {
                   {totalAmountWithoutDiscount}
                 </div>
               </div>
-              <div className="text-lg h-5 m-5 mt-2 flex justify-between sm:mt-1 sm:mb-0 xs:mt-0 xs:mb-0 py-4">
+              <div className="text-lg ml-4 mr-4 flex justify-between mt-3">
                 <p className="text-lg lg:text-lg md:text-sm xs:text-sm">
                   Discount
                 </p>
@@ -438,20 +438,20 @@ const Cart = () => {
                 </div>
               </div>
 
-              <div className="text-lg h-5 m-5 mt-2 flex justify-between sm:mt-0 sm:mb-0 xs:mt-0 xs:mb-0 py-4 mb-2">
-                <p className="text-lg lg:text-lg md:text-sm xs:text-sm">
+              <div className="text-lg ml-4 mr-4 flex justify-between mt-3">
+                <p className="text-lg lg:text-lg md:text-sm xs:text-sm mb-2">
                   Delivery Charges
                 </p>
-                <div className="flex text-lg lg:text-lg md:text-sm xs:text-sm">
+                <div className="flex text-lg lg:text-lg md:text-sm xs:text-sm mb-2">
                   {deliveryCharges}
                 </div>
               </div>
 
               <div className="text-lg h-5 m-5 mt-2 flex justify-between border-dashed border-gray-300 border-t-2">
-                <p className="text-lg lg:text-lg md:text-sm xs:text-sm">
+                <p className="text-lg lg:text-lg md:text-sm xs:text-sm mt-2">
                   Total Amount
                 </p>
-                <div className="flex text-lg lg:text-lg md:text-sm xs:text-sm">
+                <div className="flex text-lg lg:text-lg md:text-sm xs:text-sm mt-2">
                   <FontAwesomeIcon
                     className="text-sm mt-2 lg:mt-2 md:mt-1 sm:text-xs xs:text-xs xs:mt-1"
                     icon={faIndianRupeeSign}
@@ -529,7 +529,7 @@ const Cart = () => {
           </div>
         </div>
       ) : (
-        <div className="text-3xl lg:text-3xl md:text-2xl sm:text-2xl xs:text-lg w-full flex justify-center items-center h-full xs:h-96">
+        <div className="text-3xl lg:text-3xl md:text-2xl sm:text-xl xs:text-lg w-full flex justify-center items-center h-full xs:h-96">
           Please add items to the cart
         </div>
       )}

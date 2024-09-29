@@ -124,9 +124,12 @@ const RestuarentPage = () => {
   };
 
   const addToCartFunction = async (foodId) => {
+    console.log(foodId, "food idsss");
+    console.log(userId, "user idsss");
+    console.log(restaurantId, "restaurant idsss");
     const accessToken = Cookies.get("accessToken");
     const config = {
-      headers: { Authorization: `Bearer ${accessToken}` },
+      headers: { Authorization: `Bearer ${accessToken}`},
     };
 
     if (!userId) {
@@ -200,11 +203,11 @@ const RestuarentPage = () => {
             <div className="text-lg text-gray-400 lg:text-lg md:text-lg sm:text-sm xs:text-sm">
               {hotel.restaurantAddress}
             </div>
-            <div className="w-60 justify-between text-lg flex lg:text-lg md:text-sm xs:text-sm lg:w-56 md:w-48 sm:w-48 xs:w-48">
+            <div className="w-full justify-between text-lg flex lg:text-lg md:text-sm xs:text-sm lg:w-56 md:w-48 sm:w-48 xs:w-48">
               <div className="text-orange-400 p-1">
                 {hotel.restaurantStatus}
               </div>
-              <div className="text-lg lg:text-lg md:text-sm xs:text-sm p-1">
+              <div className="text-lg lg:text-lg md:text-sm xs:text-sm p-1 w-full">
                 {moment(hotel.openingTime, "YYYY-MM-DD HH:mm:ss").format(
                   "hh:mm A"
                 )}
@@ -227,7 +230,7 @@ const RestuarentPage = () => {
                 value="Veg"
                 name="foodType"
                 className="mr-1 xs:w-4 xs:mr-0"
-                checked={type === "Veg"}
+                // checked={type === "Veg"}
                 onClick={() => foodTypeHandler("Veg")}
               />
               <label
@@ -242,7 +245,7 @@ const RestuarentPage = () => {
                 value="Non-Veg"
                 name="foodType"
                 className="mr-1 xs:w-4 xs:mr-0 mt-1"
-                checked={type === "Non-Veg"}
+                // checked={type === "Non-Veg"}
                 onClick={() => foodTypeHandler("Non-Veg")}
               />
               <label

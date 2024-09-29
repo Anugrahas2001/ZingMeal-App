@@ -54,7 +54,7 @@ const Order = (props) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`/restaurant/cancelAndDelivered`)
+      .get(`/restaurant/cancelAndDelivered/${userId}`)
       .then((response) => {
         setPastOrders(response.data.Data);
         setLoading(false);
@@ -303,7 +303,7 @@ const Order = (props) => {
           )}
         </div>
       ) : (
-        <div className="text-4xl w-full text-center flex items-center justify-center min-h-screen">
+        <div className="text-4xl w-full text-center flex items-center justify-center min-h-screen lg:text-4xl md:text-3xl sm:text-lg xs:text-lg">
           Currently no item is available
         </div>
       )}

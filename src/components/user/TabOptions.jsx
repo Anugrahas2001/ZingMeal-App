@@ -44,7 +44,7 @@ const TabOptions = () => {
 
   const foodItemsToDisplay = uniqueFoodItems.map((food) => (
     <div
-      className="flex-none w-44 h-44 mx-1 p-1 lg:p-5 md:p-1 cursor-pointer mt-4 lg:w-40 lg:h-40 md:w-40 md:h-40 sm:w-28 sm:h-28 xs:w-24 xs:h-24"
+      className="flex-none w-44 h-44 mx-1 p-1 lg:p-4 md:p-1 cursor-pointer mt-4 lg:w-44 lg:h-44 lg:rounded-full md:w-40 md:h-40 sm:w-28 sm:h-28 xs:w-24 xs:h-24"
       key={food.id}
     >
       <img

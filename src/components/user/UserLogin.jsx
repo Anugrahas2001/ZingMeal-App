@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../axios/axios";
 import { toast, Bounce } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { addUser} from "../../slices/userSlice.js";
+import { addUser } from "../../slices/userSlice.js";
 import { createCart } from "../../slices/cartSlice.js";
 import { LoadingContext } from "../common/LoaderContext.jsx";
 import Loader from "../common/Loader.jsx";
@@ -310,18 +310,18 @@ const UserLogin = () => {
               </span>
             </div>
             <div className="border p-3 mt-2 w-1/3 flex items-center justify-center flex-col lg:w-1/3 md:w-2/5 sm:w-4/5 xs:w-4/5">
-            <div>
-              Username:
-              <span className="text-sm font-semibold text-red-600">
-                demouser01@gmail.com
-              </span>
-            </div>
-            <div>
-              Password:
-              <span className="text-sm font-semibold text-red-600">
-                demouser@01
-              </span>
-            </div>
+              <div>
+                Username:
+                <span className="text-sm font-semibold text-red-600">
+                  demouser01@gmail.com
+                </span>
+              </div>
+              <div>
+                Password:
+                <span className="text-sm font-semibold text-red-600">
+                  demouser@01
+                </span>
+              </div>
             </div>
           </div>
         </div>
