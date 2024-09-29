@@ -56,13 +56,13 @@ ZingMeal also includes a trial mode, allowing potential users to explore the ful
 - React
 - Redux
 - Context Api
-- Taailwind CSS
+- Tailwind CSS
 - Git
 
 ## How to Install
 
 ### Backend
-1. Git Clone:
+1. Git Clone:https://github.com/Anugrahas2001/ZingMeal-Node
 2. Navigate to the Terminal
 3. Execute node index.js
 
