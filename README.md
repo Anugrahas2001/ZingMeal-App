@@ -1,6 +1,6 @@
 # ZingMeal
 
-<h2>Demo: https://anugraha--soft-pothos-8a37b8.netlify.app/</h2>
+<h2>Demo: https://66f8e2cf7f440000089c3a9e--soft-pothos-8a37b8.netlify.app/</h2>
 
 Users can sign in or sign up either as a customer or as a restaurant. A trial mode is also provided, allowing users to explore all the features of the application using a trial email and password.
 ![Screenshot (264)](https://github.com/user-attachments/assets/136e02b2-7e17-4367-b41f-ff00a918077d)
