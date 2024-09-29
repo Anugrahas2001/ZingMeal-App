@@ -499,7 +499,7 @@ const Cart = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col justify-center items-center">
+              <div className="flex flex-col justify-center items-center px-8">
                 <button
                   onClick={() =>
                     createRazorpayOrder(payableAmount, "INR", "recept_id")

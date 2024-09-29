@@ -239,7 +239,6 @@ const UserLogin = () => {
                     placeholder="Enter Email"
                     className="outline-none p-1 w-72 lg:w-72 sm:64 xs:w-64 xs:text-sm"
                     value={credentials.email}
-                    s
                     onChange={(e) =>
                       setCredentials({ ...credentials, email: e.target.value })
                     }
