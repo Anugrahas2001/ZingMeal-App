@@ -151,7 +151,7 @@ const UserLogin = () => {
         setLoading(true);
 
         if (response.data && response.data.accessToken) {
-          const userId = response.data.Data.id;
+          const userId = response.data.data.id;
           const accessToken = response.data.accessToken;
           const refreshToken = response.data.refreshToken;
           const config = {
